@@ -15,8 +15,8 @@ const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 
 function checkPath(directories, secondHalf){
-  console.log('checkPath ' + directories[0])
-    for(const dir in directories){
+  // console.log('checkPath ' + directories[0])
+    directories.forEach((dir)=>{
       try{
         const fullPath = path.join(dir, secondHalf)
         console.log(fullPath)
@@ -27,7 +27,7 @@ function checkPath(directories, secondHalf){
       catch(error){
         continue
       }
-    }
+    })
   return null
 }
 
