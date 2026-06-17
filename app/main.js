@@ -1,5 +1,6 @@
 const readline = require("readline");
-const path = require('path')
+const path = require('path');
+const fs = require('fs');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -11,17 +12,15 @@ const rl = readline.createInterface({
 // console.log('rl is this: ' + rl)
 
 const validCommands = ['echo', 'exit', 'type']
-executable = 'fill in later'
 rl.prompt();
 
-function checkPath(directories, executable, secondHalf){
+function checkPath(directories, secondHalf){
     // console.log('in checkPath is '  + secondHalf)
     console.log('inCheckpath is dir ' + directories)
     for(dir in directories){
       try{
         const fullPath = path.join(dir, executable)
-        require('fs').accessSync(fullPath, require('fs').constants.X_OK)
-        if (path.dirname(fullPath) === secondHalf){
+        if(fs.accessSync(fullPath, fs.constants.X_OK)){
           return dir
         }
       }
