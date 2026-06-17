@@ -15,7 +15,6 @@ const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 
 function checkPath(directories, secondHalf){
-  console.log(directories)
     for(dir in directories){
       try{
         const fullPath = path.join(dir, secondHalf)
@@ -43,7 +42,7 @@ rl.on('line', (command)=>{
   }
   else if(command?.startsWith('type')){
     const secondHalf = command.slice(5)
-    const directories = process.env.PATH.split(path.delimeter)
+    const directories = process.env.PATH.split(path.delimiter)
     const newPath = checkPath(directories, secondHalf)
 
     if(validCommands.includes(secondHalf)) {
