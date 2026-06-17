@@ -9,9 +9,13 @@ const rl = readline.createInterface({
 // console.log('rl is this: ' + rl)
 rl.prompt();
 rl.on('line', (command)=>{
-  // console.log(command)
+  // console.log(typeof command)
   if(command === 'exit'){
     rl.close()
+    return
+  }
+  if(command?.split(' ')[0] === 'echo'){
+    console.log(`${command.slice(5)}`)
     return
   }
   console.log(`${command}: command not found`)
