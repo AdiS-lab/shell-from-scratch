@@ -1,4 +1,5 @@
 const readline = require("readline");
+const path = require(path)
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -10,9 +11,27 @@ const rl = readline.createInterface({
 // console.log('rl is this: ' + rl)
 
 const validCommands = ['echo', 'exit', 'type']
-const PATH= process.env.PATH
-// console.log(PATH)
+executable = 'fill in later'
 rl.prompt();
+
+function checkPath(directories, executable, secondHalf){
+  const 
+  for(dir in directories){
+      try{
+        const fullPath = path.join(dir, executable)
+        require('fs').accessSync(fullPath, require('fs').constants.X_OK)
+        if (path.dirname(fullPath) === secondHalf){
+          return dir
+        }
+      }
+      catch(error){
+        continue
+      }
+    }
+  return null
+}
+
+//_________ if type exists but not exec then continue, if non-existent command then return that________
 rl.on('line', (command)=>{
   // console.log(typeof command)
   if(command === 'exit'){
@@ -24,23 +43,18 @@ rl.on('line', (command)=>{
   }
   else if(command?.startsWith('type')){
     const secondHalf = command.slice(5)
-    const directories = PATH.split(':')
-    if(secondHalf){
-      if (validCommands.includes(secondHalf)) {console.log(`${secondHalf} is a shell builtin`)}
-      else{
-        directories.forEach((path, index) => {
-        const files = path.split('/')
-          if(files.includes(secondHalf)){
-            console.log(`${secondHalf} is ${directories[index]}`)
-            return
-          }
-        })
-        console.log(`${secondHalf}: not found`)
-      } 
+    const directories = process.env.PATH.split(path.delimeter)
+    const newPath = checkPath(directories, executable, secondHalf)
+
+    if(validCommands.includes(secondHalf)) {
+      console.log(`${secondHalf} is a shell builtin`)
     }
+    else if(newPath){
+      console.log(`${secondHalf} is ${dir}`)
     }
     else{
-      console.log(`${command}: command not found`)
+      console.log(`${secondHalf} not found`)
     }
+  }
   rl.prompt()
 })
