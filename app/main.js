@@ -16,6 +16,7 @@ rl.prompt();
 
 function checkPath(directories, executable, secondHalf){
     console.log('in checkPath is '  + secondHalf)
+    console.log('inCheckpath is dir ' + directories)
     for(dir in directories){
       try{
         const fullPath = path.join(dir, executable)
