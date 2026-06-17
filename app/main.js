@@ -15,8 +15,6 @@ const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 
 function checkPath(directories, secondHalf){
-    // console.log('in checkPath is '  + secondHalf)
-    console.log('inCheckpath is dir ' + directories)
     for(dir in directories){
       try{
         const fullPath = path.join(dir, executable)
@@ -44,7 +42,7 @@ rl.on('line', (command)=>{
   else if(command?.startsWith('type')){
     const secondHalf = command.slice(5)
     const directories = process.env.PATH.split(path.delimeter)
-    const newPath = checkPath(directories, executable, secondHalf)
+    const newPath = checkPath(directories, secondHalf)
 
     if(validCommands.includes(secondHalf)) {
       console.log(`${secondHalf} is a shell builtin`)
