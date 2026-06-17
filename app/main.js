@@ -18,6 +18,7 @@ function checkPath(directories, secondHalf){
     for(dir in directories){
       try{
         const fullPath = path.join(dir, executable)
+        console.log(fullPath)
         if(fs.accessSync(fullPath, fs.constants.X_OK)){
           return dir
         }
