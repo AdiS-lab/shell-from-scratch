@@ -10,7 +10,7 @@ const rl = readline.createInterface({
 // console.log('rl is this: ' + rl)
 
 const validCommands = ['echo', 'exit', 'type']
-const PATH= "/usr/bin:/usr/local/bin"
+const PATH= process.env.PATH
 rl.prompt();
 rl.on('line', (command)=>{
   // console.log(typeof command)
