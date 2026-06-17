@@ -15,6 +15,7 @@ const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 
 function checkPath(directories, secondHalf){
+  console.log(directories)
     for(dir in directories){
       try{
         const fullPath = path.join(dir, secondHalf)
