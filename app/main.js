@@ -18,7 +18,6 @@ function checkPath(directories, secondHalf){
     for(dir in directories){
       try{
         const fullPath = path.join(dir, executable)
-        console.log(fullPath)
         if(fs.accessSync(fullPath, fs.constants.X_OK)){
           return dir
         }
@@ -44,6 +43,7 @@ rl.on('line', (command)=>{
     const secondHalf = command.slice(5)
     const directories = process.env.PATH.split(path.delimeter)
     const newPath = checkPath(directories, secondHalf)
+    console.log(newPath)
 
     if(validCommands.includes(secondHalf)) {
       console.log(`${secondHalf} is a shell builtin`)
