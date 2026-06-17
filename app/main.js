@@ -44,7 +44,7 @@ rl.on('line', (command)=>{
   else if(command?.startsWith('type')){
     const secondHalf = command.slice(5)
     const directories = process.env.PATH.split(path.delimiter)
-    console.log(directories.split(','))
+    console.log(directories)
     const newPath = checkPath(directories, secondHalf)
 
     if(validCommands.includes(secondHalf)) {
