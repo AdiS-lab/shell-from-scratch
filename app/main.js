@@ -1,5 +1,5 @@
 const readline = require("readline");
-const path = require(path)
+const path = require('path')
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -15,8 +15,7 @@ executable = 'fill in later'
 rl.prompt();
 
 function checkPath(directories, executable, secondHalf){
-  const 
-  for(dir in directories){
+    for(dir in directories){
       try{
         const fullPath = path.join(dir, executable)
         require('fs').accessSync(fullPath, require('fs').constants.X_OK)
