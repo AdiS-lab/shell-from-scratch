@@ -15,9 +15,9 @@ const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 
 function checkPath(directories, secondHalf){
+  console.log('checkPath ' + directories)
     for(const dir in directories){
       try{
-        
         const fullPath = path.join(dir, secondHalf)
         console.log(fullPath)
         if(fs.accessSync(fullPath, fs.constants.X_OK)){
@@ -44,7 +44,7 @@ rl.on('line', (command)=>{
   else if(command?.startsWith('type')){
     const secondHalf = command.slice(5)
     const directories = process.env.PATH.split(path.delimiter)
-    console.log(directories)
+    // console.log(directories)
     const newPath = checkPath(directories, secondHalf)
 
     if(validCommands.includes(secondHalf)) {
