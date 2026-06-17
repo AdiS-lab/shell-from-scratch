@@ -16,6 +16,7 @@ rl.on('line', (command)=>{
   }
   if(command?.split(' ')[0] === 'echo'){
     console.log(`${command.slice(5)}`)
+    rl.prompt()
     return
   }
   console.log(`${command}: command not found`)
