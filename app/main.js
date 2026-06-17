@@ -10,6 +10,7 @@ const rl = readline.createInterface({
 // console.log('rl is this: ' + rl)
 
 const validCommands = ['echo', 'exit', 'type']
+const PATH= "/usr/bin:/usr/local/bin"
 rl.prompt();
 rl.on('line', (command)=>{
   // console.log(typeof command)
@@ -22,11 +23,23 @@ rl.on('line', (command)=>{
   }
   else if(command?.startsWith('type')){
     const secondHalf = command.slice(5)
-    if (validCommands.includes(secondHalf)) console.log(`${secondHalf} is a shell builtin`)
-    else console.log(`${secondHalf}: not found`)
-  }
-  else{
-    console.log(`${command}: command not found`)
-  }
+    const directories = PATH.split(':')
+    if(secondHalf){
+      if (validCommands.includes(secondHalf)) {console.log(`${secondHalf} is a shell builtin`)}
+      else{
+        directories.forEach((path, index) => {
+        const files = path.split('/')
+          if(files.includes(secondHalf)){
+            console.log(`${secondHalf} is ${directories[index]}`)
+            return
+          }
+        })
+        console.log(`${secondHalf}: not found`)
+      } 
+    }
+    }
+    else{
+      console.log(`${command}: command not found`)
+    }
   rl.prompt()
 })
