@@ -17,6 +17,7 @@ rl.prompt();
 function checkPath(directories, secondHalf){
     for(dir in directories){
       try{
+        console.log('made it inside the for loop')
         const fullPath = path.join(dir, executable)
         if(fs.accessSync(fullPath, fs.constants.X_OK)){
           return dir
