@@ -22,7 +22,7 @@ rl.on('line', (command)=>{
   }
   else if(command?.startsWith('type')){
     const secondHalf = command.slice(5)
-    if (validCommands.includes(secondHalf)) console.log(`${secondHalf} is a shell built in`)
+    if (validCommands.includes(secondHalf)) console.log(`${secondHalf} is a shell builtin`)
     else console.log(`${secondHalf}: not found`)
   }
   else{
