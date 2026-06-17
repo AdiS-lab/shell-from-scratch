@@ -6,7 +6,7 @@ const rl = readline.createInterface({
   prompt: "$ ",
 });
 
-console.log('rl is this: ' + rl)
+// console.log('rl is this: ' + rl)
 rl.prompt();
 rl.on('line', (command)=>{
   if(command === 'exit'){
