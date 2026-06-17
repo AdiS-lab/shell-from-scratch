@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 
 const validCommands = ['echo', 'exit', 'type']
 const PATH= process.env.PATH
-console.log(PATH)
+// console.log(PATH)
 rl.prompt();
 rl.on('line', (command)=>{
   // console.log(typeof command)
