@@ -9,7 +9,7 @@ const rl = readline.createInterface({
 
 // console.log('rl is this: ' + rl)
 
-const validCommands = ['echo', 'exit']
+const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 rl.on('line', (command)=>{
   // console.log(typeof command)
