@@ -6,7 +6,10 @@ const rl = readline.createInterface({
   prompt: "$ ",
 });
 
+
 // console.log('rl is this: ' + rl)
+
+const validCommands = ['echo', 'exit']
 rl.prompt();
 rl.on('line', (command)=>{
   // console.log(typeof command)
@@ -14,11 +17,16 @@ rl.on('line', (command)=>{
     rl.close()
     return
   }
-  if(command?.split(' ')[0] === 'echo'){
+  else if(command.startsWith("echo")){
     console.log(`${command.slice(5)}`)
-    rl.prompt()
-    return
   }
-  console.log(`${command}: command not found`)
+  else if(command?.startsWith('type')){
+    const secondHalf = command.slice(5)
+    if (validCommands.includes(secondHalf)) console.log(`${secondHalf} is a shell built in`)
+    else console.log(`${secondHalf}: not found`)
+  }
+  else{
+    console.log(`${command}: command not found`)
+  }
   rl.prompt()
 })
