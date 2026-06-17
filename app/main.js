@@ -17,8 +17,7 @@ rl.prompt();
 function checkPath(directories, secondHalf){
     for(dir in directories){
       try{
-        console.log('made it inside the for loop')
-        const fullPath = path.join(dir, executable)
+        const fullPath = path.join(dir, secondHalf)
         if(fs.accessSync(fullPath, fs.constants.X_OK)){
           return dir
         }
@@ -50,7 +49,7 @@ rl.on('line', (command)=>{
       console.log(`${secondHalf} is a shell builtin`)
     }
     else if(newPath){
-      console.log(`${secondHalf} is ${dir}`)
+      console.log(`${secondHalf} is ${newPath}`)
     }
     else{
       console.log(`${secondHalf} not found`)
