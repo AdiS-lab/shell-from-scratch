@@ -15,7 +15,7 @@ executable = 'fill in later'
 rl.prompt();
 
 function checkPath(directories, executable, secondHalf){
-    console.log('in checkPath is '  + secondHalf)
+    // console.log('in checkPath is '  + secondHalf)
     console.log('inCheckpath is dir ' + directories)
     for(dir in directories){
       try{
