@@ -11,16 +11,15 @@ const rl = readline.createInterface({
   output: process.stdout,
   prompt: "$ ",
   completer: function(line){
-    // if(!line.includes(' ')){
       hits = targets.filter(target=>target.startsWith(line))
+      // return [hits.length? hits : [], line]
       if(hits.length)
-        return [hits]
+        return [hits, line]
       else{
         process.stdout.write('\x07')
         return [[], line]
       } 
-    // }
-  }
+    }
 });
 
 
