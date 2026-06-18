@@ -36,6 +36,8 @@ const rl = readline.createInterface({
           }  
         } //  end of for loop
         hits = [... new Set(hits)].sort() //  t handle duplicates create new set with hits, and then arr it
+        console.log(hits.filter(hit=>hit.includes(hits[0])))
+
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
           return [hits, line]
