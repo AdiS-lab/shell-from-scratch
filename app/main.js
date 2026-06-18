@@ -93,7 +93,7 @@ rl.on('line', (command)=>{
     const targetFile = path.resolve(normCom[index+1])
     try{
       const message = execFileSync(normCom[0],normCom.slice(1, index),{encoding: 'utf8'})
-      process.stdout.write(message)
+      // process.stdout.write(message)
     } 
     catch(error){
       fs.writeFileSync(targetFile, error.stderr)
