@@ -38,23 +38,41 @@ const rl = readline.createInterface({
               continue
           }  
         } //  end of for loop, checking all executables
-        if(line.includes(' ') && line.includes('/')){
+        if(line.includes(' ') && line.includes('/')){ //  this check won't work anymore
           const pathParts = normLine.slice(1).join()
           const maxIndex = pathParts.lastIndexOf('/')
           const inputDir = pathParts.slice(0,maxIndex)      
           const dirFiles = fs.readdirSync(inputDir)
+
+
           if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, dirFiles[0])} `)
           for(dirFile of dirFiles){
-            dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)} `)
+            if(dirFile.startsWith(line)){
+              const fullPath = path.join(inputDir, dirFile)
+              fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)}/`)
+              : hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)} `)
+            }
           }
-        }
+
+
+        }// for any directory get files. 
         else if(line.includes(' ') && !line.includes('/')){
           const currFiles =  fs.readdirSync(process.cwd())
-            for(const fname of currFiles){ 
-          
+          const rootDir = fs.readdirSync('/')
+          for(const fname of currFiles){ 
             fname.startsWith(normLine.slice(1).join()) && hits.push(`${normLine[0]} ${fname} `)
           }
-        }
+          for (const dir of rootDir){
+            if(dir.startsWith(normLine.slice(1).join())){
+              const fullPath = path.join(rootDir, dir)
+              fs.statSync(fullPath).isDirectory() && hits.push(`${normLine[0]} ${fullPath}/`)
+            }
+          }
+           
+        }// for curr directory get files
+        else if(){
+            fs.statSync().isDirectory()
+        }// get directories
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
