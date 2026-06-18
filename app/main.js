@@ -70,9 +70,6 @@ const rl = readline.createInterface({
           }
            
         }// for curr directory get files
-        else if(){
-            fs.statSync().isDirectory()
-        }// get directories
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
