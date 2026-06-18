@@ -1,6 +1,7 @@
 const readline = require("readline");
 const path = require('path');
 const fs = require('fs');
+const {execFileSync} = require('child_process')
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -29,6 +30,7 @@ function checkPath(directories, secondHalf){
 }
 
 //_________ if type exists but not exec then continue, if non-existent command then return that________
+//_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
   // console.log(typeof command)
   if(command === 'exit'){
@@ -39,15 +41,16 @@ rl.on('line', (command)=>{
     console.log(`${command.slice(5)}`)
   }
   else if(command?.startsWith('type')){
-    const secondHalf = command.slice(5)
+    const secondHalf = command.slice(5).split(' ')
     const directories = process.env.PATH.split(path.delimiter)
     // console.log(directories)
-    const newPath = checkPath(directories, secondHalf)
+    const newPath = checkPath(directories, secondHalf[0])
 
     if(validCommands.includes(secondHalf)) {
       console.log(`${secondHalf} is a shell builtin`)
     }
     else if(newPath){
+      execFileSync(newPath, secondHalf.slice(1), {encoding: 'utf8'})
       console.log(`${secondHalf} is ${newPath}`)
     }
     else{
