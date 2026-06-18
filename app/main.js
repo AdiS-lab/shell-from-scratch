@@ -19,7 +19,7 @@ const rl = readline.createInterface({
         const dirNames = process.env.PATH.split(':')
         for(const dir of dirNames){
           try{
-            files = fs.readdirSync(dir)
+            const files = fs.readdirSync(dir)
             for (const fileName of files){
               const fullPath = path.join(dir, fileName)
               try{
@@ -35,6 +35,19 @@ const rl = readline.createInterface({
               continue
           }  
         } //  end of for loop
+
+        try{
+          const currFiles =  fs.readdirSync(process.cwd())
+           for(const fileNames of fs.readdirSync(process.cwd())){ 
+            (fileNames.startsWith(line)) && hits.push(`${fileName} `)
+          }
+        }
+        catch(error){
+          continue
+        }
+
+
+
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
         
@@ -65,6 +78,8 @@ const rl = readline.createInterface({
         } 
       return [[], line]
   }
+
+
 });
 
 
