@@ -123,25 +123,16 @@ rl.on('line', (command)=>{
       console.log(`${secondHalf}: not found`)
     }
   }// handle type commands
-
-  else if(checkPath(directories, normCom[0])){
-    const message = execFileSync(normCom[0], normCom.slice(1), {encoding: 'utf8'})
-    process.stdout.write(message) // if we don't want new lines use this. 
-  }
   else if(normCom.includes('>')){
     const index = normCom.indexOf('>')
     const targetFile = path.resolve(normCom[index+1])
-    console.log('this is for > ' + normCom)
-    if(!fs.existsSync(targetFile)){
-      fs.mkdirSync(targetFile, {recursive:true}) 
-    }
-    const output = executeFileSync(normCom[0], normCom.splice(1,index),{encoding: 'utf8'})
-    console.log('this is for > ' + output)
+    const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8'})
     fs.writeFileSync(targetFile, output)
   }
-
-
-
+  else if(checkPath(directories, normCom[0])){
+    const message = execFileSync(normCom[0], normCom.slice(1), {encoding: 'utf8'})
+    process.stdout.write(message) // if we don't want new lines use this. 
+  }// check path command 
   else{
     console.log(`${command}: not found`)
   }
