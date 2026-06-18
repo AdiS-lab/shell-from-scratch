@@ -87,19 +87,24 @@ rl.on('line', (command)=>{
       rl.prompt()
     }
   }
-
   else if(normCom.includes('2>')){
     const index = normCom.indexOf('2>')
     const targetFile = path.resolve(normCom[index+1])
+    // core idea here is you want to direct err to file, if no err, then still create file but empty
+    // this means you have to handle writing when err doesn't happen, and this can be accomplished through just opening
+    // the file pre-emptively, and writing a default if everything goes well
     try{
       const message = execFileSync(normCom[0],normCom.slice(1, index),{encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe']})
+      fs.writeFileSync(targetFile, '')
       process.stdout.write(message)
     } 
     catch(error){
-      fs.writeFileSync(targetFile, error.stderr)
+      fs.writeFileSync(targetFile, error.stderr) 
       process.stdout.write(error.stdout)
     }
-  }
+  } //  handling 2>
+
+
   else if(command === 'exit'){
     rl.close()
     return
