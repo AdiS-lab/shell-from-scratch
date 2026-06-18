@@ -39,8 +39,7 @@ const rl = readline.createInterface({
           }  
         } //  end of for loop, checking all executables
         if(line.includes(' ') && line.includes('/')){
-            console.log('made it to the correct check ')
-            const fileParts = normLine.slice(0).split('/')
+            const fileParts = normLine[1].split('/')
             const inputDir = fileParts.slice(JSON.stringify(fileParts(0,-1)))
             const dirFiles = fs.readdirSync(inputDir)
             if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFiles))}`)
