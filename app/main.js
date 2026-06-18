@@ -97,8 +97,9 @@ rl.on('line', (command)=>{
     } 
     catch(error){
       fs.writeFileSync(targetFile, error.stderr)
-      console.log(error.stdout)
-
+      // console.log(error.stdout)
+      rl.prompt()
+      return
     }
   }
   else if(command === 'exit'){
