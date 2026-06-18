@@ -79,7 +79,6 @@ rl.on('line', (command)=>{
 
   if(normCom.includes('>') || normCom.includes('1>')){
     const index = normCom.includes('>') ? normCom.indexOf('>') : normCom.indexOf('1>')
-    if(normCom.includes('1>')) console.log(index)
     const targetFile = path.resolve(normCom[index+1])
     const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8'})
     fs.writeFileSync(targetFile, output)
