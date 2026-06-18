@@ -108,6 +108,7 @@ rl.on('line', (command)=>{
     const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
     const targetPath = path.resolve(normCom[index+1])
     try{  
+      console.log('made inside the normCom try block')
       const message = fs.appendFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8'})
     }
     catch(error){
