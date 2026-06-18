@@ -89,7 +89,6 @@ rl.on('line', (command)=>{
   }
 
   else if(normCom.includes('2>')){
-    console.log('making it inside 2> cmon')
     const index = normCom.indexOf('2>')
     const targetFile = path.resolve(normCom[index+1])
     try{
@@ -99,8 +98,6 @@ rl.on('line', (command)=>{
     catch(error){
       fs.writeFileSync(targetFile, error.stderr)
       // console.log(error.stdout)
-      rl.prompt()
-      return
     }
   }
   else if(command === 'exit'){
