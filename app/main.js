@@ -53,7 +53,7 @@ rl.on('line', (command)=>{
       process.chdir(fileName)
     }
     else{
-      console.log(`cd: ${fileName}: No such file or direcotry`)
+      console.log(`cd: ${fileName}: No such file or directory`)
     }
   }
 
