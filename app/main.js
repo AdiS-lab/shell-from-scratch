@@ -46,7 +46,7 @@ function normalize(command){
     else if(ch===`"` && !singleQuotes && !backslash){
       doubleQuotes = !doubleQuotes
     }
-    else if (ch === '\\' && !singleQuotes && !doubleQuotes && !backslash){
+    else if (ch === '\\' && !singleQuotes && !backslash){
       backslash = true
     }
     else if(ch=== ' ' && !singleQuotes && !doubleQuotes &&!backslash){
