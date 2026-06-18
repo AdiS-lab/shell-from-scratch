@@ -38,10 +38,10 @@ function normalize(command){
   let doubleQuotes = false
   
   for (const ch of command){
-    if(ch===`'` && !singleQuotes){
+    if(ch===`'`){
       singleQuotes = !singleQuotes
     }
-    else if(ch===`"`&& !doubleQuotes){
+    else if(ch===`"`){
       doubleQuotes = !doubleQuotes
     }
     else if(ch=== ' ' && !singleQuotes && !doubleQuotes){
