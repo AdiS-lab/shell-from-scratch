@@ -40,16 +40,18 @@ const rl = readline.createInterface({
         } //  end of for loop, checking all executables
         if(line.includes(' ') && line.includes('/')){
           const pathParts = normLine.slice(1)
+          console.log('this is pathParts  ' + pathParts)
           let indices = []
           pathParts.forEach((ch,index)=>
               {if(ch==='/') indices.push(index)})
           const maxIndex = Math.max(...indices)
-
+          console.log('this is maxIndex ' + maxIndex)
+          
           const inputDir = pathParts.slice(0,maxIndex)      
           const dirFiles = fs.readdirSync(inputDir)
-          if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFiles))}`)
+          if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, dirFiles[0])}`)
           for(dirFile of dirFiles){
-            dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFile))}`)
+            dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)}`)
           }
         }
         else if(line.includes(' ') && !line.includes('/')){
