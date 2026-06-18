@@ -39,14 +39,6 @@ const rl = readline.createInterface({
           }  
         } //  end of for loop
         
-        if(line.includes(' ')){
-          const currFiles =  fs.readdirSync(process.cwd())
-            for(const fname of currFiles){ 
-          
-            fname.startsWith(normLine.slice(1)) && hits.push(`${normLine[0]} ${fname} `)
-          }
-        }
-        
         if(line.includes(' ') && normLine.slice(1).includes('/')){
             const fileParts = normLine.slice(1).split('/')
             const inputDir = fileParts.slice(JSON.stringify(fileParts(0,-1)))
@@ -56,6 +48,13 @@ const rl = readline.createInterface({
             for(dirFile in dirFiles){
               dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFiles))}`)
             }
+        }
+        else if(line.includes(' ')){
+          const currFiles =  fs.readdirSync(process.cwd())
+            for(const fname of currFiles){ 
+          
+            fname.startsWith(normLine.slice(1)) && hits.push(`${normLine[0]} ${fname} `)
+          }
         }
 
         // console.log(hits)
