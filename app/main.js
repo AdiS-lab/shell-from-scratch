@@ -39,10 +39,9 @@ const rl = readline.createInterface({
           }  
         } //  end of for loop
 
-        console.log(process.cwd())
         const currFiles =  fs.readdirSync(process.cwd())
           for(const fname of currFiles){ 
-          (fname.startsWith(normLine.slice(1))) && hits.push(`${normLine[0]} ${fname} `)
+          fname.startsWith(normLine.slice(1)) && hits.push(`${normLine[0]} ${fname} `)
         }
 
         // console.log(hits)
