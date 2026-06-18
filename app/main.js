@@ -38,6 +38,7 @@ const rl = readline.createInterface({
 
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
+          if(line==='ech') console.log(hits)
           return [hits, line]
         } 
         else{
