@@ -50,9 +50,10 @@ rl.on('line', (command)=>{
     else if(newPath){
       console.log(`${secondHalf} is ${newPath}`)
     }
-    else{
-      console.log(`${command} not found`)
-    }
+
+  else{
+    console.log(`${command} not found`)
+  }
   }
   rl.prompt()
 })
