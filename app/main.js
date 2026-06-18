@@ -16,6 +16,7 @@ const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 
 function checkPath(directories, secondHalf){
+  console.log('making it ' + )
     for(const dir of directories){
       try{
         const fullPath = path.join(dir, secondHalf)
@@ -34,7 +35,8 @@ function checkPath(directories, secondHalf){
 rl.on('line', (command)=>{
   // console.log(typeof command)
   const commandDivision = command?.split(' ')
-
+  const directories = process.env.PATH.split(path.delimiter)
+  
   if(command === 'exit'){
     rl.close()
     return
@@ -45,7 +47,6 @@ rl.on('line', (command)=>{
 
   else if(commandDivision[0]==='type'){
     const secondHalf = command.slice(5)
-    const directories = process.env.PATH.split(path.delimiter)
     // console.log(directories)
     console.log(secondHalf)
     const newPath = checkPath(directories, secondHalf)
@@ -61,9 +62,9 @@ rl.on('line', (command)=>{
     }
   }
 
-  else if(checkPath(commandDivision[0])){
+  else if(checkPath(directories, commandDivision[0])){
     console.log('inside else if statement ' + commandDivision)
-    const newPath = checkPath(commandDivision[0])
+    const newPath = checkPath(directories, commandDivision[0])
     execFileSync(newPath, commandDivision.slice(1), {encoding: 'utf8'})
   }
 
