@@ -15,7 +15,10 @@ const rl = readline.createInterface({
   output: process.stdout,
   prompt: "$ ",
   completer: function(line){
+
         let hits = targets.filter(target=>target.startsWith(line))
+
+        const normLine = normalize(line)
         const dirNames = process.env.PATH.split(':')
         for(const dir of dirNames){
           try{
@@ -36,17 +39,11 @@ const rl = readline.createInterface({
           }  
         } //  end of for loop
 
-        try{
-          const currFiles =  fs.readdirSync(process.cwd())
-           for(const fileNames of fs.readdirSync(process.cwd())){ 
-            (fileNames.startsWith(line)) && hits.push(`${fileName} `)
-          }
+        console.log(process.cwd())
+        const currFiles =  fs.readdirSync(process.cwd())
+          for(const fileNames of currFiles){ 
+          (fileNames.startsWith(normLine.slice(1))) && hits.push(`${fileName} `)
         }
-        catch(error){
-          continue
-        }
-
-
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
