@@ -52,7 +52,6 @@ rl.on('line', (command)=>{
     if(fs.existsSync(fileName)){
       process.chdir(fileName)
     }
-    return
   }
 
   else if(command.startsWith('type')){
