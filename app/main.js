@@ -33,30 +33,37 @@ function checkPath(directories, secondHalf){
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
   // console.log(typeof command)
+  const commandDivision = command?.split(' ')
+
   if(command === 'exit'){
     rl.close()
     return
   }
-  else if(command.startsWith("echo")){
+  else if(commandDivision[0]==="echo"){
     console.log(`${command.slice(5)}`)
   }
-  else if(command?.startsWith('type')){
-    const secondHalf = command.slice(5).split(' ')
+
+  else if(commandDivision[0]==='type'){
+    const secondHalf = command.slice(5)
     const directories = process.env.PATH.split(path.delimiter)
     // console.log(directories)
     console.log(secondHalf)
-    const newPath = checkPath(directories, secondHalf[0])
+    const newPath = checkPath(directories, secondHalf)
 
     if(validCommands.includes(secondHalf)) {
       console.log(`${secondHalf} is a shell builtin`)
     }
     else if(newPath){
-      execFileSync(newPath, secondHalf.slice(1), {encoding: 'utf8'})
       console.log(`${secondHalf} is ${newPath}`)
     }
     else{
       console.log(`${secondHalf}: not found`)
     }
+  }
+
+  else if(checkPath(commandDivision[0])){
+    const newPath = checkPath(commandDivision[0])
+    execFileSync(newPath, commandDivision.slice(1), {encoding: 'utf8'})
   }
 
   else{
