@@ -42,7 +42,7 @@ const rl = readline.createInterface({
         console.log(process.cwd())
         const currFiles =  fs.readdirSync(process.cwd())
           for(const fileNames of currFiles){ 
-          (fileNames.startsWith(normLine.slice(1))) && hits.push(`${fileName} `)
+          (fileNames.startsWith(normLine.slice(1))) && hits.push(`${fileNames} `)
         }
 
         // console.log(hits)
