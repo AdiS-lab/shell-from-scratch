@@ -38,7 +38,7 @@ const rl = readline.createInterface({
               continue
           }  
         } //  end of for loop, checking all executables
-        if(line.includes(' ') && normLine.slice(1).includes('/')){
+        if(line.includes(' ') && line.includes('/')){
             console.log('made it to the correct check ')
             const fileParts = normLine.slice(1).split('/')
             const inputDir = fileParts.slice(JSON.stringify(fileParts(0,-1)))
