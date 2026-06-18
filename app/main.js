@@ -43,9 +43,9 @@ const rl = readline.createInterface({
           const maxIndex = pathParts.lastIndexOf('/')
           const inputDir = pathParts.slice(0,maxIndex)      
           const dirFiles = fs.readdirSync(inputDir)
-          if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, dirFiles[0])}`)
+          if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, dirFiles[0])} `)
           for(dirFile of dirFiles){
-            dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)}`)
+            dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)} `)
           }
         }
         else if(line.includes(' ') && !line.includes('/')){
