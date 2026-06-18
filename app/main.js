@@ -2,6 +2,7 @@ const readline = require("readline");
 const path = require('path');
 const fs = require('fs');
 const {execFileSync} = require('child_process')
+const os = require('os')
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -49,26 +50,17 @@ rl.on('line', (command)=>{
   }
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
-    if(fs.existsSync(fileName)){
-      process.chdir(fileName)
-    }
-    else if(fileName.startsWith('./')){
-      const relativePath = fileName.slice(3)
-      const dir = path.dirname(process.cwd())
-      const newPath = path.join(dir,relativePath)
-      fs.existsSync(newPath) && process.chdir(newPath)
-    }
-    else if (fileName.startsWith('../')){
-      const information = fileName.split('/')
-      const levels = information.filter((info)=>{info ==='..'}).length()
-      let dir = path.dirname(process.cwd())
-      for(const i = 0; i<levels-1; i++){
-        let dir = path.dirname(dir)
-      }
-      fs.existsSync(dir) && process.chdir(dir)
-    }
+    if(fileName==='~'){
+      process.chdir(os.homedir())
+    } 
     else{
-      console.log(`cd: ${fileName}: No such file or directory`)
+      const targetFile = path.resolve(fileName)
+      if(fs.existsSync(fileName)){
+        process.chdir(fileName)
+      }
+      else{
+        console.log(`cd: ${fileName}: No such file or directory`)
+      }
     }
   }
 
