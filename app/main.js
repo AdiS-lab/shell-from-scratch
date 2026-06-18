@@ -6,13 +6,14 @@ const os = require('os')
 
 const targets = ['echo ','exit ']
 
+let tabCount = 0 
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
   prompt: "$ ",
   completer: function(line){
         let hits = targets.filter(target=>target.startsWith(line))
-        
         const dirNames = process.env.PATH.split(':')
         for(const dir of dirNames){
           try{
@@ -34,7 +35,18 @@ const rl = readline.createInterface({
         } //  end of for loop
 
         if(!hits.length) process.stdout.write('\x07')
-        return [hits, line]
+        else{
+          tabCount += 1
+          console.log(tabCount)
+          if(tabCount===1){
+            process.stdout.write('\x07')
+          }
+          else{
+            tabCount = 0
+            return [hits, line]
+          }
+        } 
+      return [[], line]
   }
 });
 
