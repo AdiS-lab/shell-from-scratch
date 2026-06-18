@@ -36,7 +36,6 @@ const rl = readline.createInterface({
         } //  end of for loop
 
         if(!hits.length) process.stdout.write('\x07')
-        else if (hits.length = 1) return [hits, line]
         else{
           tabCount += 1
           if(tabCount===1){
@@ -44,6 +43,9 @@ const rl = readline.createInterface({
           }
           else{
             tabCount = 0
+            if(hits.length===1){
+              return [hits, length]
+            } 
             process.stdout.write('\n')
             const allHits = hits.sort().join(' ')
             console.log(allHits)
