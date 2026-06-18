@@ -72,13 +72,19 @@ function normalize(command){
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
   let normCom = normalize(command)
-  if(command.includes(`''`)){
-  }
 
   const commandDivision = command?.split(' ')
   const directories = process.env.PATH.split(path.delimiter)
 
-  if(command === 'exit'){
+
+  if(normCom.includes('>') || normCom.includes('1>')){
+    const index = normCom.indexOf('>') || normCom.indexOf('1>')
+    const targetFile = path.resolve(normCom[index+1])
+    const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8'})
+    fs.writeFileSync(targetFile, output)
+  }
+
+  else if(command === 'exit'){
     rl.close()
     return
   }
@@ -123,12 +129,7 @@ rl.on('line', (command)=>{
       console.log(`${secondHalf}: not found`)
     }
   }// handle type commands
-  else if(normCom.includes('>') || normCom.includes('1>')){
-    const index = normCom.indexOf('>') || normCom.indexOf('1>')
-    const targetFile = path.resolve(normCom[index+1])
-    const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8'})
-    fs.writeFileSync(targetFile, output)
-  }
+
   else if(checkPath(directories, normCom[0])){
     const message = execFileSync(normCom[0], normCom.slice(1), {encoding: 'utf8'})
     process.stdout.write(message) // if we don't want new lines use this. 
