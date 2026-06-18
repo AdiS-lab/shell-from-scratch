@@ -52,6 +52,9 @@ rl.on('line', (command)=>{
     if(fs.existsSync(fileName)){
       process.chdir(fileName)
     }
+    else{
+      console.log(`cd: ${fileName}: No such file or direcotry`)
+    }
   }
 
   else if(command.startsWith('type')){
