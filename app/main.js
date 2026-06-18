@@ -13,7 +13,7 @@ const rl = readline.createInterface({
   completer: function(line){
     // if(!line.includes(' ')){
       hits = targets.filter(target=>target.startsWith(line))
-      return[hits.length ? hits : targets, line]
+      return[hits.length ? `${hits} ` : targets, line]
     // }
   }
 });
