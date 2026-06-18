@@ -41,6 +41,7 @@ const rl = readline.createInterface({
 
         const currFiles =  fs.readdirSync(process.cwd())
           for(const fname of currFiles){ 
+        
           fname.startsWith(normLine.slice(1)) && hits.push(`${normLine[0]} ${fname} `)
         }
 
@@ -52,6 +53,7 @@ const rl = readline.createInterface({
           return [hits, line]
         } 
         else if(JSON.stringify(hits) === JSON.stringify(hits.filter(hit=>hit.includes(hits[0].trim())))){ // check if filtering by the first(root) gives you hits
+          console.log(`${hits} and the other ${ hits.filter(hit=>hit.includes(hits[0].trim()))} `)
           return [[hits[0].trim()], line]
         } 
         else{
