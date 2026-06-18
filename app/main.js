@@ -18,7 +18,6 @@ function checkPath(directories, secondHalf){
     for(const dir of directories){
       try{
         const fullPath = path.join(dir, secondHalf)
-        console.log(fullPath)
         fs.accessSync(fullPath, fs.constants.X_OK)
         return dir
       }
