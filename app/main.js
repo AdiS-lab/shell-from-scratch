@@ -83,7 +83,7 @@ rl.on('line', (command)=>{
     console.log(process.cwd()) // current working direcotry
   }
   else if (command.startsWith('cat')){
-    console.log('this is inside cat command  ' + normCom)
+    // console.log('this is inside cat command  ' + normCom)
     const message = execFileSync(normCom[0], normCom.splice(1),{encoding: 'utf8'})
     console.log(message)
   } // handle cat commands
