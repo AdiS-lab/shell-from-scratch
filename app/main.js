@@ -43,7 +43,6 @@ const rl = readline.createInterface({
           return [hits, line]
         } 
         else if(JSON.stringify(hits) === JSON.stringify(hits.filter(hit=>hit.includes(hits[0].trim())))){ // check if filtering by the first(root) gives you hits
-          console.log('made it into the check')
           return [[hits[0].trim()], line]
         } 
         else{
