@@ -18,6 +18,7 @@ rl.prompt();
 function checkPath(directories, secondHalf){
     for(const dir of directories){
       try{
+        console.log(fullPath)
         const fullPath = path.join(dir, secondHalf)
         fs.accessSync(fullPath, fs.constants.X_OK)
         return fullPath
