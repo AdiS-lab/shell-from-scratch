@@ -38,7 +38,8 @@ const rl = readline.createInterface({
               continue
           }  
         } //  end of for loop
-
+        
+        if(line.includes(' '))
         const currFiles =  fs.readdirSync(process.cwd())
           for(const fname of currFiles){ 
         
