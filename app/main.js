@@ -39,9 +39,8 @@ const rl = readline.createInterface({
           }  
         } //  end of for loop, checking all executables
         if(line.includes(' ') && line.includes('/')){
-          const pathParts = normLine.slice(1)
+          const pathParts = normLine.slice(1).join()
           const maxIndex = pathParts.lastIndexOf('/')
-          
           const inputDir = pathParts.slice(0,maxIndex)      
           const dirFiles = fs.readdirSync(inputDir)
           if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, dirFiles[0])}`)
@@ -53,7 +52,7 @@ const rl = readline.createInterface({
           const currFiles =  fs.readdirSync(process.cwd())
             for(const fname of currFiles){ 
           
-            fname.startsWith(normLine.slice(1)) && hits.push(`${normLine[0]} ${fname} `)
+            fname.startsWith(normLine.slice(1).join()) && hits.push(`${normLine[0]} ${fname} `)
           }
         }
 
