@@ -14,28 +14,30 @@ const rl = readline.createInterface({
         hits = []
         dirNames = process.env.PATH.split(':')
         for(dir of dirNames){
-          for (fileName of fs.readdirSync(dir)){
-            const fullPath = path.join(dir, fileName)
-            try{
-              fs.accessSync(fullPath, fs.constants.X_OK)
-              if(fileName.startsWith(line)) hits.push(`${fileName} `)
-            }
-            catch(error){ 
-              continue
-            } 
-          }//  end of for loop
-          if(!hits.length){
-            hits = targets.filter(target=>target.startsWith(line))
+          try{
+            files = fs.readdirSync(dir)
+            for (fileName of files){
+              const fullPath = path.join(dir, fileName)
+              if(checkPath(dir,fileName)){
+                fileName.startsWith(line) && hits.push(`${fileName} `)
+              }
+            }//  end of for loop
+          }catch(error){
+            continue
           }
-          // return [hits.length? hits : [], line]
-          if(hits.length)
-              return [hits, line]
-            else{
-              process.stdout.write('\x07')
-              return [[], line]
-            } 
         }
-      }
+          
+        if(!hits.length){
+          hits = targets.filter(target=>target.startsWith(line))
+        }
+        // return [hits.length? hits : [], line]
+        if(hits.length)
+            return [hits, line]
+        else{
+            process.stdout.write('\x07')
+            return [[], line]
+        } 
+  }
 });
 
 
@@ -209,6 +211,8 @@ rl.on('line', (command)=>{
     const message = execFileSync(normCom[0], normCom.slice(1), {encoding: 'utf8'})
     process.stdout.write(message) // if we don't want new lines use this. 
   }// check path command 
+
+
   else{
     console.log(`${command}: not found`)
   }
