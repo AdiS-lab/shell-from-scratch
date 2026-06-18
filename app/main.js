@@ -100,7 +100,7 @@ rl.on('line', (command)=>{
     } 
     catch(error){
       fs.writeFileSync(targetFile, error.stderr)
-      console.log(stdout)
+      console.log(error.stdout)
     }
   }
 
@@ -119,6 +119,7 @@ rl.on('line', (command)=>{
     const message = execFileSync(normCom[0], normCom.slice(1),{encoding: 'utf8'})
     process.stdout.write(message)
   } // handle cat commands
+  
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
     if(fileName==='~'){
