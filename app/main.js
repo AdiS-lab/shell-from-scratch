@@ -6,13 +6,14 @@ const os = require('os')
 
 const targets = ['echo' , 'exit']
 
+readline.emitKeypressEvents(process.stdin)
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
   prompt: "$ ",
   completer: function(line){
-      const hits = targets.filter((target)=>{target.startsWith(line)})
-      return hits.length ? hits : 0
+      const hits = targets.filter((target)=>{return target.startsWith(line)})
+      return `${hits} `
   }
 });
 
