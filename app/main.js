@@ -83,8 +83,7 @@ rl.on('line', (command)=>{
     }
     catch(error){
       console.log('made it to the error woohoo')
-      processs.stdout.write(error.stdout
-      )
+      process.stdout.write(error.stdout)
     }
   }
 
