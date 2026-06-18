@@ -62,7 +62,7 @@ rl.on('line', (command)=>{
   }
 
   else if(checkPath(commandDivision[0])){
-    console.log(commandDivision)
+    console.log('inside else if statement ' + commandDivision)
     const newPath = checkPath(commandDivision[0])
     execFileSync(newPath, commandDivision.slice(1), {encoding: 'utf8'})
   }
