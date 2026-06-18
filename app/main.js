@@ -79,7 +79,7 @@ rl.on('line', (command)=>{
     const index = normCom.includes('>') ? normCom.indexOf('>') : normCom.indexOf('1>')
     const targetFile = path.resolve(normCom[index+1])
     try{
-      const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8'})
+      const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe']})
       fs.writeFileSync(targetFile, output)
     }
     catch(error){
@@ -92,13 +92,12 @@ rl.on('line', (command)=>{
     const index = normCom.indexOf('2>')
     const targetFile = path.resolve(normCom[index+1])
     try{
-      console.log('making it inside the try')
-      const message = execFileSync(normCom[0],normCom.slice(1, index),{encoding: 'utf8'})
-      // process.stdout.write(message)
+      const message = execFileSync(normCom[0],normCom.slice(1, index),{encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe']})
+      process.stdout.write(message)
     } 
     catch(error){
       fs.writeFileSync(targetFile, error.stderr)
-      // console.log(error.stdout)
+      console.log(error.stdout)
     }
   }
   else if(command === 'exit'){
