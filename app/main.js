@@ -123,8 +123,8 @@ rl.on('line', (command)=>{
       console.log(`${secondHalf}: not found`)
     }
   }// handle type commands
-  else if(normCom.includes('>')){
-    const index = normCom.indexOf('>')
+  else if(normCom.includes('>') || normCom.includes('1>')){
+    const index = normCom.indexOf('>') || normCom.indexOf('1>')
     const targetFile = path.resolve(normCom[index+1])
     const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8'})
     fs.writeFileSync(targetFile, output)
