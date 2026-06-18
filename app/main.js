@@ -90,7 +90,7 @@ rl.on('line', (command)=>{
     }
   }
 
-  if(normCom.includes('2>')){
+  else if(normCom.includes('2>')){
     const index = normCom.indexOf('2>')
     const targetFile = path.resolve(normCom[index+1])
 
@@ -101,6 +101,7 @@ rl.on('line', (command)=>{
     catch(error){
       fs.writeFileSync(targetFile, error.stderr)
       console.log(error.stdout)
+
     }
   }
 
