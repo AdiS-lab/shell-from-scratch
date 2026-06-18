@@ -41,14 +41,14 @@ rl.on('line', (command)=>{
     rl.close()
     return
   }
-  else if(commandDivision[0]==="echo"){
+  else if(command.startsWith("echo")){
     console.log(`${command.slice(5)}`)
   }
 
-  else if(commandDivision[0]==='type'){
+  else if(command.startsWith('type')){
     const secondHalf = command.slice(5)
     // console.log(directories)
-    console.log(secondHalf)
+    // console.log(secondHalf)
     const newPath = checkPath(directories, secondHalf)
 
     if(validCommands.includes(secondHalf)) {
@@ -64,9 +64,8 @@ rl.on('line', (command)=>{
 
   else if(checkPath(directories, commandDivision[0])){
     const message = execFileSync(commandDivision[0], commandDivision.slice(1), {encoding: 'utf8'})
-    console.log(message)
+    process.stdout.write(message)
   }
-
   else{
     console.log(`${command}: not found`)
   }
