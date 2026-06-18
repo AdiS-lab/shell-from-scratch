@@ -35,10 +35,9 @@ const rl = readline.createInterface({
               continue
           }  
         } //  end of for loop
-
+        hits = [... new Set(hits)] //  t handle duplicates create new set with hits, and then arr it
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
-          if(line==='ech') console.log(hits)
           return [hits, line]
         } 
         else{
