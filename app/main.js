@@ -82,6 +82,11 @@ rl.on('line', (command)=>{
   else if(command === 'pwd'){
     console.log(process.cwd()) // current working direcotry
   }
+  else if (command.startsWith('cat')){
+    console.log('this is inside cat command  ' + normCom)
+    const message = execFileSync(normCom[0], normCom.splice(1),{encoding: 'utf8'})
+    console.log(message)
+  } // handle cat commands
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
     if(fileName==='~'){
@@ -96,12 +101,10 @@ rl.on('line', (command)=>{
         console.log(`cd: ${fileName}: No such file or directory`)
       }
     }
-  }
+  }// handle cd commands
 
   else if(command.startsWith('type')){
     const secondHalf = command.slice(5)
-    // console.log(directories)
-    // console.log(secondHalf)
     const newPath = checkPath(directories, secondHalf)
 
     if(validCommands.includes(secondHalf)) {
@@ -113,7 +116,7 @@ rl.on('line', (command)=>{
     else{
       console.log(`${secondHalf}: not found`)
     }
-  }
+  }// handle type commands
 
   else if(checkPath(directories, commandDivision[0])){
     const message = execFileSync(commandDivision[0], commandDivision.slice(1), {encoding: 'utf8'})
