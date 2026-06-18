@@ -79,10 +79,10 @@ rl.on('line', (command)=>{
     const targetPath = path.resolve(normCom[index+1])
     try{  
       const message = fs.execFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8', stdio: ['pipe', 'pipe', 'pipe']})
+      console.log('message in check ' + message)
       fs.appendFileSync(targetPath, message)
     }
     catch(error){
-      console.log('made it to the error woohoo')
       process.stdout.write(error.stdout)
     }
   }
