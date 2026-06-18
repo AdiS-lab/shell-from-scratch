@@ -49,9 +49,11 @@ const rl = readline.createInterface({
         
         if(line.includes(' ') && normLine.slice(1).includes('/')){
             const fileParts = normLine.slice(1).split('/')
-            const dirFiles = fs.readdirSync(fileParts.slice(0,-1).join())
+            const inputDir = fileParts.slice(JSON.stringify(fileParts(0,-1)))
+            const dirFiles = fs.readdirSync(inputDir)
+            if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stingify(dirFiles))}`)
             for(dirFile in dirFiles){
-              dirFile.startsWith(line) && hits.push(`${normLine[0]} ${dirFile}`)
+              dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stingify(dirFiles))}`)
             }
         }
 
