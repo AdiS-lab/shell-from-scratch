@@ -37,7 +37,6 @@ const rl = readline.createInterface({
         if(!hits.length) process.stdout.write('\x07')
         else{
           tabCount += 1
-          console.log(tabCount)
           if(tabCount===1){
             process.stdout.write('\x07')
           }
