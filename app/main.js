@@ -108,7 +108,7 @@ rl.on('line', (command)=>{
     const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
     const targetPath = path.resolve(normCom[index+1])
     try{  
-      fs.appendFileSync(normCom[0], normCom.slice(1,index), {encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe']})
+      fs.appendFileSync(normCom[0], normCom.slice(1,index))
     }
     catch(error){
       process.stderr.write(error.stderr)
