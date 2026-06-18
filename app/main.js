@@ -80,8 +80,14 @@ rl.on('line', (command)=>{
   if(normCom.includes('>') || normCom.includes('1>')){
     const index = normCom.includes('>') ? normCom.indexOf('>') : normCom.indexOf('1>')
     const targetFile = path.resolve(normCom[index+1])
-    const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8'})
-    fs.writeFileSync(targetFile, output)
+
+    try{
+      const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8'})
+      fs.writeFileSync(targetFile, output)
+    }
+    catch(error){
+      console.log(error.message)
+    }
   }
 
   else if(command === 'exit'){
