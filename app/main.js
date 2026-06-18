@@ -124,8 +124,8 @@ rl.on('line', (command)=>{
     }
   }// handle type commands
 
-  else if(checkPath(directories, commandDivision[0])){
-    const message = execFileSync(commandDivision[0], commandDivision.slice(1), {encoding: 'utf8'})
+  else if(checkPath(directories, normCom[0])){
+    const message = execFileSync(normCom[0], normCom.slice(1), {encoding: 'utf8'})
     process.stdout.write(message) // if we don't want new lines use this. 
   }
   else{
