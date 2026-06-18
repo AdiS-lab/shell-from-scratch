@@ -17,9 +17,9 @@ const rl = readline.createInterface({
   completer: function(line){
 
         let hits = targets.filter(target=>target.startsWith(line))
-
         const normLine = normalize(line)
         const dirNames = process.env.PATH.split(':')
+
         for(const dir of dirNames){
           try{
             const files = fs.readdirSync(dir)
@@ -37,12 +37,12 @@ const rl = readline.createInterface({
           catch(error){
               continue
           }  
-        } //  end of for loop
+        } //  end of for loop, checking all executables
         
         if(line.includes(' ') && normLine.slice(1).includes('/')){
+            console.log('made it to the correct check ')
             const fileParts = normLine.slice(1).split('/')
             const inputDir = fileParts.slice(JSON.stringify(fileParts(0,-1)))
-            console.log('made it to the correct check ' + inputDir)
             const dirFiles = fs.readdirSync(inputDir)
             if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFiles))}`)
             for(dirFile in dirFiles){
