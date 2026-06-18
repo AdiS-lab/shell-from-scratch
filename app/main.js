@@ -11,6 +11,7 @@ const rl = readline.createInterface({
   output: process.stdout,
   prompt: "$ ",
   completer: function(line){
+        hits = []
         dirNames = process.env.PATH.split(':')
         for(dir of dirNames){
           for (fileName of fs.readdirSync(dir)){
