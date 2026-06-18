@@ -44,6 +44,9 @@ rl.on('line', (command)=>{
   else if(command.startsWith("echo")){
     console.log(`${command.slice(5)}`)
   }
+  else if(command === 'pwd'){
+    console.log(process.cwd())
+  }
 
   else if(command.startsWith('type')){
     const secondHalf = command.slice(5)
@@ -64,7 +67,7 @@ rl.on('line', (command)=>{
 
   else if(checkPath(directories, commandDivision[0])){
     const message = execFileSync(commandDivision[0], commandDivision.slice(1), {encoding: 'utf8'})
-    process.stdout.write(message)
+    process.stdout.write(message) // if we don't want new lines use this. 
   }
   else{
     console.log(`${command}: not found`)
