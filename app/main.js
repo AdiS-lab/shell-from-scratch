@@ -109,9 +109,11 @@ rl.on('line', (command)=>{
     const targetPath = path.resolve(normCom[index+1])
     try{  
       console.log('made inside the normCom try block')
-      const message = fs.appendFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8'})
+      const message = fs.execFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8', stdio: ['pipe', 'pipe', 'pipe']})
+      fs.appendFileSync(targetPath, message)
     }
     catch(error){
+      process.stdout.write(error.stdout)
     }
   }
 
