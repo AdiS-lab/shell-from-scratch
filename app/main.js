@@ -7,6 +7,7 @@ const os = require('os')
 const targets = ['echo ','exit ']
 
 let tabCount = 0 
+let lastLine = ''
 //______ idea = completer is a func that can detect tab + do something
 //_________ to check exec, just append files + directories + call accessSync
 const rl = readline.createInterface({
@@ -44,6 +45,10 @@ const rl = readline.createInterface({
           if(tabCount===1){
             process.stdout.write('\x07')
           }
+          else if(tabCount>1 && !(lastLine===line)){
+            tabCount = 1
+            process.stdout.write('\x07')
+          }
           else{
             tabCount = 0
             process.stdout.write('\n')
@@ -51,6 +56,7 @@ const rl = readline.createInterface({
             console.log(allHits)
             rl.prompt()
           }
+          let lastLine = line
         } 
       return [[], line]
   }
