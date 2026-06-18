@@ -15,11 +15,10 @@ const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 
 function checkPath(directories, secondHalf){
-  // console.log('checkPath ' + directories[0])
-    directories.forEach((dir)=>{
+    for(const dir in directories){
       try{
+        console.log(dir)
         const fullPath = path.join(dir, secondHalf)
-        console.log(fullPath)
         if(fs.accessSync(fullPath, fs.constants.X_OK)){
           return dir
         }
@@ -27,7 +26,7 @@ function checkPath(directories, secondHalf){
       catch(error){
         continue
       }
-    })
+    }
   return null
 }
 
