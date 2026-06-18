@@ -131,6 +131,7 @@ rl.on('line', (command)=>{
   else if(normCom.includes('>')){
     const index = normCom.indexOf('>')
     const targetFile = path.resolve(normCom[index+1])
+    console.log('this is for > ' + normCom)
     if(!fs.existsSync(targetFile)){
       fs.mkdirSync(targetFile, {recursive:true}) 
     }
