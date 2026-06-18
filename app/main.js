@@ -31,10 +31,44 @@ function checkPath(directories, executable){
   return null
 }
 
+function normalize(command){
+  let args = []
+  let current = ''
+  let singleQuotes = false
+  let doubleQuotes = false
+  
+  for (const ch of command){
+    if(ch===`'` && singleQuotes){
+      singleQuotes = !singleQuotes
+    }
+    else if(ch===`"`&& !doubleQuotes){
+      doubleQuotes = !doubleQuotes
+    }
+    else if(ch=== ' ' && !singleQuotes && !doubleQuotes){
+      if(current){
+        args.push(current)
+        current = ''
+      }
+    }
+    else{
+      current += ch
+    }
+  }
+  if(current) args.push(current)
+  return args
+  // else find first single quote then find next. delete both. keep going
+  
+}
+
+
+
 //_________ if type exists but not exec then continue, if non-existent command then return that________
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
-  // console.log(typeof command)
+  let normCom = normalize(command)
+  if(command.includes(`''`)){
+  }
+
   const commandDivision = command?.split(' ')
   const directories = process.env.PATH.split(path.delimiter)
 
@@ -43,7 +77,7 @@ rl.on('line', (command)=>{
     return
   }
   else if(command.startsWith("echo")){
-    console.log(`${command.slice(5)}`)
+    console.log(`${normCom.splice(1).join(' ')}`)
   }
   else if(command === 'pwd'){
     console.log(process.cwd()) // current working direcotry
