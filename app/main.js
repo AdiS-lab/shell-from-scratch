@@ -49,7 +49,7 @@ const rl = readline.createInterface({
               dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFiles))}`)
             }
         }
-        else if(line.includes(' ')){
+        else if(line.includes(' ') && !line.includes('/')){
           const currFiles =  fs.readdirSync(process.cwd())
             for(const fname of currFiles){ 
           
