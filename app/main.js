@@ -46,6 +46,14 @@ const rl = readline.createInterface({
             fname.startsWith(normLine.slice(1)) && hits.push(`${normLine[0]} ${fname} `)
           }
         }
+        
+        if(line.includes(' ') && normLine.slice(1).includes('/')){
+            const fileParts = normLine.slice(1).split('/')
+            const dirFiles = fs.readdirSync(fileParts.slice(0,-1).join())
+            for(dirFile in dirFiles){
+              dirFile.startsWith(line) && hits.push(`${normLine[0]} ${dirFile}`)
+            }
+        }
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
@@ -56,7 +64,6 @@ const rl = readline.createInterface({
           return [hits, line]
         } 
         else if(JSON.stringify(hits) === JSON.stringify(hits.filter(hit=>hit.includes(hits[0].trim())))){ // check if filtering by the first(root) gives you hits
-          // console.log(`${hits} and the other ${ hits.filter(hit=>hit.includes(hits[0].trim()))} `)
           return [[hits[0].trim()], line]
         } 
         else{
