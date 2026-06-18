@@ -77,10 +77,8 @@ rl.on('line', (command)=>{
   if(normCom.includes('>>') || normCom.includes('1>>') ){
     const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
     const targetPath = path.resolve(normCom[index+1])
-    console.log('inside service ' + normCom)
     try{  
       const message = fs.execFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8', stdio: ['pipe', 'pipe', 'pipe']})
-      console.log('this is message in >> ' + message)
       fs.appendFileSync(targetPath, message)
     }
     catch(error){
