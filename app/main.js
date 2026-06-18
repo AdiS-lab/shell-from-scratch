@@ -90,6 +90,20 @@ rl.on('line', (command)=>{
     }
   }
 
+  if(normCom.includes('2>')){
+    const index = normCom.indexOf('2>')
+    const targetFile = path.resolve(normCom[index+1])
+
+    try{
+      const message = execFileSync(normCom[0],normCom.splice(1, index),{encoding: 'utf8'})
+      console.log(message)
+    } 
+    catch(error){
+      fs.writeFileSync(targetFile, error.stderr)
+      console.log(stdout)
+    }
+  }
+
   else if(command === 'exit'){
     rl.close()
     return
