@@ -128,6 +128,18 @@ rl.on('line', (command)=>{
     const message = execFileSync(normCom[0], normCom.slice(1), {encoding: 'utf8'})
     process.stdout.write(message) // if we don't want new lines use this. 
   }
+  else if(normCom.includes('>')){
+    const index = normCom.indexOf('>')
+    const targetFile = path.resolve(normCom[index+1])
+    if(!fs.existsSync(targetFile)){
+      fs.mkdirSync(targetFile, {recursive:true}) 
+    }
+    const output = executeFileSync(normCom[0], normCom.splice(1,index),{encoding: 'utf8'})
+    fs.writeFileSync(targetFile, output)
+  }
+
+
+
   else{
     console.log(`${command}: not found`)
   }
