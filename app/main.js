@@ -37,12 +37,12 @@ const rl = readline.createInterface({
         } //  end of for loop
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
-        console.log(`\n ${hits} and ${hits.filter(hit=>hit.includes(hits[0].trim()))}`) 
+        
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
           return [hits, line]
         } 
-        else if(hits === hits.filter(hit=>hit.includes(hits[0].trim()))){ // check if filtering by the first(root) gives you hits
+        else if(JSON.stringify(hits) === JSON.stringify(hits.filter(hit=>hit.includes(hits[0].trim())))){ // check if filtering by the first(root) gives you hits
           console.log('made it into the check')
           return [[hits[0].trim()], line]
         } 
