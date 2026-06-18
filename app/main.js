@@ -37,17 +37,17 @@ function normalize(command){
   let current = ''
   let singleQuotes = false
   let doubleQuotes = false
-  let forSlash = false
+  let backslash = false
   
   for (const ch of command){
-    if(ch===`'` && !doubleQuotes && !forSlash){
+    if(ch===`'` && !doubleQuotes && !backslash){
       singleQuotes = !singleQuotes
     }
-    else if(ch===`"` && !singleQuotes && !forSlash){
+    else if(ch===`"` && !singleQuotes && !backslash){
       doubleQuotes = !doubleQuotes
     }
-    else if (ch === `/` && !singleQuotes && !doubleQuotes && !forSlash){
-      forSlash = true
+    else if (ch === '\\' && !singleQuotes && !doubleQuotes && !backslash){
+      backslash = true
     }
     else if(ch=== ' ' && !singleQuotes && !doubleQuotes){
       if(current){
@@ -57,7 +57,7 @@ function normalize(command){
     }
     else{
       current += ch
-      if(forSlash) forSlash = false
+      if(backslash) backslash = false
     }
   }
   if(current) args.push(current)
