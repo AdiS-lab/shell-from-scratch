@@ -35,6 +35,7 @@ const rl = readline.createInterface({
               continue
           }  
         } //  end of for loop
+        console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
         console.log(`${hits} and other ${hits.filter(hit=>hit.includes(hits[0].trim()))}`)
 
