@@ -135,6 +135,7 @@ rl.on('line', (command)=>{
       fs.mkdirSync(targetFile, {recursive:true}) 
     }
     const output = executeFileSync(normCom[0], normCom.splice(1,index),{encoding: 'utf8'})
+    console.log('this is for > ' + output)
     fs.writeFileSync(targetFile, output)
   }
 
