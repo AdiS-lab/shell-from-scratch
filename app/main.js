@@ -85,7 +85,20 @@ rl.on('line', (command)=>{
       process.stdout.write(error.stdout)
     }
   }
-
+  
+  else if(normCom.includes('2>>')){
+    const index = normCom.indexOf('2>>') 
+    const targetPath = path.resolve(normCom[index+1])
+    try{  
+      const message = execFileSync(normCom[0],normCom.slice(1,index),{encoding:'utf8', stdio: ['pipe', 'pipe', 'pipe']})
+      fs.appendFileSync(targetPath, '')
+      process.stdout.write(message)
+    }
+    catch(error){
+      fs.appendFileSync(targetPath, error.stderr)
+      process.stdout.write(error.stdout)
+    }
+  }
 
   else if(normCom.includes('>') || normCom.includes('1>')){
     const index = normCom.includes('>') ? normCom.indexOf('>') : normCom.indexOf('1>')
