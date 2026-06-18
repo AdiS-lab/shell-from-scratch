@@ -16,7 +16,7 @@ const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 
 function checkPath(directories, executable){
-  console.log('making it ' + executable)
+  // console.log('making it ' + executable)
     for(const dir of directories){
       try{
         const fullPath = path.join(dir, executable)
@@ -63,7 +63,6 @@ rl.on('line', (command)=>{
   }
 
   else if(checkPath(directories, commandDivision[0])){
-    console.log('inside else if statement ' + commandDivision)
     const newPath = checkPath(directories, commandDivision[0])
     execFileSync(newPath, commandDivision.slice(1), {encoding: 'utf8'})
   }
