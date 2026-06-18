@@ -18,15 +18,20 @@ const rl = readline.createInterface({
             files = fs.readdirSync(dir)
             for (fileName of files){
               const fullPath = path.join(dir, fileName)
-              if(checkPath(dir,fileName)){
+              try{
+                fs.accessSync(fullPath, fs.constants.X_OK)
                 fileName.startsWith(line) && hits.push(`${fileName} `)
               }
-            }//  end of for loop
-          }catch(error){
-            continue
+              catch(e){
+                continue  
+              } 
+            }
           }
-        }
-          
+          catch(error){
+              continue
+          }  
+        } //  end of for loop
+         
         if(!hits.length){
           hits = targets.filter(target=>target.startsWith(line))
         }
