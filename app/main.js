@@ -72,8 +72,6 @@ function normalize(command){
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
   let normCom = normalize(command)
-
-  const commandDivision = command?.split(' ')
   const directories = process.env.PATH.split(path.delimiter)
 
 
@@ -86,6 +84,7 @@ rl.on('line', (command)=>{
       fs.writeFileSync(targetFile, output)
     }
     catch(error){
+      fs.writeFileSync(targetFile, error.stdout)
       rl.prompt()
       return
     }
@@ -96,14 +95,14 @@ rl.on('line', (command)=>{
     return
   }
   else if(command.startsWith("echo")){
-    console.log(`${normCom.splice(1).join(' ')}`)
+    console.log(`${normCom.slice(1).join(' ')}`)
   }
   else if(command === 'pwd'){
     console.log(process.cwd()) // current working direcotry
   }
   else if (command.startsWith('cat')){
     // console.log('this is inside cat command  ' + normCom)
-    const message = execFileSync(normCom[0], normCom.splice(1),{encoding: 'utf8'})
+    const message = execFileSync(normCom[0], normCom.slice(1),{encoding: 'utf8'})
     process.stdout.write(message)
   } // handle cat commands
   else if (command.startsWith('cd')){
