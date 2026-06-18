@@ -19,9 +19,8 @@ function checkPath(directories, secondHalf){
       try{
         const fullPath = path.join(dir, secondHalf)
         console.log(fullPath)
-        if(fs.accessSync(fullPath, fs.constants.X_OK)){
-          return dir
-        }
+        fs.accessSync(fullPath, fs.constants.X_OK)
+        return dir
       }
       catch(error){
         continue
