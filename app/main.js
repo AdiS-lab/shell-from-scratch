@@ -111,7 +111,6 @@ rl.on('line', (command)=>{
       const message = fs.appendFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8'})
     }
     catch(error){
-      process.stderr.write(error.stderr)
     }
   }
 
