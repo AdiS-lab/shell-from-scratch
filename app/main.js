@@ -4,7 +4,7 @@ const fs = require('fs');
 const {execFileSync} = require('child_process')
 const os = require('os')
 
-const targets = ['echo ','exit']
+const targets = ['echo ','exit ']
 
 const rl = readline.createInterface({
   input: process.stdin,
