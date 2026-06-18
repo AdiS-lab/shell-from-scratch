@@ -86,6 +86,8 @@ rl.on('line', (command)=>{
       fs.writeFileSync(targetFile, output)
     }
     catch(error){
+      rl.prompt()
+      return
     }
   }
 
