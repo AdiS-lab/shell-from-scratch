@@ -49,7 +49,7 @@ function normalize(command){
     else if (ch === '\\' && !singleQuotes && !doubleQuotes && !backslash){
       backslash = true
     }
-    else if(ch=== ' ' && !singleQuotes && !doubleQuotes){
+    else if(ch=== ' ' && !singleQuotes && !doubleQuotes &&!backslash){
       if(current){
         args.push(current)
         current = ''
