@@ -84,7 +84,7 @@ rl.on('line', (command)=>{
     }
     catch(error){
       fs.writeFileSync(targetFile, error.stdout)
-      rl.prompt()
+      process.stderr.write(error.stderr)
     }
   }
   else if(normCom.includes('2>')){
