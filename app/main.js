@@ -82,7 +82,9 @@ rl.on('line', (command)=>{
       fs.appendFileSync(targetPath, message)
     }
     catch(error){
-      fs.appendFileSync(targetPath, error.stdout)
+      console.log('made it to the error woohoo')
+      processs.stdout.write(error.stdout
+      )
     }
   }
 
