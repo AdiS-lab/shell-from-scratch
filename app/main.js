@@ -12,7 +12,7 @@ const rl = readline.createInterface({
 
 // console.log('rl is this: ' + rl)
 
-const validCommands = ['echo', 'exit', 'type']
+const validCommands = ['echo', 'exit', 'type', 'pwd']
 rl.prompt();
 
 function checkPath(directories, executable){
@@ -45,7 +45,7 @@ rl.on('line', (command)=>{
     console.log(`${command.slice(5)}`)
   }
   else if(command === 'pwd'){
-    console.log(process.cwd())
+    console.log(process.cwd()) // current working direcotry
   }
 
   else if(command.startsWith('type')){
