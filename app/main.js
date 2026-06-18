@@ -11,12 +11,13 @@ const rl = readline.createInterface({
   output: process.stdout,
   prompt: "$ ",
   completer: function(line){
-        hits = []
-        dirNames = process.env.PATH.split(':')
-        for(dir of dirNames){
+        let hits = targets.filter(target=>target.startsWith(line))
+        
+        const dirNames = process.env.PATH.split(':')
+        for(const dir of dirNames){
           try{
             files = fs.readdirSync(dir)
-            for (fileName of files){
+            for (const fileName of files){
               const fullPath = path.join(dir, fileName)
               try{
                 fs.accessSync(fullPath, fs.constants.X_OK)
@@ -31,17 +32,9 @@ const rl = readline.createInterface({
               continue
           }  
         } //  end of for loop
-         
-        if(!hits.length){
-          hits = targets.filter(target=>target.startsWith(line))
-        }
-        // return [hits.length? hits : [], line]
-        if(hits.length)
-            return [hits, line]
-        else{
-            process.stdout.write('\x07')
-            return [[], line]
-        } 
+
+        if(!hits.length) process.stdout.write('\x07')
+        return [hits, line]
   }
 });
 
