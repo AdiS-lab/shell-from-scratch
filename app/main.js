@@ -42,7 +42,10 @@ const rl = readline.createInterface({
           }
           else{
             tabCount = 0
-            return [hits, line]
+            process.stdout.write('\n')
+            const allHits = hits.join(' ')
+            console.log(allHits)
+            rl.prompt()
           }
         } 
       return [[], line]
