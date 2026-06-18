@@ -39,16 +39,17 @@ const rl = readline.createInterface({
           }  
         } //  end of for loop
         
-        if(line.includes(' '))
-        const currFiles =  fs.readdirSync(process.cwd())
-          for(const fname of currFiles){ 
-        
-          fname.startsWith(normLine.slice(1)) && hits.push(`${normLine[0]} ${fname} `)
+        if(line.includes(' ')){
+          const currFiles =  fs.readdirSync(process.cwd())
+            for(const fname of currFiles){ 
+          
+            fname.startsWith(normLine.slice(1)) && hits.push(`${normLine[0]} ${fname} `)
+          }
         }
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
-        hits.length>1 && console.log(`${hits} and the other ${ hits.filter(hit=>hit.includes(hits[0].trim()))} `)
+        // hits.length>1 && console.log(`${hits} and the other ${ hits.filter(hit=>hit.includes(hits[0].trim()))} `)
 
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
