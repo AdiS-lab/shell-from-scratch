@@ -15,11 +15,11 @@ const rl = readline.createInterface({
 const validCommands = ['echo', 'exit', 'type']
 rl.prompt();
 
-function checkPath(directories, secondHalf){
-  console.log('making it ' + )
+function checkPath(directories, executable){
+  console.log('making it ' + executable)
     for(const dir of directories){
       try{
-        const fullPath = path.join(dir, secondHalf)
+        const fullPath = path.join(dir, executable)
         fs.accessSync(fullPath, fs.constants.X_OK)
         return fullPath
       }
@@ -36,7 +36,7 @@ rl.on('line', (command)=>{
   // console.log(typeof command)
   const commandDivision = command?.split(' ')
   const directories = process.env.PATH.split(path.delimiter)
-  
+
   if(command === 'exit'){
     rl.close()
     return
