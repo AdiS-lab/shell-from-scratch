@@ -30,19 +30,24 @@ function checkPath(directories, executable){
     }
   return null
 }
-
+//______ use state machine to basically traverse through any string and only
+//pick up the values needed_________________________________________________
 function normalize(command){
   let args = []
   let current = ''
   let singleQuotes = false
   let doubleQuotes = false
+  let forSlash = false
   
   for (const ch of command){
-    if(ch===`'` && !doubleQuotes){
+    if(ch===`'` && !doubleQuotes && !forSlash){
       singleQuotes = !singleQuotes
     }
-    else if(ch===`"` && !singleQuotes){
+    else if(ch===`"` && !singleQuotes && !forSlash){
       doubleQuotes = !doubleQuotes
+    }
+    else if (ch === `/` && !singleQuotes && !doubleQuotes && !forSlash){
+      forSlash = true
     }
     else if(ch=== ' ' && !singleQuotes && !doubleQuotes){
       if(current){
@@ -52,6 +57,7 @@ function normalize(command){
     }
     else{
       current += ch
+      if(forSlash) forSlash = false
     }
   }
   if(current) args.push(current)
