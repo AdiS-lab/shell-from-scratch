@@ -107,13 +107,13 @@ rl.on('line', (command)=>{
   else if(normCom.includes('>>') || normCom.includes('1>>') ){
     const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
     const targetPath = path.resolve(normCom[index+1])
+    console.log(index)
     try{  
-      console.log('made inside the normCom try block')
       const message = fs.execFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8', stdio: ['pipe', 'pipe', 'pipe']})
       fs.appendFileSync(targetPath, message)
     }
     catch(error){
-      process.stdout.write(error.stdout)
+      fs.appendFileSync(targetPath, error.stdout)
     }
   }
 
