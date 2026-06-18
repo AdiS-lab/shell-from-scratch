@@ -18,7 +18,7 @@ const rl = readline.createInterface({
             const fullPath = path.join(dir, fileName)
             try{
               fs.accessSync(fullPath, fs.constants.X_OK)
-              if(fileName.startsWith(line)) hits.push(fileName)
+              if(fileName.startsWith(line)) hits.push(`${fileName} `)
             }
             catch(error){ 
               continue
