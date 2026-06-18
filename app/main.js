@@ -4,7 +4,7 @@ const fs = require('fs');
 const {execFileSync} = require('child_process')
 const os = require('os')
 
-const targets = ['echo ','exit ']
+const targets = ['echo ','exit']
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -13,7 +13,12 @@ const rl = readline.createInterface({
   completer: function(line){
     // if(!line.includes(' ')){
       hits = targets.filter(target=>target.startsWith(line))
-      return[hits.length ? hits: targets, line]
+      if(hits.length)
+        return [hits]
+      else{
+        process.stdout.write('\x07')
+        return [[], line]
+      } 
     // }
   }
 });
