@@ -11,15 +11,30 @@ const rl = readline.createInterface({
   output: process.stdout,
   prompt: "$ ",
   completer: function(line){
-      hits = targets.filter(target=>target.startsWith(line))
-      // return [hits.length? hits : [], line]
-      if(hits.length)
-        return [hits, line]
-      else{
-        process.stdout.write('\x07')
-        return [[], line]
-      } 
-    }
+        dirNames = process.env.PATH.split(':')
+        for(dir of dirNames){
+          for (fileName of fs.readdirSync(dir)){
+            const fullPath = path.join(dir, fileName)
+            try{
+              fs.accessSync(fullPath, fs.constants.X_OK)
+              if(fileName.startsWith(line)) hits.push(fileName)
+            }
+            catch(error){ 
+              continue
+            } 
+          }//  end of for loop
+          if(!hits.length){
+            hits = targets.filter(target=>target.startsWith(line))
+          }
+          // return [hits.length? hits : [], line]
+          if(hits.length)
+              return [hits, line]
+            else{
+              process.stdout.write('\x07')
+              return [[], line]
+            } 
+        }
+      }
 });
 
 
