@@ -50,7 +50,7 @@ rl.on('line', (command)=>{
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
     if(fs.existsSync(fileName)){
-      procss.chdir(dir)
+      process.chdir(fileName)
     }
     return
   }
