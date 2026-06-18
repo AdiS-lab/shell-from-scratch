@@ -78,8 +78,7 @@ rl.on('line', (command)=>{
     const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
     const targetPath = path.resolve(normCom[index+1])
     try{  
-      const message = fs.execFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8', stdio: ['pipe', 'pipe', 'pipe']})
-      console.log('message in check ' + message)
+      const message = execFileSync(normCom[0],normCom.slice(1,index),{encoding:'utf8', stdio: ['pipe', 'pipe', 'pipe']})
       fs.appendFileSync(targetPath, message)
     }
     catch(error){
@@ -92,7 +91,7 @@ rl.on('line', (command)=>{
     const index = normCom.includes('>') ? normCom.indexOf('>') : normCom.indexOf('1>')
     const targetFile = path.resolve(normCom[index+1])
     try{
-      const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe']})
+      const output = execFileSync(normCom[0],normCom.slice(1,index),{encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe']})
       fs.writeFileSync(targetFile, output)
     }
     catch(error){
