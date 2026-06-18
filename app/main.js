@@ -74,8 +74,22 @@ rl.on('line', (command)=>{
   let normCom = normalize(command)
   const directories = process.env.PATH.split(path.delimiter)
 
+  if(normCom.includes('>>') || normCom.includes('1>>') ){
+    const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
+    const targetPath = path.resolve(normCom[index+1])
+    console.log('inside service ' + normCom)
+    try{  
+      const message = fs.execFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8', stdio: ['pipe', 'pipe', 'pipe']})
+      console.log('this is message in >> ' + message)
+      fs.appendFileSync(targetPath, message)
+    }
+    catch(error){
+      fs.appendFileSync(targetPath, error.stdout)
+    }
+  }
 
-  if(normCom.includes('>') || normCom.includes('1>')){
+
+  else if(normCom.includes('>') || normCom.includes('1>')){
     const index = normCom.includes('>') ? normCom.indexOf('>') : normCom.indexOf('1>')
     const targetFile = path.resolve(normCom[index+1])
     try{
@@ -103,19 +117,6 @@ rl.on('line', (command)=>{
       process.stdout.write(error.stdout)
     }
   } //  handling 2>
-
-  else if(normCom.includes('>>') || normCom.includes('1>>') ){
-    const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
-    const targetPath = path.resolve(normCom[index+1])
-    try{  
-      const message = fs.execFileSync(normCom[0], normCom.slice(1,index), {encoding:'utf8', stdio: ['pipe', 'pipe', 'pipe']})
-      console.log('this is message in >> ' + message)
-      fs.appendFileSync(targetPath, message)
-    }
-    catch(error){
-      fs.appendFileSync(targetPath, error.stdout)
-    }
-  }
 
 
   else if(command === 'exit'){
