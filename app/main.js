@@ -104,6 +104,17 @@ rl.on('line', (command)=>{
     }
   } //  handling 2>
 
+  else if(normCom.includes('>>') || normCom.includes('1>>') ){
+    const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
+    const targetPath = path.resolve(normCom[index+1])
+    try{  
+      fs.appendFileSync(normCom[0], normCom.slice(1,index), {encoding: 'utf8'})
+    }
+    catch(error){
+      process.stderr.out(error.stderr)
+    }
+  }
+
 
   else if(command === 'exit'){
     rl.close()
