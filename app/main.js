@@ -52,6 +52,21 @@ rl.on('line', (command)=>{
     if(fs.existsSync(fileName)){
       process.chdir(fileName)
     }
+    else if(fileName.startsWith('./')){
+      const relativePath = fileName.slice(3)
+      const dir = path.dirname(process.cwd())
+      const newPath = path.join(dir,relativePath)
+      fs.existsSync(newPath) && process.chdir(newPath)
+    }
+    else if (fileName.startsWith('../')){
+      const information = fileName.split('/')
+      const levels = information.filter((info)=>{info ==='..'}).length()
+      let dir = path.dirname(process.cwd())
+      for(const i = 0; i<levels-1; i++){
+        let dir = path.dirname(dir)
+      }
+      fs.existsSync(dir) && process.chdir(dir)
+    }
     else{
       console.log(`cd: ${fileName}: No such file or directory`)
     }
