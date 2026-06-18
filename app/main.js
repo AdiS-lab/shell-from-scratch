@@ -13,7 +13,7 @@ const rl = readline.createInterface({
   prompt: "$ ",
   completer: function(line){
       const hits = targets.filter((target)=>{return target.startsWith(line)})
-      return `${hits} `
+      return[hits]
   }
 });
 
