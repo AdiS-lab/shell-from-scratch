@@ -38,7 +38,6 @@ const rl = readline.createInterface({
               continue
           }  
         } //  end of for loop, checking all executables
-        console.log(normLine)
         if(line.includes(' ') && normLine.slice(1).includes('/')){
             console.log('made it to the correct check ')
             const fileParts = normLine.slice(1).split('/')
