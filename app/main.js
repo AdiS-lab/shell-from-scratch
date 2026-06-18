@@ -35,15 +35,15 @@ const rl = readline.createInterface({
               continue
           }  
         } //  end of for loop
-        hits = [... new Set(hits)].sort() //  t handle duplicates create new set with hits, and then arr it
-        console.log(hits.filter(hit=>hit.includes(hits[0].trim())))
+        hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
+        // console.log(hits.filter(hit=>hit.includes(hits[0].trim())))
 
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
           return [hits, line]
         } 
-        else if(hits === hits.filter(hit=>hit.includes(hits[0]))){ // check if filtering by the first(root) gives you hits
-          return [hits[0], line]
+        else if(hits === hits.filter(hit=>hit.includes(hits[0].trim()))){ // check if filtering by the first(root) gives you hits
+          return [hits[0].trim(), line]
         } 
         else{
           tabCount += 1
