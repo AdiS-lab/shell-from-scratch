@@ -85,7 +85,7 @@ rl.on('line', (command)=>{
   else if (command.startsWith('cat')){
     // console.log('this is inside cat command  ' + normCom)
     const message = execFileSync(normCom[0], normCom.splice(1),{encoding: 'utf8'})
-    console.log(message)
+    process.stdout.write(message)
   } // handle cat commands
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
