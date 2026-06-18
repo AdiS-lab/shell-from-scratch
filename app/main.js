@@ -78,7 +78,6 @@ rl.on('line', (command)=>{
   if(normCom.includes('>') || normCom.includes('1>')){
     const index = normCom.includes('>') ? normCom.indexOf('>') : normCom.indexOf('1>')
     const targetFile = path.resolve(normCom[index+1])
-
     try{
       const output = execFileSync(normCom[0], normCom.slice(1,index),{encoding: 'utf8'})
       fs.writeFileSync(targetFile, output)
@@ -86,16 +85,14 @@ rl.on('line', (command)=>{
     catch(error){
       fs.writeFileSync(targetFile, error.stdout)
       rl.prompt()
-      return
     }
   }
 
   else if(normCom.includes('2>')){
     const index = normCom.indexOf('2>')
     const targetFile = path.resolve(normCom[index+1])
-
     try{
-      const message = execFileSync(normCom[0],normCom.splice(1, index),{encoding: 'utf8'})
+      const message = execFileSync(normCom[0],normCom.slice(1, index),{encoding: 'utf8'})
       console.log(message)
     } 
     catch(error){
@@ -104,7 +101,6 @@ rl.on('line', (command)=>{
 
     }
   }
-
   else if(command === 'exit'){
     rl.close()
     return
