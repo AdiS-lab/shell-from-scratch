@@ -56,7 +56,7 @@ const rl = readline.createInterface({
             console.log(allHits)
             rl.prompt()
           }
-          let lastLine = line
+          lastLine = line
         } 
       return [[], line]
   }
