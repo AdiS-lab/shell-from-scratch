@@ -47,6 +47,13 @@ rl.on('line', (command)=>{
   else if(command === 'pwd'){
     console.log(process.cwd()) // current working direcotry
   }
+  else if (command.startsWith('cd')){
+    const fileName = command.slice(3)
+    if(fs.existsSync(fileName)){
+      procss.chdir(dir)
+    }
+    return
+  }
 
   else if(command.startsWith('type')){
     const secondHalf = command.slice(5)
