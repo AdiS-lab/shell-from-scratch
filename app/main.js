@@ -39,13 +39,18 @@ const rl = readline.createInterface({
           }  
         } //  end of for loop, checking all executables
         if(line.includes(' ') && line.includes('/')){
-            const fileParts = normLine[1].split('/')
-            const inputDir = fileParts.slice(JSON.stringify(fileParts(0,-1)))
-            const dirFiles = fs.readdirSync(inputDir)
-            if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFiles))}`)
-            for(dirFile in dirFiles){
-              dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFiles))}`)
-            }
+          const pathParts = normLine.slice(1)
+          let indices = []
+          pathParts.forEach((ch,index)=>
+              {if(ch==='/') indices.push(index)})
+          const maxIndex = Math.max(...indices)
+
+          const inputDir = pathParts.slice(0,maxIndex)      
+          const dirFiles = fs.readdirSync(inputDir)
+          if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFiles))}`)
+          for(dirFile of dirFiles){
+            dirFile.startsWith(line) && hits.push(`${normLine[0]} ${path.join(inputDir, JSON.stringify(dirFile))}`)
+          }
         }
         else if(line.includes(' ') && !line.includes('/')){
           const currFiles =  fs.readdirSync(process.cwd())
