@@ -85,10 +85,7 @@ const rl = readline.createInterface({
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
-        hits = hits.map(hit=>{
-              if(hit.includes(' ')){
-                return hit.split(' ')[1]}
-        })
+  
 
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
@@ -109,6 +106,10 @@ const rl = readline.createInterface({
           else{
             tabCount = 0
             process.stdout.write('\n')
+            hits = hits.map(hit=>{
+              if(hit.includes(' ')){
+                return hit.split(' ')[1]}
+            })
             const allHits = hits.join(' ')
             console.log(allHits)
             // rl.prompt()
