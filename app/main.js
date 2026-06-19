@@ -5,7 +5,7 @@ const {execFileSync} = require('child_process')
 const os = require('os')
 
 const targets = ['echo ','exit ']
-const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete']
+const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs']
 let newCommands = {}
 let copyCommands = {}
 
@@ -369,6 +369,10 @@ rl.on('line', (command)=>{
     const message = execFileSync(normCom[0], normCom.slice(1),{encoding: 'utf8'})
     process.stdout.write(message)
   } // handle cat commands
+
+  else if (command.startsWith('jobs')){
+    
+  }
   
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
