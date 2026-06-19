@@ -53,7 +53,7 @@ const rl = readline.createInterface({
             fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine[0]} ${fullPath}/`)
             : hits.push(`${normLine[0]} ${fullPath} `)
           }
-          
+
           for(dirFile of dirFiles){
             if(dirFile.startsWith(input)){
               const fullPath = path.join(inputDir, dirFile)
@@ -69,7 +69,7 @@ const rl = readline.createInterface({
           // to get into directory + to get to file within directory
           for(const fname of currFiles){
             const input = normLine.slice(1).join()
-            const fullPath = path.join(process.cwd, fname)
+            const fullPath = path.join(process.cwd(), fname)
             if(input === ' '){
               fs.statSync(fullPath).isDirectory() && hits.push(`${normLine[0]} ${fname}/`)
             } 
