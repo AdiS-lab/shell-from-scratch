@@ -281,13 +281,13 @@ function handleBuiltin(input, rest){
     const newPath = checkPath(directories, arg)
 
     if(validCommands.includes(arg)) {
-      return `${secondHalf} is a shell builtin` + '\n'
+      return `${arg} is a shell builtin` + '\n'
     }
     else if(arg){
-      return `${secondHalf} is ${newPath}` + '\n'
+      return `${arg} is ${newPath}` + '\n'
     }
     else{
-      return `${secondHalf}: not found` + '\n'
+      return `${arg}: not found` + '\n'
     }
   } 
   return input === 'pwd' && process.cwd() + '\n'
@@ -449,7 +449,7 @@ rl.on('line', (command)=>{
         //handle middle
       }
     }) // determine all spawns + strings
-    
+    // [obj,string] 
     for(let i=0; i<allSpawns.length; i++){
       const lastIndex = i === allSpawns.length-1
       const nextString = typeof allSpawns[i+1] === 'string'
