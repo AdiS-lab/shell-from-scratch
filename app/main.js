@@ -85,7 +85,7 @@ const rl = readline.createInterface({
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
-        hits.forEach(hit=>{
+        hits = hits.map(hit=>{
               if(hit.includes(' ')){
                 return hit.split(' ')[1]}
         })
