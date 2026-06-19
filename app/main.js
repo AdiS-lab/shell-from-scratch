@@ -403,7 +403,7 @@ rl.on('line', (command)=>{
       let recency = ' '
       if(index === jobs.length-1) recency = '+'
       if(index === jobs.length-2) recency = '-'
-      
+
       if(job.spawnProcess.exitCode !== null){
         const status = 'Done'
         finishedTasks.push(index)
@@ -415,7 +415,7 @@ rl.on('line', (command)=>{
     })
     
     finishedTasks.forEach((ind)=>{
-      jobs.splice(index,1)
+      jobs.splice(ind,1)
     })
   }
   
