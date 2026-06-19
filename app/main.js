@@ -290,6 +290,7 @@ function handleType(arg){
 }
 
 function handleBuiltin(input, rest){
+  console.log('im inside in handleBuilt in' + input)
   return input  === 'echo' && rest.join(' ') + '\n'
   if(input === 'type'){
     const arg = rest.join()
