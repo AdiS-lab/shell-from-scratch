@@ -407,12 +407,15 @@ rl.on('line', (command)=>{
     child1.stdout.pipe(child2.stdin)
 
     let output = ''
-    child2.stdout.on('data', (data)=>output+=data)
+    child2.stdout.on('data', (data)=>{
+      output+=data
+      console.log(output)
+    })
 
     child2.on('close', ()=>{
       pipelineCmd = false
       child1.kill('SIGTERM')
-      process.stdout.write(output)
+      // process.stdout.write(output)
       rl.prompt()
     })
     // child2.stdout.pipe(process.stdout)
