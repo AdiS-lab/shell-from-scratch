@@ -52,6 +52,7 @@ const rl = readline.createInterface({
             } 
             else{
               custTabCount = 0 
+              console.log('IMIEMRIEMRI ' + message)
               const allMessages = message.sort().join(' ')
               process.stdout.write('\n')
               console.log(allMessages)
