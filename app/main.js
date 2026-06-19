@@ -1,7 +1,7 @@
 const readline = require("readline");
 const path = require('path');
 const fs = require('fs');
-const {execFileSync, spawn} = require('child_process')
+const {execFileSync, spawn, fork } = require('child_process')
 const os = require('os')
 
 const targets = ['echo ','exit ']
@@ -376,6 +376,7 @@ rl.on('line', (command)=>{
       process.stderr.write(error.stderr)
     }
   }
+
   else if(normCom.includes('2>')){
     const index = normCom.indexOf('2>')
     const targetFile = path.resolve(normCom[index+1])
@@ -392,6 +393,16 @@ rl.on('line', (command)=>{
       process.stdout.write(error.stdout)
     }
   } //  handling 2>
+
+  else if(normCom.includes('|')){
+    const index = normCom.indexOf('|')
+    const firstCommand = normCom.slice(0, index)
+    const secondCommand = normCom.slice(index+1)
+    const child1 = spawn(firstCommand[0], firstCommand.slice(1),{stdio:['inherit', 'pipe', 'inherit']})
+    const child2 = spawn(secondCommand[0], secondCommand.slice(1),{stdio:['pipe', 'inherit', 'inherit']})
+    child1.stdout.pipe(child2.stdin)
+
+  }
 
   else if(normCom.includes('complete') && normCom.includes('-p')){
       const index = normCom.indexOf('-p')
