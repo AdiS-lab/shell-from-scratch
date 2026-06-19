@@ -9,6 +9,7 @@ const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete']
 let newCommands = {}
 
 let tabCount = 0 
+let custTabCount = 0
 let lastLine = ''
 //______ idea = completer is a func that can detect tab + do something
 //_________ to check exec, just append files + directories + call accessSync
@@ -38,12 +39,25 @@ const rl = readline.createInterface({
               process.stdout.write('\x07')
               return [[], line]
             }
-
-            
-            const terminal = normLine.length===1 ? `${customCmd} ${message.trim()} ` : 
-            `${normLine.slice(0,-1).join(' ')} ${message.trim()} `
-             return [[terminal], line]
-          }
+            else if (message.length === 1){   
+              const terminal = normLine.length===1 ? `${customCmd} ${message.trim()} ` : 
+              `${normLine.slice(0,-1).join(' ')} ${message.trim()} `
+              return [[terminal], line]
+            }
+            else if(custTabCount<1){
+              custTabCount+=1
+              process.stdout.write('x07')
+              return [[], line]
+            } 
+            else{
+              custTabCount = 0 
+              const allMessages = messages.join(' ')
+              process.stdout.write('\n')
+              console.log(allMessages)
+              rl._refreshLine()
+              return [[],line]
+            }
+          }// in the case it is greater then we want to go to ned
           catch(error){
             error.stderr && process.stderr.write(error.stderr)
           }
