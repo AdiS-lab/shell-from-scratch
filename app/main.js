@@ -8,7 +8,7 @@ const targets = ['echo ','exit ']
 const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs']
 let newCommands = {}
 let copyCommands = {}
-let jobNumber = []
+let jobs = []
 let jobCounter = 1
 
 let tabCount = 0 
@@ -281,23 +281,23 @@ rl.on('line', (command)=>{
   
   if (normCom.at(-1) === '&'){
     normCom.pop()
-    let child = spawn(normCom[0], normCom.slice(1), {stdio: 'inherit'})
+    const cmd = normCom[0]
+    let child = spawn(cmd, normCom.slice(1), {stdio: 'inherit'}) // i
     console.log(`[${jobCounter}] ${child.pid}`)
+
+    const jobData = {
+      num: jobCounter,
+      status: 'running',
+      processId: child.pid,
+      command: normCom.join(' ')
+    }
+
+    jobs.push(jobData)
     jobCounter++
 
     child.on('error', (error) =>{
       console.log(error.message)
     })
-
-    // child.on.stdout('data', (data)=>{
-      
-    // })
-    // child.on.stderr('data', (data)=>{
-
-    // })
-    // child.on('close', (code) => {
-    //     console.log('Done Sleeping');
-    // });
   }
   
   else if(normCom.includes('>>') || normCom.includes('1>>') ){
@@ -395,6 +395,10 @@ rl.on('line', (command)=>{
   } // handle cat commands
 
   else if (command.startsWith('jobs')){
+    jobs.forEach((job, index)=>{
+      const recency = index === jobs.length-1 ? '-' : '+'
+      console.log(`[${job.num}]${recency} ${job.status.padEnd(24)}${job.command}`)
+    })
   }
   
   else if (command.startsWith('cd')){
