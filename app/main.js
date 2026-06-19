@@ -77,15 +77,18 @@ const rl = readline.createInterface({
           for(const fname of currFiles){
             const fullPath = path.join(process.cwd(), fname)
             if(fname.startsWith(input)){
-               fs.statSync(fullPath).isDirectory() ? hits.push(`${fname}/`)
-               : hits.push(`${fname} `)
+               fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine[0]} ${fname}/`)
+               : hits.push(`${normLine[0]} ${fname} `)
             }
           }    
         }// for curr directory get files
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
-        // hits.length>1 && console.log(`${hits} and the other ${ hits.filter(hit=>hit.includes(hits[0].trim()))} `)
+        hits.forEach(hit=>{
+              if(hit.includes(' ')){
+                return hit.split(' ')[1]}
+        })
 
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
