@@ -376,7 +376,7 @@ rl.on('line', (command)=>{
   }
   else if (normCom.at(-1) === '&'){
     normCom.pop()
-    const child = spawn(newCom[0], newCom.slice(1))
+    const child = spawn(normCom[0], normCom.slice(1))
     jobNumber.push(jobCounter)
     console.log(`[${jobCounter}] ${child.pid}`)
     counter++
