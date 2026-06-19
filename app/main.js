@@ -431,7 +431,7 @@ rl.on('line', (command)=>{
     let allSpawns = []
     let allChilds = []
 
-    allSpawns = allCmds.map((cmd, index)=>{ // [[echo, file], [grep, text]]
+    allSpawns = allCmds.map((cmd, index)=>{ // [[echo, blueberry], [wc]]
       if(validCommands.includes(cmd[0])){
         let output =  handleBuiltin(cmd[0], cmd.slice(1))
         return output
@@ -449,7 +449,8 @@ rl.on('line', (command)=>{
         //handle middle
       }
     }) // determine all spawns + strings
-
+    
+    console.log('after allSpawns populated ' + allSpawns)
     for(let i=0; i<allSpawns.length; i++){
       const lastIndex = i === allSpawns.length-1
 
