@@ -35,16 +35,15 @@ const rl = readline.createInterface({
           args.push(normLine.at(-1))
           normLine.length>2 ? args.push(normLine.at(1)) : args.push(customCmd)
           try{
-            const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
-            const normMessage = normalize(message)
-            console.log('this is normMessage ' + normMessage)
-            if(!message){
+            const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} ).trim()
+            const results = message.split('\n').filter(Boolean)
+            if(results.length===0){
               process.stdout.write('\x07')
               return [[], line]
             }
-            else if (normMessage.length === 1){   
-              const terminal = normLine.length===1 ? `${customCmd} ${message.trim()} ` : 
-              `${normLine.slice(0,-1).join(' ')} ${message.trim()} `
+            else if (results.length===1){   
+              const terminal = normLine.length===1 ? `${customCmd} ${message} ` : 
+              `${normLine.slice(0,-1).join(' ')} ${message} `
               return [[terminal], line]
             }
             else if(custTabCount<1){
@@ -54,8 +53,9 @@ const rl = readline.createInterface({
             } 
             else{
               custTabCount = 0
+              const allMessages = results.sort().join(' ')
               process.stdout.write('\n')
-              console.log(message)
+              console.log(allMessages)
               rl._refreshLine()
               return [[],line]
             }
