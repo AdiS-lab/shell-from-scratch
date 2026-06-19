@@ -460,7 +460,7 @@ rl.on('line', (command)=>{
             process.stdout.write(allSpawns[i])
             rl.prompt()
         }
-        else allSpawns[i+1].stdin.write(allSpawns[i]) 
+        else allSpawns[i+1].stdin.write(allSpawns[i+1]) 
       } // case that is string 
 
       else if(!(typeof allSpawns[i+1] === 'string') && !lastIndex){ // !string for next
