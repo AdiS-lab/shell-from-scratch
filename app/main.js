@@ -52,9 +52,11 @@ const rl = readline.createInterface({
             } 
             else{
               custTabCount = 0 
+              console.log(message.sort())
               const allMessages = message.sort().join(' ')
+
+
               process.stdout.write('\n')
-              console.log(allMessages)
               console.log(allMessages)
               rl._refreshLine()
               return [[],line]
