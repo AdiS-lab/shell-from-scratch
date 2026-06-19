@@ -312,6 +312,7 @@ rl.on('line', (command)=>{
     console.log(`[${jobCounter}] ${child.pid}`)
 
     if(jobs.length>0){
+      console.log(jobs)
       jobs.forEach((job)=>[
         maxCounter = Math.max(job.num, maxCounter)
       ])
