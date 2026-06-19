@@ -280,6 +280,7 @@ rl.on('line', (command)=>{
 
   
   if (normCom.at(-1) === '&'){
+    const fullCmd = normCom.join(' ')
     normCom.pop()
     const cmd = normCom[0]
     let child = spawn(cmd, normCom.slice(1), {stdio: 'inherit'}) // i
@@ -287,9 +288,9 @@ rl.on('line', (command)=>{
 
     const jobData = {
       num: jobCounter,
-      status: 'running',
+      status: 'Running',
       processId: child.pid,
-      command: normCom.join(' ')
+      command: fullCmd
     }
 
     jobs.push(jobData)
@@ -396,8 +397,8 @@ rl.on('line', (command)=>{
 
   else if (command.startsWith('jobs')){
     jobs.forEach((job, index)=>{
-      const recency = index === jobs.length-1 ? '-' : '+'
-      console.log(`[${job.num}]${recency} ${job.status.padEnd(24)}${job.command}`)
+      const recency = index === jobs.length-1 ? '+' : '-'
+      console.log(`[${job.num}]${recency}  ${job.status.padEnd(24)}${job.command}`)
     })
   }
   
