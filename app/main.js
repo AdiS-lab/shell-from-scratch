@@ -18,7 +18,6 @@ const rl = readline.createInterface({
 
         let hits = targets.filter(target=>target.startsWith(line))
         const normLine = normalize(line)
-        const target
         const dirNames = process.env.PATH.split(':')
         
         
