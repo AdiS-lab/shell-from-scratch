@@ -376,7 +376,11 @@ rl.on('line', (command)=>{
   }
   else if (normCom.at(-1) === '&'){
     normCom.pop()
+    jobNumber.push(jobCounter)
+    console.log(`[${jobCounter}] ${child.pid}`)
+    jobCounter++
     const child = spawn(normCom[0], normCom.slice(1), {stdio: 'inherit'})
+
     
     // child.on.stdout('data', (data)=>{
       
@@ -387,12 +391,6 @@ rl.on('line', (command)=>{
     ls.on('close', (code) => {
         console.log('Done Sleeping');
     });
-    
-
-
-    jobNumber.push(jobCounter)
-    console.log(`[${jobCounter}] ${child.pid}`)
-    jobCounter++
   }
   
   else if (command.startsWith('cd')){
