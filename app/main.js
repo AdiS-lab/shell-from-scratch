@@ -407,7 +407,7 @@ rl.on('line', (command)=>{
     child1.stdout.pipe(child2.stdin)
 
     let output = ''
-    child2.on('data', (data)=>output+=data)
+    child2.stdout.on('data', (data)=>output+=data)
 
     child2.on('close', ()=>{
       pipelineCmd = false
