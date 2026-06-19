@@ -159,11 +159,11 @@ const rl = readline.createInterface({
 });
 
 
-const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete']
 rl.prompt();
 
 function checkPath(directories, executable){
   // console.log('making it ' + executable)
+  if(directories.length )
     for(const dir of directories){
       try{
         const fullPath = path.join(dir, executable)
@@ -212,7 +212,8 @@ function normalize(command){
   
 }
 
-
+const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete']
+let newCommands = {}
 
 //_________ if type exists but not exec then continue, if non-existent command then return that________
 //_____ this entire loop is called a REPL good to know _________________________
@@ -275,14 +276,19 @@ rl.on('line', (command)=>{
     }
   } //  handling 2>
 
-  else if(normCom.includes('-p')){
+  else if(normCom.includes(complete) && normCom.includes('-p')){
       const index = normCom.indexOf('-p')
-      if(!checkPath(directories, normCom[index + 1])){
+      const path = newCommands[normCom[index + 1]]
+      if(!path){
           console.log(`complete: ${normCom[index + 1]}: no completion specification`)
       }
+      else{
+        console.log(`complete -C '${path}' ${docker}`)
+      }
   }
-    
-
+  else if(normCom.includes(complete) && normCom.includes('-C')){
+      newCommands[normCom.at(-1)] = normCom.at(-2)
+  }
   else if(command === 'exit'){
     rl.close()
     return
