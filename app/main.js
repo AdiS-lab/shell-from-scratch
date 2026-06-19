@@ -41,14 +41,19 @@ const rl = readline.createInterface({
         if(line.includes(' ') && line.includes('/')){ //  this check won't work anymore
 
           let inputDir = ''
-          const pathParts = normLine.slice(1).join()
-          const maxIndex = Math.max(pathParts.lastIndexOf('/'), pathParts.lastIndexOf('\\'))
-          let input = pathParts.substring(maxIndex+1)
-          maxIndex===0 ? inputDir = '/': inputDir = pathParts.slice(0,maxIndex)
+          const inputPath = normLine.slice(1).join()
+          const maxIndex = Math.max(inputPath.lastIndexOf('/'), inputPath.lastIndexOf('\\'))
+          let input = inputPath.substring(maxIndex+1)
+          maxIndex===0 ? inputDir = '/': inputDir = inputPath.slice(0,maxIndex)
           const dirFiles = fs.readdirSync(inputDir)
 
 
-          if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, dirFiles[0])} `)
+          if(dirFiles.length===1){ //  could be a directory or file
+            const fullPath = path.join(inputDir, dirFiles[0])
+            fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine[0]} ${fullPath}/`)
+            : hits.push(`${normLine[0]} ${fullPath} `)
+          }
+          
           for(dirFile of dirFiles){
             if(dirFile.startsWith(input)){
               const fullPath = path.join(inputDir, dirFile)
@@ -61,17 +66,17 @@ const rl = readline.createInterface({
         }// for any directory get files. 
         else if(line.includes(' ') && !line.includes('/')){
           const currFiles =  fs.readdirSync(process.cwd())
-          const rootDir = fs.readdirSync('/')
-          for(const fname of currFiles){ 
-            fname.startsWith(normLine.slice(1).join()) && hits.push(`${normLine[0]} ${fname} `)
-          }
-          for (const dir of rootDir){
-            if(dir.startsWith(normLine.slice(1).join())){
-              // const fullPath = path.join(rootDir, dir)
-              fs.statSync(`/${dir}`).isDirectory() && hits.push(`${normLine[0]} ${dir}/`)
+          // to get into directory + to get to file within directory
+          for(const fname of currFiles){
+            const input = normLine.slice(1).join()
+            const fullPath = path.join(process.cwd, fname)
+            if(input === ' '){
+              fs.statSync(fullPath).isDirectory() && hits.push(`${normLine[0]} ${fname}/`)
+            } 
+            else if(fname.startsWith(input)){
+               hits.push(`${normLine[0]} ${fname} `)
             }
-          }
-           
+          }    
         }// for curr directory get files
 
         // console.log(hits)
