@@ -402,15 +402,15 @@ rl.on('line', (command)=>{
     const firstCommand = normCom.slice(0, index)
     const secondCommand = normCom.slice(index+1)
     const child1 = spawn(firstCommand[0], firstCommand.slice(1),{stdio:['inherit', 'pipe', 'inherit']})
-    const child2 = spawn(secondCommand[0], secondCommand.slice(1),{stdio:['pipe', 'pipe', 'inherit']}) // inherit prints to the terminal, since async process.stdout does the same
+    const child2 = spawn(secondCommand[0], secondCommand.slice(1),{stdio:['pipe', 'inherit', 'inherit']}) // inherit prints to the terminal, since async process.stdout does the same
     //handled last time with process.stdout.write('\n') 
     child1.stdout.pipe(child2.stdin)
 
     let output = ''
-    child2.stdout.on('data', (data)=>{
-      output+=data
-      console.log(output)
-    })
+    // child2.stdout.on('data', (data)=>{
+    //   output+=data
+    //   console.log(output)
+    // })
 
     child2.on('close', ()=>{
       pipelineCmd = false
