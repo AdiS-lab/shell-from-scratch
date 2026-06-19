@@ -68,13 +68,12 @@ const rl = readline.createInterface({
           const currFiles =  fs.readdirSync(process.cwd())
           // to get into directory + to get to file within directory
           for(const fname of currFiles){
-            const input = normLine.slice(1).join()
+            const input = line.split(' ')[1]
+            console.log(input)
             const fullPath = path.join(process.cwd(), fname)
-            if(input === ' '){
-              fs.statSync(fullPath).isDirectory() && hits.push(`${normLine[0]} ${fname}/`)
-            } 
-            else if(fname.startsWith(input)){
-               hits.push(`${normLine[0]} ${fname} `)
+            if(fname.startsWith(input)){
+               fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine[0]} ${fname}/`)
+               : hits.push(`${normLine[0]} ${fname} `)
             }
           }    
         }// for curr directory get files
