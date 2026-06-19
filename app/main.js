@@ -275,22 +275,22 @@ function normalize(command){
 }
 
 function handleBuiltin(input, rest){
-  return input  === 'echo' && rest.join(' ')
+  return input  === 'echo' && rest.join(' ') + '\n'
   if(input === 'type'){
     const arg = rest.join()
     const newPath = checkPath(directories, arg)
 
     if(validCommands.includes(arg)) {
-      return `${secondHalf} is a shell builtin`
+      return `${secondHalf} is a shell builtin` + '\n'
     }
     else if(arg){
-      return `${secondHalf} is ${newPath}`
+      return `${secondHalf} is ${newPath}` + '\n'
     }
     else{
-      return `${secondHalf}: not found`
+      return `${secondHalf}: not found` + '\n'
     }
   } 
-  return input === 'pwd' && process.cwd()
+  return input === 'pwd' && process.cwd() + '\n'
 }
 
 function checkJobs(printAll){
