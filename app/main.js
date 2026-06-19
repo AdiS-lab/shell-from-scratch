@@ -46,7 +46,6 @@ const rl = readline.createInterface({
           let input = pathParts.substring(maxIndex+1)
           maxIndex===0 ? inputDir = '/': inputDir = pathParts.slice(0,maxIndex)
           const dirFiles = fs.readdirSync(inputDir)
-          console.log(dirFiles)
 
 
           if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, dirFiles[0])} `)
