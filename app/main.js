@@ -70,7 +70,6 @@ const rl = readline.createInterface({
             if(dir.startsWith(normLine.slice(1).join())){
               // const fullPath = path.join(rootDir, dir)
               fs.statSync(`/${dir}`).isDirectory() && hits.push(`${normLine[0]} ${dir}/`)
-              console.log(hits)
             }
           }
            
