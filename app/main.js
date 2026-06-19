@@ -77,8 +77,8 @@ const rl = readline.createInterface({
           for(const fname of currFiles){
             const fullPath = path.join(process.cwd(), fname)
             if(fname.startsWith(input)){
-               fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine[0]} ${fname}/`)
-               : hits.push(`${normLine[0]} ${fname} `)
+               fs.statSync(fullPath).isDirectory() ? hits.push(`${fname}/`)
+               : hits.push(`${fname} `)
             }
           }    
         }// for curr directory get files
