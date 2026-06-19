@@ -55,7 +55,7 @@ const rl = readline.createInterface({
           }
 
           for(dirFile of dirFiles){
-            if(dirFile.startsWith(input)){
+            if(dirFile.startsWith(input.trim())){
               const fullPath = path.join(inputDir, dirFile)
               fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)}/`)
               : hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)} `)
