@@ -36,18 +36,22 @@ const rl = readline.createInterface({
           }
           catch(error){
               continue
-          }  
+          }  // cases are with / check if directory or file
         } //  end of for loop, checking all executables
         if(line.includes(' ') && line.includes('/')){ //  this check won't work anymore
+
+          let inputDir = ''
           const pathParts = normLine.slice(1).join()
-          const maxIndex = pathParts.lastIndexOf('/')
-          const inputDir = pathParts.slice(0,maxIndex)      
+          const maxIndex = Math.max(pathParts.lastIndexOf('/'), pathParts.lastIndexOf('\\'))
+          let input = pathParts.substring(maxIndex+1)
+          maxIndex===0 ? inputDir = '/': inputDir = pathParts.slice(0,maxIndex)
           const dirFiles = fs.readdirSync(inputDir)
+          console.log(dirFiles)
 
 
           if(dirFiles.length===1) hits.push(`${normLine[0]} ${path.join(inputDir, dirFiles[0])} `)
           for(dirFile of dirFiles){
-            if(dirFile.startsWith(line)){
+            if(dirFile.startsWith(input)){
               const fullPath = path.join(inputDir, dirFile)
               fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)}/`)
               : hits.push(`${normLine[0]} ${path.join(inputDir,dirFile)} `)
@@ -64,8 +68,9 @@ const rl = readline.createInterface({
           }
           for (const dir of rootDir){
             if(dir.startsWith(normLine.slice(1).join())){
-              const fullPath = path.join(rootDir, dir)
-              fs.statSync(fullPath).isDirectory() && hits.push(`${normLine[0]} ${fullPath}/`)
+              // const fullPath = path.join(rootDir, dir)
+              fs.statSync(`/${dir}`).isDirectory() && hits.push(`${normLine[0]} ${dir}/`)
+              console.log(hits)
             }
           }
            
