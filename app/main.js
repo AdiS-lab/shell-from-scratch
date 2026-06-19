@@ -112,11 +112,13 @@ const rl = readline.createInterface({
         }
         else if(LCP && tabCount<1){
           if(LCP.length > line.length){
+
             return [[LCP], line] 
           }
           else{
             process.stdout.write('\x07')
             tabCount += 1
+            lastLine = line
           }
         } 
         else{
@@ -130,7 +132,6 @@ const rl = readline.createInterface({
           }
           else{
             tabCount = 0
-            process.stdout.write('\n')
             hits = hits.map(hit=>{
               if(hit.includes(' ')){
                 const parts =  hit.split(' ')
@@ -138,9 +139,9 @@ const rl = readline.createInterface({
               }
             })
             const allHits = hits.join(' ')
+            
+            process.stdout.write('\n')
             console.log(allHits)
-            // rl.prompt()
-            // rl.write(line)
             rl._refreshLine()
             return [[],line]
           }
