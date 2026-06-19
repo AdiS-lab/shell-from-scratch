@@ -411,8 +411,7 @@ rl.on('line', (command)=>{
 
     child2.on('close', ()=>{
       pipelineCmd = false
-      console.log('made it to close hlet')
-      console.log(output)
+      process.stdout.write(output)
       child1.kill('SIGTERM')
       rl.prompt()
     })
