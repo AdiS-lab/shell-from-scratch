@@ -379,7 +379,7 @@ rl.on('line', (command)=>{
     const child = spawn(normCom[0], normCom.slice(1))
     jobNumber.push(jobCounter)
     console.log(`[${jobCounter}] ${child.pid}`)
-    counter++
+    jobCounter++
   }
   
   else if (command.startsWith('cd')){
