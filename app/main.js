@@ -25,13 +25,10 @@ const rl = readline.createInterface({
         const dirNames = process.env.PATH.split(':')  
 
 
-        console.log('this is a normLine check ' + normLine[0])
         if(normLine[0] in newCommands){ // need to make async
           const customCmd = normLine[0]
-          console.log('made it inside the right comman')
           try{
-            const message = execFileSync(newCommands.normLine[0], [customCmd, '', customCmd], {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
-            console.log('IN NEW COMMANDS IF GOOD THEN ' + message)
+            const message = execFileSync(newCommand[customCmd], [customCmd, '', customCmd], {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
             return [[`${message} `], line]
           }
           catch(error){
