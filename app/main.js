@@ -5,6 +5,8 @@ const {execFileSync} = require('child_process')
 const os = require('os')
 
 const targets = ['echo ','exit ']
+const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete']
+let newCommands = {}
 
 let tabCount = 0 
 let lastLine = ''
@@ -16,10 +18,22 @@ const rl = readline.createInterface({
   prompt: "$ ",
   completer: function(line){
 
+
+
         let hits = targets.filter(target=>target.startsWith(line))
         const normLine = normalize(line)
         const dirNames = process.env.PATH.split(':')
-        
+
+        if(normLine[0] in newCommands){ // need to make async
+          const customCmd = normLine[0]
+          try{
+            const message = execFileSync(newCommands.normLine[0], [customCmd, '', customCmd], {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
+            return [[`${message} `], line]
+          }
+          catch(error){
+            process.stdout.write(error.stderr)
+          }
+        }
         
         for(const dir of dirNames){
           try{
@@ -211,9 +225,6 @@ function normalize(command){
   // else find first single quote then find next. delete both. keep going
   
 }
-
-const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete']
-let newCommands = {}
 
 //_________ if type exists but not exec then continue, if non-existent command then return that________
 //_____ this entire loop is called a REPL good to know _________________________
