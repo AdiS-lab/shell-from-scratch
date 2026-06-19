@@ -7,12 +7,14 @@ const os = require('os')
 const targets = ['echo ','exit ']
 const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'ls', 'du', 'stat', 'cat', 'xyz', 'wc']
 let newCommands = {}
+let copyCommands = {}
 
 let tabCount = 0 
-let custTabCount = 0
-let lastLine = ''
+let custTabCount = 0 //  as to not mix the 2 which are for separate ocassions
+let lastLine = '' 
+
 //______ idea = completer is a func that can detect tab + do something
-//_________ to check exec, just append files + directories + call accessSync
+//_________ to check exec, just join files + directories + call accessSync
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -72,7 +74,7 @@ const rl = readline.createInterface({
           }
         }
 
-        if(!(mainCmd in newCommands )&& !(validCommands.includes(mainCmd)) ){
+        if((mainCmd in copyCommands )&& !((mainCmd in newCommands )) ){
           process.stdout.write('\x07')
           return [[], line]
         }
@@ -343,6 +345,7 @@ rl.on('line', (command)=>{
 
   else if(normCom.includes('complete') && normCom.includes('-C')){
       newCommands[normCom.at(-1)] = normCom.at(-2)
+      copyCommands[normCom.at(-1)] = normCom.at(-2)
   }// handle registration
 
   else if(normCom.includes('complete') && normCom.includes('-r')){
