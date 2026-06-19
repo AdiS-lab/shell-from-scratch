@@ -401,7 +401,7 @@ rl.on('line', (command)=>{
     const child1 = spawn(firstCommand[0], firstCommand.slice(1),{stdio:['inherit', 'pipe', 'inherit']})
     const child2 = spawn(secondCommand[0], secondCommand.slice(1),{stdio:['pipe', 'pipe', 'inherit']})
     child1.stdout.pipe(child2.stdin)
-    process.stdout.write(child2.stdout)
+    child2.stdout.pipe(process.stdout)
   }
 
   else if(normCom.includes('complete') && normCom.includes('-p')){
