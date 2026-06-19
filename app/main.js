@@ -280,6 +280,7 @@ rl.on('line', (command)=>{
       if(!checkPath(directories, normCom[index])){
           console.log(`complete: ${normCom[index]}: no completion specification`)
       }
+  }
     
 
   else if(command === 'exit'){
