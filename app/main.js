@@ -31,8 +31,9 @@ const rl = readline.createInterface({
           process.env.COMP_POINT = line.length;
           const customCmd = normLine[0]
           let args = [customCmd]
+          
           args.push(normLine.at(-1))
-          normLine.length>1 ? args.push(normLine.at(1)) : args.push('')
+          normLine.length>1 ? args.push(normLine.at(1)) : args.push(customCmd)
           try{
             const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
             if(!message){
@@ -51,7 +52,7 @@ const rl = readline.createInterface({
             } 
             else{
               custTabCount = 0 
-              const allMessages = messages.join(' ')
+              const allMessages = messages.sort().join(' ')
               process.stdout.write('\n')
               console.log(allMessages)
               rl._refreshLine()
