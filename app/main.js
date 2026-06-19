@@ -436,7 +436,9 @@ rl.on('line', (command)=>{
 
     allSpawns = allCmds.map((cmd, index)=>{ // [[echo, blueberry], [wc]]
       if(validCommands.includes(cmd[0])){
+        console.log('THIS IS INPUT ' + cmd[0])
         let output =  handleBuiltin(cmd[0], cmd.slice(1))
+        console.log('THIS IS OUTPUT ' + output)
         return output
       }
       else if(index === 0){
@@ -455,7 +457,7 @@ rl.on('line', (command)=>{
     // [obj,string] 
     for(let i=0; i<allSpawns.length; i++){
       const lastIndex = i === allSpawns.length-1
-      const nextString = typeof allSpawns[i+1] === 'string'
+      const nextString = (typeof allSpawns[i+1] === 'string')
 
       if(typeof allSpawns[i] === 'string'){
         if(lastIndex){
