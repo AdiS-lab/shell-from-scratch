@@ -328,7 +328,7 @@ rl.on('line', (command)=>{
 
   else if (command.startsWith('jobs')){
     printAll = true
-    checkJobs()
+    checkJobs(printAll)
     printAll = false
   }
   
@@ -466,6 +466,6 @@ rl.on('line', (command)=>{
   else{
     console.log(`${command}: not found`)
   }
-  checkJobs()
+  checkJobs(printAll)
   rl.prompt()
 })
