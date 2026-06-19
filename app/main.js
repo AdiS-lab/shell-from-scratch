@@ -275,6 +275,12 @@ rl.on('line', (command)=>{
     }
   } //  handling 2>
 
+  else if(normCom.includes('-p')){
+      const index = normCom.indexOf('-p')
+      if(!checkPath(directories, normCom[index])){
+          console.log(`complete: ${normCom[index]}: no completion specification`)
+      }
+    
 
   else if(command === 'exit'){
     rl.close()
