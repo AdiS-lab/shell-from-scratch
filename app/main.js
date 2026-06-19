@@ -274,6 +274,25 @@ function normalize(command){
   
 }
 
+function handleBuiltin(input, rest){
+  return input  === 'echo' && rest.join(' ')
+  if(input === 'type'){
+    const arg = rest.join()
+    const newPath = checkPath(directories, arg)
+
+    if(validCommands.includes(arg)) {
+      return `${secondHalf} is a shell builtin`
+    }
+    else if(arg){
+      return `${secondHalf} is ${newPath}`
+    }
+    else{
+      return `${secondHalf}: not found`
+    }
+  } 
+  return input === 'pwd' && process.cwd()
+}
+
 function checkJobs(printAll){
   const finishedTasks = []
 
@@ -398,27 +417,67 @@ rl.on('line', (command)=>{
 
   else if(normCom.includes('|')){
     pipelineCmd = true
-    const index = normCom.indexOf('|')
-    const firstCommand = normCom.slice(0, index)
-    const secondCommand = normCom.slice(index+1)
-    const child1 = spawn(firstCommand[0], firstCommand.slice(1),{stdio:['inherit', 'pipe', 'inherit']})
-    const child2 = spawn(secondCommand[0], secondCommand.slice(1),{stdio:['pipe', 'inherit', 'inherit']}) // inherit prints to the terminal, since async process.stdout does the same
-    //handled last time with process.stdout.write('\n') 
-    child1.stdout.pipe(child2.stdin)
+    const allCmds = normCom.split('|')
+    let allSpawns = []
+    let allChilds = []
 
-    let output = ''
-    // child2.stdout.on('data', (data)=>{
-    //   output+=data
-    //   console.log(output)
-    // })
+    allSpawns = allCmds.map((cmd, index)=>{
+      if(validCommands.includes(cmd)){
+        let output =  handleBuiltin(cmd[0], cmd.slice(1))
+        return output
+      }
+      else if(index === 0){
+        return spawn(cmd[0], cmd.slice(1),{stdio:['inherit', 'pipe', 'inherit']})
+        //handle ipi
+      }
+      else if(index === allCmds.length-1){
+        return spawn(cmd[0], cmd.slice(1),{stdio:['pipe', 'inherit', 'inherit']})
+        // then create the pii
+      } 
+      else{
+        return spawn(cmd[0], cmd.slice(1),{stdio:['pipe', 'pipe', 'inherit']})
+        //handle middle
+      }
+    }) // determine all spawns + strings
 
-    child2.on('close', ()=>{
-      pipelineCmd = false
-      child1.kill('SIGTERM')
-      // process.stdout.write(output)
-      rl.prompt()
+    for(let i=0; i<allSpawns.length; i++){
+      const lastIndex = i === allSpawns.length-1
+
+      if(typeof allSpawns[i] === 'string'){
+        if(lastIndex){
+            pipelineCmd = false
+            process.stdout.write(allSpawns[i])
+            rl.prompt()
+        }
+        else allSpawns[i+1].stdin.write(allSpawns[i]) 
+      } // case that is string 
+
+      else if(!(typeof allSpawns[i+1] === 'string')){ // !string for next
+        allSpawns[i].stdout.pipe(allSpawns[i+1].stdin)
+        allChilds.push(allSpawns[i])
+      } // case that child + next ain't string 
+      else if(lastIndex){
+        allSpawns[i].on('close', ()=>{
+          pipelineCmd = false
+          rl.prompt()
+        }) 
+      } // case that is last + not string 
+    }
+    
+    allChilds.forEach((spawn)=>{
+      spawn.kill('SIGTERM')
     })
-    // child2.stdout.pipe(process.stdout)
+  
+
+    // const child1 = spawn(firstCommand[0], firstCommand.slice(1),{stdio:['inherit', 'pipe', 'inherit']})
+    // const child2 = spawn(secondCommand[0], secondCommand.slice(1),{stdio:['pipe', 'inherit', 'inherit']}) // inherit prints to the terminal, since async process.stdout does the same
+    // child1.stdout.pipe(child2.stdin)
+
+    // child2.on('close', ()=>{
+    //   pipelineCmd = false
+    //   child1.kill('SIGTERM')
+    //   rl.prompt()
+    // })
   }
 
   else if(normCom.includes('complete') && normCom.includes('-p')){
