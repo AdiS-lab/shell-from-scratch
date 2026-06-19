@@ -26,6 +26,8 @@ const rl = readline.createInterface({
 
 
         if(normLine[0] in newCommands){ // need to make async
+          process.env.COMP_LINE = line;
+          process.env.COMP_POINT = line.length;
           const customCmd = normLine[0]
           let args = [customCmd]
           args.push(normLine.at(-1))
