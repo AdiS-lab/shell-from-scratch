@@ -44,7 +44,6 @@ const rl = readline.createInterface({
 
             if(results.length===0){
               process.stdout.write('\x07')
-              return [[], line]
             }
             else if (results.length===1){   
               const terminal =`${prefix} ${message} `
@@ -56,7 +55,6 @@ const rl = readline.createInterface({
             else if(custTabCount<1){
               custTabCount+=1
               process.stdout.write('\x07')
-              return [[], line]
             } 
             else{
               custTabCount = 0
@@ -64,8 +62,8 @@ const rl = readline.createInterface({
               process.stdout.write('\n')
               console.log(allMessages)
               rl._refreshLine()
-              return [[],line]
             }
+            return[[], line]
           }// in the case it is greater then we want to go to ned
           catch(error){
             error.stderr && process.stderr.write(error.stderr)
