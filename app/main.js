@@ -27,11 +27,11 @@ const rl = readline.createInterface({
 
         if(normLine[0] in newCommands){ // need to make async
           const customCmd = normLine[0]
-          const args = normLine.length>1 && normLine.slice(1)
+          const args = normLine.slice(1)
           try{
             console.log('made it insider this place ' + newCommands[customCmd])
             const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
-            console.log('made it to the message ' + messgae)
+            console.log('made it to the message ' + message)
             return [[`${message} `], line]
           }
           catch(error){
