@@ -74,6 +74,7 @@ const rl = readline.createInterface({
         }
 
         if(!(mainCmd in newCommands )&& !(validCommands.includes(mainCmd)) ){
+          process.stdout.write('\x07')
           return [[], line]
         }
         
