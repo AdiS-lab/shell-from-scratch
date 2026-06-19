@@ -9,7 +9,6 @@ const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs']
 let newCommands = {}
 let copyCommands = {}
 let jobs = []
-let jobCounter = 1
 
 let tabCount = 0 
 let custTabCount = 0 //  as to not mix the 2 which are for separate ocassions
@@ -327,8 +326,6 @@ rl.on('line', (command)=>{
     }
 
     jobs.push(jobData)
-    jobCounter++
-
     child.on('error', (error) =>{
       console.log(error.message)
     })
