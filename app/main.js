@@ -307,8 +307,7 @@ rl.on('line', (command)=>{
     const fullCmd = normCom.join(' ')
     normCom.pop()
     const cmd = normCom[0]
-    let child = spawn(cmd, normCom.slice(1), {stdio: 'inherit'}) // i
-    console.log(`[${jobCounter}] ${child.pid}`)
+    let child = spawn(cmd, normCom.slice(1), {stdio: 'inherit'}) 
 
     if(jobs.length>0){
       console.log(jobs)
@@ -317,6 +316,8 @@ rl.on('line', (command)=>{
       ])
     }
 
+    console.log(`[${maxCounter+1}] ${child.pid}`)
+    
     const jobData = {
       num: maxCounter + 1,
       status: 'Running',
