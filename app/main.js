@@ -33,7 +33,7 @@ const rl = readline.createInterface({
           let args = [customCmd]
           
           args.push(normLine.at(-1))
-          normLine.length>1 ? args.push(normLine.at(1)) : args.push(customCmd)
+          normLine.length>2 ? args.push(normLine.at(1)) : args.push(customCmd)
           try{
             const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
             if(!message){
