@@ -279,24 +279,25 @@ function handleType(arg){
   const newPath = checkPath(directories, arg)
   if(validCommands.includes(arg)) {
     console.log('made it to here')
-    return `${arg} is a shell builtin \n`
+    return `${arg} is a shell builtin\n`
   }
-  else if(arg){
-    return `${arg} is ${newPath} \n`
+  else if(newPath){
+    return `${arg} is ${newPath}\n`
   }
   else{
-    return `${arg}: not found \n`
+    return `${arg}: not found\n`
   }
 }
 
 function handleBuiltin(input, rest){
-  return input  === 'echo' && rest.join(' ') + '\n'
+  if(input  === 'echo') return rest.join(' ') + '\n'
   if(input === 'type'){
     console.log('I at least got here')
-    const arg = rest.join()
+    const arg = rest.join(' ')
     return handleType(arg)
   } 
-  return input === 'pwd' && process.cwd() + '\n'
+  if (input === 'pwd') return process.cwd() + '\n'
+  return null
 }
 
 function checkJobs(printAll){
