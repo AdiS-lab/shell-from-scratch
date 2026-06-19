@@ -1,13 +1,15 @@
 const readline = require("readline");
 const path = require('path');
 const fs = require('fs');
-const {execFileSync} = require('child_process')
+const {execFileSync, spawn} = require('child_process')
 const os = require('os')
 
 const targets = ['echo ','exit ']
 const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs']
 let newCommands = {}
 let copyCommands = {}
+let jobNumber = []
+let jobCounter = 1
 
 let tabCount = 0 
 let custTabCount = 0 //  as to not mix the 2 which are for separate ocassions
@@ -371,7 +373,13 @@ rl.on('line', (command)=>{
   } // handle cat commands
 
   else if (command.startsWith('jobs')){
-    
+  }
+  else if (normCom.at(-1) === '&'){
+    const newCom = normCom.pop()
+    spawn(newCom[0], newCom.slice(1))
+    jobNumber.push(jobCounter)
+    console.log(jobCounter)
+    counter++
   }
   
   else if (command.startsWith('cd')){
