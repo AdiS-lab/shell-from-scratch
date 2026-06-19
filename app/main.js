@@ -37,6 +37,8 @@ const rl = readline.createInterface({
           try{
             const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} ).trim()
             const results = message.split('\n').filter(Boolean)
+            let LCP = calcLCP(line, results)
+
             if(results.length===0){
               process.stdout.write('\x07')
               return [[], line]
@@ -45,6 +47,9 @@ const rl = readline.createInterface({
               const terminal = normLine.length===1 ? `${customCmd} ${message} ` : 
               `${normLine.slice(0,-1).join(' ')} ${message} `
               return [[terminal], line]
+            }
+            else if(LCP.length>line.length){
+              return [[LCP], line]
             }
             else if(custTabCount<1){
               custTabCount+=1
@@ -135,25 +140,7 @@ const rl = readline.createInterface({
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
-
-        let LCP = line
-        const firstValue = hits[0]
-        for(let i = 1; i<hits.length; i++){ // we are going through each and finding where they match. what the lowest is. 
-          const firstWord = hits[i-1]
-          const secondWord = hits[i]
-          let tempLCP = ''
-
-          if(firstWord[0] === secondWord[0]){
-            tempLCP += firstWord[0]
-            for(let j = 1; j<firstWord.length; j++){
-              if(firstWord[j] === secondWord[j]) {tempLCP += firstWord[j]}
-              else break
-            }
-            if(tempLCP.length >  LCP.length){LCP = tempLCP
-            break}  
-          }
-        }
-
+        let LCP = calcLCP(line, hits)
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
           return [hits, line]
@@ -204,6 +191,25 @@ const rl = readline.createInterface({
 
 
 rl.prompt();
+
+function calcLCP(LCP, hits){
+    const firstValue = hits[0]
+    for(let i = 1; i<hits.length; i++){ // we are going through each and finding where they match. what the lowest is. 
+      const firstWord = hits[i-1]
+      const secondWord = hits[i]
+      let tempLCP = ''
+
+      if(firstWord[0] === secondWord[0]){
+        tempLCP += firstWord[0]
+        for(let j = 1; j<firstWord.length; j++){
+          if(firstWord[j] === secondWord[j]) {tempLCP += firstWord[j]}
+          else {return tempLCP}
+        }
+        if(tempLCP.length >  LCP.length){return tempLCP}  
+      }
+    }
+    return LCP
+}
 
 function checkPath(directories, executable){
   // console.log('making it ' + executable)
