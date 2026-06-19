@@ -400,6 +400,9 @@ rl.on('line', (command)=>{
     const finishedTasks = []
 
     jobs.forEach((job, index)=>{
+      let recency = ' '
+      if(index === jobs.length-1) recency = '+'
+      if(index === jobs.length-2) recency = '-'
       
       if(job.spawnProcess.exitCode !== null){
         const status = 'Done'
@@ -407,9 +410,6 @@ rl.on('line', (command)=>{
         console.log(`[${job.num}]${recency}  ${status.padEnd(24)}${job.command.slice(0,-2)}`)
       }
       else{
-        let recency = ' '
-        if(index === jobs.length-1) recency = '+'
-        if(index === jobs.length-2) recency = '-'
         console.log(`[${job.num}]${recency}  ${job.status.padEnd(24)}${job.command}`)
       }
     })
