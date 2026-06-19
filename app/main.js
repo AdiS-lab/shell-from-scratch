@@ -82,7 +82,7 @@ const rl = readline.createInterface({
             for(const fname of currFiles){
               const fullPath = path.join(process.cwd(), fname)
               if(fname.startsWith(input)){
-                fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine.slice(0,-1).join(' ')}/`)
+                fs.statSync(fullPath).isDirectory() ? hits.push(`${normLine.slice(0,-1).join(' ')} ${fname}/`)
                 : hits.push(`${normLine.slice(0,-1).join(' ')} ${fname} `)
               }
             }   
@@ -142,7 +142,7 @@ const rl = readline.createInterface({
             hits = hits.map(hit=>{
               if(hit.includes(' ')){
                 const parts =  hit.split(' ')
-                return !parts[1] ? parts[0] : parts[1]
+                return !parts.at(-1) ? parts[-2] : parts[-1]
               }
             })
             const allHits = hits.join(' ')
