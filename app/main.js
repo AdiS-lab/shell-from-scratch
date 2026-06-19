@@ -14,6 +14,7 @@ let jobCounter = 1
 let tabCount = 0 
 let custTabCount = 0 //  as to not mix the 2 which are for separate ocassions
 let lastLine = '' 
+let printAll = false
 
 //______ idea = completer is a func that can detect tab + do something
 //_________ to check exec, just join files + directories + call accessSync
@@ -272,7 +273,7 @@ function normalize(command){
   
 }
 
-function checkJobs(){
+function checkJobs(printAll){
   const finishedTasks = []
 
     jobs.forEach((job, index)=>{
@@ -285,7 +286,7 @@ function checkJobs(){
         finishedTasks.push(index)
         console.log(`[${job.num}]${recency}  ${status.padEnd(24)}${job.command.slice(0,-2)}`)
       }
-      else{
+      else if(printAll){
         console.log(`[${job.num}]${recency}  ${job.status.padEnd(24)}${job.command}`)
       }
     })
@@ -324,6 +325,13 @@ rl.on('line', (command)=>{
       console.log(error.message)
     })
   }
+
+  else if (command.startsWith('jobs')){
+    printAll = true
+    checkJobs()
+    printAll = false
+  }
+  
   
   else if(normCom.includes('>>') || normCom.includes('1>>') ){
     const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
@@ -418,11 +426,6 @@ rl.on('line', (command)=>{
     const message = execFileSync(normCom[0], normCom.slice(1),{encoding: 'utf8'})
     process.stdout.write(message)
   } // handle cat commands
-
-  else if (command.startsWith('jobs')){
-    checkJobs()
-  }
-  
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
     if(fileName==='~'){
