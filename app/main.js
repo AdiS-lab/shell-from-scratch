@@ -450,7 +450,6 @@ rl.on('line', (command)=>{
       }
     }) // determine all spawns + strings
     
-    console.log('after allSpawns populated ' + allSpawns)
     for(let i=0; i<allSpawns.length; i++){
       const lastIndex = i === allSpawns.length-1
 
