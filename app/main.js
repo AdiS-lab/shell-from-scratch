@@ -28,6 +28,7 @@ const rl = readline.createInterface({
         if(normLine[0] in newCommands){ // need to make async
           const customCmd = normLine[0]
           const args = normLine.slice(1)
+          console.log(args)
           try{
             const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
             if(!message){
