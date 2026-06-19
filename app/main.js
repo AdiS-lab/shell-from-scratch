@@ -281,7 +281,6 @@ rl.on('line', (command)=>{
   
   if (normCom.at(-1) === '&'){
     normCom.pop()
-    console.log(typeof normCom.slice(1))
     let child = spawn(normCom[0], normCom.slice(1), {stdio: 'inherit'})
     console.log(`[${jobCounter}] ${child.pid}`)
     jobCounter++
