@@ -31,7 +31,7 @@ const rl = readline.createInterface({
             return [[`${message} `], line]
           }
           catch(error){
-            process.stdout.write(error.stderr)
+            process.stderr.write(error.stderr)
           }
         }
         
