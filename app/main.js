@@ -10,10 +10,12 @@ let newCommands = {}
 let copyCommands = {}
 let jobs = []
 
+
 let tabCount = 0 
 let custTabCount = 0 //  as to not mix the 2 which are for separate ocassions
 let lastLine = '' 
 let printAll = false
+let pipelineCmd = false
 
 //______ idea = completer is a func that can detect tab + do something
 //_________ to check exec, just join files + directories + call accessSync
@@ -395,6 +397,7 @@ rl.on('line', (command)=>{
   } //  handling 2>
 
   else if(normCom.includes('|')){
+    pipelineCmd = true
     const index = normCom.indexOf('|')
     const firstCommand = normCom.slice(0, index)
     const secondCommand = normCom.slice(index+1)
@@ -407,7 +410,11 @@ rl.on('line', (command)=>{
     child2.on('data', (data)=>output+=data)
 
     child2.on('close', ()=>{
-      console.log(output)
+      child1.kill()
+      pipelineCmd = false
+      process.stdout.write('\n')
+      process.stdout.write(output)
+      rl.prompt()
     })
     // child2.stdout.pipe(process.stdout)
   }
@@ -491,5 +498,9 @@ rl.on('line', (command)=>{
     console.log(`${command}: not found`)
   }
   checkJobs(printAll)
-  rl.prompt()
+
+  if(pipelineCmd){
+    return
+  } 
+  else rl.prompt()
 })
