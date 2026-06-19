@@ -115,7 +115,7 @@ const rl = readline.createInterface({
             return [[LCP], line] 
           }
           else{
-            process.stdout('\x07')
+            process.stdout.write('\x07')
             tabCount += 1
           }
         } 
