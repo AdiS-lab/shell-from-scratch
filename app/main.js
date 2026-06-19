@@ -316,6 +316,16 @@ function checkJobs(printAll){
     })
 }
 
+function splitPipe(inputArr){
+  const stringArr = inputArr.join(' ').split('|')
+  const newArr = stringArr.map((cmds)=>{
+    return cmds.trim().split(' ')
+  })
+  return newArr
+  //find each index
+  //slice accordingly into chunks
+}
+
 //_________ if type exists but not exec then continue, if non-existent command then return that________
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
@@ -417,7 +427,7 @@ rl.on('line', (command)=>{
 
   else if(normCom.includes('|')){
     pipelineCmd = true
-    const allCmds = normCom.split('|')
+    const allCmds = splitPipe(normCom)
     console.log('allCmds ' + allCmds)
     let allSpawns = []
     let allChilds = []
@@ -469,6 +479,8 @@ rl.on('line', (command)=>{
     allChilds.forEach((spawn)=>{
       spawn.kill('SIGTERM')
     })
+
+
   
 
     // const child1 = spawn(firstCommand[0], firstCommand.slice(1),{stdio:['inherit', 'pipe', 'inherit']})
