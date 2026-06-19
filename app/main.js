@@ -436,9 +436,9 @@ rl.on('line', (command)=>{
 
     allSpawns = allCmds.map((cmd, index)=>{ // [[echo, blueberry], [wc]]
       if(validCommands.includes(cmd[0])){
-        console.log('THIS IS INPUT ' + cmd[0])
+        index>0 && console.log('THIS IS INPUT ' + cmd[0])
         let output =  handleBuiltin(cmd[0], cmd.slice(1))
-        console.log('THIS IS OUTPUT ' + output)
+        index>0&& console.log('THIS IS OUTPUT ' + output)
         return output
       }
       else if(index === 0){
