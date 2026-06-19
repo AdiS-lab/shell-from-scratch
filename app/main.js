@@ -290,7 +290,8 @@ rl.on('line', (command)=>{
       num: jobCounter,
       status: 'Running',
       processId: child.pid,
-      command: fullCmd
+      command: fullCmd,
+      spawnProcess: child
     }
 
     jobs.push(jobData)
@@ -396,13 +397,25 @@ rl.on('line', (command)=>{
   } // handle cat commands
 
   else if (command.startsWith('jobs')){
+    const finishedTasks = []
+
     jobs.forEach((job, index)=>{
-      let recency = ' '
-      if(index === jobs.length-1) recency = '+'
-      if(index === jobs.length-2) recency = '-'
-
-
-      console.log(`[${job.num}]${recency}  ${job.status.padEnd(24)}${job.command}`)
+      
+      if(job.spawnProcess.exitCode !== null){
+        const status = 'Done'
+        finishedTasks.push(index)
+        console.log(`[${job.num}]${recency}  ${status.padEnd(24)}${job.command.slice(0,-2)}`)
+      }
+      else{
+        let recency = ' '
+        if(index === jobs.length-1) recency = '+'
+        if(index === jobs.length-2) recency = '-'
+        console.log(`[${job.num}]${recency}  ${job.status.padEnd(24)}${job.command}`)
+      }
+    })
+    
+    finishedTasks.forEach((ind)=>{
+      jobs.splice(index,1)
     })
   }
   
