@@ -97,6 +97,7 @@ const rl = readline.createInterface({
             tempLCP += firstWord[0]
             for(let j = 1; j<firstWord.length; j++){
               if(firstWord[j] === secondWord[j]) {tempLCP += firstWord[j]}
+              else break
             }
             if(tempLCP.length >  LCP.length){LCP = tempLCP
             break}  
