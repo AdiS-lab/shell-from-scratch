@@ -36,7 +36,6 @@ const rl = readline.createInterface({
             args.push(normLine.at(-1))
             normLine.length>2 ? args.push(normLine.at(1)) : args.push(mainCmd)
           }
-          console.log(args)
           try{
             const message = execFileSync(newCommands[mainCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} ).trim()
             const results = message.split('\n').filter(Boolean)
