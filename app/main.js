@@ -304,7 +304,7 @@ rl.on('line', (command)=>{
 
   
   if (normCom.at(-1) === '&'){
-    letMaxCounter = 0
+    let maxCounter = 0
     const fullCmd = normCom.join(' ')
     normCom.pop()
     const cmd = normCom[0]
@@ -316,7 +316,7 @@ rl.on('line', (command)=>{
         maxCounter = Math.max(job.num, maxCounter)
       ])
     }
-    
+
     const jobData = {
       num: maxCounter + 1,
       status: 'Running',
