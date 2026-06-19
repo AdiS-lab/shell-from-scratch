@@ -38,7 +38,9 @@ const rl = readline.createInterface({
             const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} ).trim()
             const results = message.split('\n').filter(Boolean)
             const LCP = calcLCP(line, results)
+
             const prefix = normLine.length===1  ? customCmd : normLine.slice(0,-1).join(' ')
+            const comparison = `${prefix} ${LCP}`
 
             if(results.length===0){
               process.stdout.write('\x07')
@@ -48,9 +50,7 @@ const rl = readline.createInterface({
               const terminal =`${prefix} ${message} `
               return [[terminal], line]
             }
-
-            else if(LCP){
-              const comparison = `${prefix} ${LCP}`
+            else if(comparison.length>line.length){
               return [[comparison], line]
             }
             else if(custTabCount<1){
