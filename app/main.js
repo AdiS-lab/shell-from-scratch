@@ -399,13 +399,9 @@ rl.on('line', (command)=>{
     const firstCommand = normCom.slice(0, index)
     const secondCommand = normCom.slice(index+1)
     const child1 = spawn(firstCommand[0], firstCommand.slice(1),{stdio:['inherit', 'pipe', 'inherit']})
-    const child2 = spawn(secondCommand[0], secondCommand.slice(1),{stdio:['pipe', 'pipe', 'inherit']})
+    const child2 = spawn(secondCommand[0], secondCommand.slice(1),{stdio:['pipe', 'pipe', 'inherit']}) // inherit prints to the terminal, and 
     child1.stdout.pipe(child2.stdin)
-
-    child2.on('data', (data)=>{
-      console.log(data)
-    })
-    // child2.stdout.pipe(process.stdout)
+    child2.stdout.pipe(process.stdout)
   }
 
   else if(normCom.includes('complete') && normCom.includes('-p')){
