@@ -70,8 +70,8 @@ const rl = readline.createInterface({
           // to get into directory + to get to file within directory
           if(!input){
             const firstPath = path.join(process.cwd(), currFiles[0])
-            fs.statSync(firstPath).isDirectory() ? hits.push(`${normLine[0]} ${fname}/`)
-            : hits.push(`${normLine[0]} ${fname} `)
+            fs.statSync(firstPath).isDirectory() ? hits.push(`${normLine[0]} ${currFiles[0]}/`)
+            : hits.push(`${normLine[0]} ${currFiles[0]} `)
           }
 
           for(const fname of currFiles){
