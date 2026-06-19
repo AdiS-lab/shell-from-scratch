@@ -279,13 +279,13 @@ function handleType(arg){
   const newPath = checkPath(directories, arg)
   if(validCommands.includes(arg)) {
     console.log('made it to here')
-    return `${arg} is a shell builtin` + '\n'
+    return `${arg} is a shell builtin \n`
   }
   else if(arg){
-    return `${arg} is ${newPath}` + '\n'
+    return `${arg} is ${newPath} \n`
   }
   else{
-    return `${arg}: not found` + '\n'
+    return `${arg}: not found \n`
   }
 }
 
