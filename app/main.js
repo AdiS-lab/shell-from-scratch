@@ -341,6 +341,10 @@ rl.on('line', (command)=>{
       newCommands[normCom.at(-1)] = normCom.at(-2)
   }// handle registration
 
+  else if(normCom.includes('complete') && normCom.includes('-r')){
+     delete newCommands[normCom.at(-1)]
+  }// handle registration
+
   else if(command === 'exit'){
     rl.close()
     return
