@@ -412,8 +412,8 @@ rl.on('line', (command)=>{
     child2.on('close', ()=>{
       child1.kill()
       pipelineCmd = false
-      process.stdout.write('\n')
-      process.stdout.write(output)
+      console.log('made it to close hlet')
+      console.log(output)
       rl.prompt()
     })
     // child2.stdout.pipe(process.stdout)
