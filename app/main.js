@@ -428,7 +428,6 @@ rl.on('line', (command)=>{
   else if(normCom.includes('|')){
     pipelineCmd = true
     const allCmds = splitPipe(normCom)
-    console.log('allCmds ' + allCmds)
     let allSpawns = []
     let allChilds = []
 
@@ -451,7 +450,6 @@ rl.on('line', (command)=>{
       }
     }) // determine all spawns + strings
 
-    console.log('allSpawns ' + allSpawns)
     for(let i=0; i<allSpawns.length; i++){
       const lastIndex = i === allSpawns.length-1
 
