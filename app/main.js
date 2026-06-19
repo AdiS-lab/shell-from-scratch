@@ -432,8 +432,8 @@ rl.on('line', (command)=>{
     let allSpawns = []
     let allChilds = []
 
-    allSpawns = allCmds.map((cmd, index)=>{
-      if(validCommands.includes(cmd)){
+    allSpawns = allCmds.map((cmd, index)=>{ // [[echo, file], [grep, text]]
+      if(validCommands.includes(cmd[0])){
         let output =  handleBuiltin(cmd[0], cmd.slice(1))
         return output
       }
