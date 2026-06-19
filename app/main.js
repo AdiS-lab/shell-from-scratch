@@ -9,6 +9,7 @@ const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs']
 let newCommands = {}
 let copyCommands = {}
 let jobs = []
+const directories = process.env.PATH.split(path.delimiter)
 
 
 let tabCount = 0 
@@ -274,22 +275,24 @@ function normalize(command){
   
 }
 
+function handleType(arg){
+  const newPath = checkPath(directories, arg)
+  if(validCommands.includes(arg)) {
+    return `${arg} is a shell builtin` + '\n'
+  }
+  else if(arg){
+    return `${arg} is ${newPath}` + '\n'
+  }
+  else{
+    return `${arg}: not found` + '\n'
+  }
+}
+
 function handleBuiltin(input, rest){
   return input  === 'echo' && rest.join(' ') + '\n'
   if(input === 'type'){
     const arg = rest.join()
-    const newPath = checkPath(directories, arg)
-
-    if(validCommands.includes(arg)) {
-      console.log('made it to here')
-      return `${arg} is a shell builtin` + '\n'
-    }
-    else if(arg){
-      return `${arg} is ${newPath}` + '\n'
-    }
-    else{
-      return `${arg}: not found` + '\n'
-    }
+    return handleType(arg)
   } 
   return input === 'pwd' && process.cwd() + '\n'
 }
@@ -331,9 +334,6 @@ function splitPipe(inputArr){
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
   let normCom = normalize(command)
-  const directories = process.env.PATH.split(path.delimiter)
-
-  
   if (normCom.at(-1) === '&'){
     let maxCounter = 0
     const fullCmd = normCom.join(' ')
