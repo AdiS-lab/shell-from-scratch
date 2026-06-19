@@ -30,7 +30,7 @@ const rl = readline.createInterface({
           const args = normLine.slice(1)
           console.log(args)
           try{
-            const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
+            const message = execFileSync(newCommands[customCmd],normLine, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
             if(!message){
               process.stdout.write('\x07')
               return [[], line]
