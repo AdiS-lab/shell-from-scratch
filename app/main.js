@@ -278,7 +278,31 @@ rl.on('line', (command)=>{
   let normCom = normalize(command)
   const directories = process.env.PATH.split(path.delimiter)
 
-  if(normCom.includes('>>') || normCom.includes('1>>') ){
+  
+  if (normCom.at(-1) === '&'){
+    normCom.pop()
+    console.log('this is my cmd ' +  normCom[0])
+    console.log(typeof normCom.slice(1))
+    let child = spawn(normCom[0], normCom.slice(1), {stdio: 'inherit'})
+    console.log(`[${jobCounter}] ${child.pid}`)
+    jobCounter++
+
+    child.on('error', (error) =>{
+      console.log(error.message)
+    })
+
+    // child.on.stdout('data', (data)=>{
+      
+    // })
+    // child.on.stderr('data', (data)=>{
+
+    // })
+    // child.on('close', (code) => {
+    //     console.log('Done Sleeping');
+    // });
+  }
+  
+  else if(normCom.includes('>>') || normCom.includes('1>>') ){
     const index = normCom.includes('>>') ? normCom.indexOf('>>') : normCom.indexOf('1>>')
     const targetPath = path.resolve(normCom[index+1])
     try{  
@@ -373,23 +397,6 @@ rl.on('line', (command)=>{
   } // handle cat commands
 
   else if (command.startsWith('jobs')){
-  }
-  else if (normCom.at(-1) === '&'){
-    normCom.pop()
-    const child = spawn(normCom[0], normCom.slice(1))
-    jobNumber.push(jobCounter)
-    console.log(`[${jobCounter}] ${child.pid}`)
-    jobCounter++
-    
-    // child.on.stdout('data', (data)=>{
-      
-    // })
-    // child.on.stderr('data', (data)=>{
-
-    // })
-    // child.on('close', (code) => {
-    //     console.log('Done Sleeping');
-    // });
   }
   
   else if (command.startsWith('cd')){
