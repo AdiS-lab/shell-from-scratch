@@ -464,7 +464,7 @@ rl.on('line', (command)=>{
         else allSpawns[i+1].stdin.write(allSpawns[i]) 
       } // case that is string 
 
-      else if(!(typeof allSpawns[i+1] === 'string')){ // !string for next
+      else if(!(typeof allSpawns[i+1] === 'string') && !lastIndex){ // !string for next
         allSpawns[i].stdout.pipe(allSpawns[i+1].stdin)
         allChilds.push(allSpawns[i])
       } // case that child + next ain't string 
