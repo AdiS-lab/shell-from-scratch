@@ -51,6 +51,7 @@ const rl = readline.createInterface({
               return [[], line]
             } 
             else{
+              console.log(messages)
               custTabCount = 0 
               const allMessages = messages.sort().join(' ')
               process.stdout.write('\n')
