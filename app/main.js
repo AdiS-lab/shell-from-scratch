@@ -406,8 +406,9 @@ rl.on('line', (command)=>{
     child2.on('data', (data) => output += data)
 
     child2.on('close' , ()=>{
-      process.stdout.write('\n')
-      process.stdout.write(output)
+      console.log(output)
+      // process.stdout.write('\n')
+      // process.stdout.write(output)
     })
   }
 
