@@ -5,7 +5,7 @@ const {execFileSync} = require('child_process')
 const os = require('os')
 
 const targets = ['echo ','exit ']
-const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'ls', 'du', 'stat', 'cat', 'xyz', 'wc']
+const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete']
 let newCommands = {}
 let copyCommands = {}
 
