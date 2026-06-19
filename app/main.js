@@ -278,7 +278,6 @@ function normalize(command){
 function handleType(arg){
   const newPath = checkPath(directories, arg)
   if(validCommands.includes(arg)) {
-    console.log('made it to here')
     return `${arg} is a shell builtin\n`
   }
   else if(newPath){
@@ -292,7 +291,6 @@ function handleType(arg){
 function handleBuiltin(input, rest){
   if(input  === 'echo') return rest.join(' ') + '\n'
   if(input === 'type'){
-    console.log('I at least got here')
     const arg = rest.join(' ')
     return handleType(arg)
   } 
@@ -437,9 +435,7 @@ rl.on('line', (command)=>{
 
     allSpawns = allCmds.map((cmd, index)=>{ // [[echo, blueberry], [wc]]
       if(validCommands.includes(cmd[0])){
-        index>0 && console.log('THIS IS INPUT ' + cmd[0])
         let output =  handleBuiltin(cmd[0], cmd.slice(1))
-        index>0&& console.log('THIS IS OUTPUT ' + output)
         return output
       }
       else if(index === 0){
