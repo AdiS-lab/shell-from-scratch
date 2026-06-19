@@ -159,7 +159,7 @@ const rl = readline.createInterface({
 });
 
 
-const validCommands = ['echo', 'exit', 'type', 'pwd']
+const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete']
 rl.prompt();
 
 function checkPath(directories, executable){
