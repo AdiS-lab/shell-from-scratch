@@ -278,12 +278,13 @@ rl.on('line', (command)=>{
 
   else if(normCom.includes('complete') && normCom.includes('-p')){
       const index = normCom.indexOf('-p')
-      const path = newCommands[normCom[index + 1]]
+      const customCmd = normCom[index + 1]
+      const path = newCommands[customCmd]
       if(!path){
-          console.log(`complete: ${normCom[index + 1]}: no completion specification`)
+          console.log(`complete: ${customCmd}: no completion specification`)
       }
       else{
-        console.log(`complete -C '${path}' ${docker}`)
+        console.log(`complete -C '${path}' ${customCmd}`)
       }
   }// handle checking registration
 
