@@ -85,7 +85,22 @@ const rl = readline.createInterface({
 
         // console.log(hits)
         hits = [... new Set(hits)].sort() // handle duplicates create new set with hits, and then arr it
-  
+
+        let LCP = line
+        const firstValue = hits[0]
+        for(let i = 1; i<hits.length; i++){ // we are going through each and finding where they match. what the lowest is. 
+          const firstWord = hits[i-1]
+          const secondWord = hits[i]
+          let tempLCP = ''
+
+          if(firstWord[0] === secondWord[0]){
+            tempLCP += firstWord[0]
+            for(let j = 1; j<firstWord.length; j++){
+              if(firstWord[j] === secondWord[j]) {tempLCP += firstWord[j]}
+            }
+            if(tempLCP.length >  LCP.length) LCP = tempLCP  
+          }
+        }
 
         if(!hits.length) process.stdout.write('\x07')
         else if(hits.length===1){
@@ -93,6 +108,15 @@ const rl = readline.createInterface({
         } 
         else if(JSON.stringify(hits) === JSON.stringify(hits.filter(hit=>hit.includes(hits[0].trim())))){ // check if filtering by the first(root) gives you hits
           return [[hits[0].trim()], line]
+        }
+        else if(LCP){
+          if(LCP.length > line.length){
+            return [[LCP], line] 
+          }
+          else{
+            process.stdout('\x07')
+            tabCount += 1
+          }
         } 
         else{
           tabCount += 1
