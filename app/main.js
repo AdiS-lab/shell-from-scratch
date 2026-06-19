@@ -310,14 +310,13 @@ rl.on('line', (command)=>{
     let child = spawn(cmd, normCom.slice(1), {stdio: 'inherit'}) 
 
     if(jobs.length>0){
-      console.log(jobs)
       jobs.forEach((job)=>[
         maxCounter = Math.max(job.num, maxCounter)
       ])
     }
 
     console.log(`[${maxCounter+1}] ${child.pid}`)
-    
+
     const jobData = {
       num: maxCounter + 1,
       status: 'Running',
