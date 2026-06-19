@@ -29,6 +29,7 @@ const rl = readline.createInterface({
           const customCmd = normLine[0]
           try{
             const message = execFileSync(newCommand[customCmd], [customCmd, '', customCmd], {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} )
+            console.log('made it to the message ' + messgae)
             return [[`${message} `], line]
           }
           catch(error){
