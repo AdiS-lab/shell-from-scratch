@@ -277,8 +277,8 @@ rl.on('line', (command)=>{
 
   else if(normCom.includes('-p')){
       const index = normCom.indexOf('-p')
-      if(!checkPath(directories, normCom[index])){
-          console.log(`complete: ${normCom[index]}: no completion specification`)
+      if(!checkPath(directories, normCom[index + 1])){
+          console.log(`complete: ${normCom[index + 1]}: no completion specification`)
       }
   }
     
