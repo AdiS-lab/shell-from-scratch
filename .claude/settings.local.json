@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(node -e \"console.log\\(process.config.variables.node_prefix || process.execPath\\)\")"
-    ]
-  }
-}

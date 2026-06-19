@@ -5,7 +5,7 @@ const {execFileSync} = require('child_process')
 const os = require('os')
 
 const targets = ['echo ','exit ']
-const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'ls']
+const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'ls', 'du']
 let newCommands = {}
 
 let tabCount = 0 
@@ -157,7 +157,6 @@ const rl = readline.createInterface({
         }
         else if(LCP && tabCount<1){
           if(LCP.length > line.length){
-
             return [[LCP], line] 
           }
           else{
