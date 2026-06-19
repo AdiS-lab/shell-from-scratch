@@ -108,7 +108,9 @@ const rl = readline.createInterface({
             process.stdout.write('\n')
             hits = hits.map(hit=>{
               if(hit.includes(' ')){
-                return hit.split(' ')[1]}
+                const parts =  hit.split(' ')
+                return !parts[1] ? parts[0] : parts[1]
+              }
             })
             const allHits = hits.join(' ')
             console.log(allHits)
