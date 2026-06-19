@@ -474,15 +474,14 @@ rl.on('line', (command)=>{
       } // case that child + next ain't string 
       else if(lastIndex){
         allSpawns[i].on('close', ()=>{
+          allChilds.forEach((spawn)=>{
+            spawn.kill('SIGTERM')
+          })
           pipelineCmd = false
           rl.prompt()
         }) 
       } // case that is last + not string 
     }
-    
-    allChilds.forEach((spawn)=>{
-      spawn.kill('SIGTERM')
-    })
 
 
   
