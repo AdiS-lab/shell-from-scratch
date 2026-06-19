@@ -452,6 +452,7 @@ rl.on('line', (command)=>{
     
     for(let i=0; i<allSpawns.length; i++){
       const lastIndex = i === allSpawns.length-1
+      const nextString = typeof allSpawns[i+1] === 'string'
 
       if(typeof allSpawns[i] === 'string'){
         if(lastIndex){
@@ -459,10 +460,13 @@ rl.on('line', (command)=>{
             process.stdout.write(allSpawns[i])
             rl.prompt()
         }
-        else allSpawns[i+1].stdin.write(allSpawns[i+1]) 
+        else if(!nextString){ 
+          allSpawns[i+1].stdin.write(allSpawns[i]) 
+          allSpawns[i+1].stdin.end()
+        }
       } // case that is string 
 
-      else if(!(typeof allSpawns[i+1] === 'string') && !lastIndex){ // !string for next
+      else if(!nextString && !lastIndex){ // !string for next
         allSpawns[i].stdout.pipe(allSpawns[i+1].stdin)
         allChilds.push(allSpawns[i])
       } // case that child + next ain't string 
