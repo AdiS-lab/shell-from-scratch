@@ -407,7 +407,7 @@ rl.on('line', (command)=>{
     child2.on('data', (data)=>output+=data)
 
     child2.on('close', ()=>{
-      console.log(data)
+      console.log(output)
     })
     // child2.stdout.pipe(process.stdout)
   }
