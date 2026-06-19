@@ -278,6 +278,7 @@ function normalize(command){
 function handleType(arg){
   const newPath = checkPath(directories, arg)
   if(validCommands.includes(arg)) {
+    console.log('made it to here')
     return `${arg} is a shell builtin` + '\n'
   }
   else if(arg){
