@@ -411,8 +411,8 @@ rl.on('line', (command)=>{
 
     child2.on('close', ()=>{
       pipelineCmd = false
-      process.stdout.write(output)
       child1.kill('SIGTERM')
+      process.stdout.write(output)
       rl.prompt()
     })
     // child2.stdout.pipe(process.stdout)
