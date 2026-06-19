@@ -272,6 +272,29 @@ function normalize(command){
   
 }
 
+function checkJobs(){
+  const finishedTasks = []
+
+    jobs.forEach((job, index)=>{
+      let recency = ' '
+      if(index === jobs.length-1) recency = '+'
+      if(index === jobs.length-2) recency = '-'
+
+      if(job.spawnProcess.exitCode !== null){
+        const status = 'Done'
+        finishedTasks.push(index)
+        console.log(`[${job.num}]${recency}  ${status.padEnd(24)}${job.command.slice(0,-2)}`)
+      }
+      else{
+        console.log(`[${job.num}]${recency}  ${job.status.padEnd(24)}${job.command}`)
+      }
+    })
+    
+    finishedTasks.forEach((ind)=>{
+      jobs.splice(ind,1)
+    })
+}
+
 //_________ if type exists but not exec then continue, if non-existent command then return that________
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
@@ -397,26 +420,7 @@ rl.on('line', (command)=>{
   } // handle cat commands
 
   else if (command.startsWith('jobs')){
-    const finishedTasks = []
-
-    jobs.forEach((job, index)=>{
-      let recency = ' '
-      if(index === jobs.length-1) recency = '+'
-      if(index === jobs.length-2) recency = '-'
-
-      if(job.spawnProcess.exitCode !== null){
-        const status = 'Done'
-        finishedTasks.push(index)
-        console.log(`[${job.num}]${recency}  ${status.padEnd(24)}${job.command.slice(0,-2)}`)
-      }
-      else{
-        console.log(`[${job.num}]${recency}  ${job.status.padEnd(24)}${job.command}`)
-      }
-    })
-    
-    finishedTasks.forEach((ind)=>{
-      jobs.splice(ind,1)
-    })
+    checkJobs()
   }
   
   else if (command.startsWith('cd')){
@@ -459,5 +463,6 @@ rl.on('line', (command)=>{
   else{
     console.log(`${command}: not found`)
   }
+  checkJobs()
   rl.prompt()
 })
