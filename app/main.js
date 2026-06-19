@@ -282,7 +282,6 @@ function checkJobs(printAll){
       if(index === jobs.length-2) recency = '-'
 
       if(job.spawnProcess.exitCode !== null){
-        console.log('made it in here for the exiting stuff ')
         const status = 'Done'
         finishedTasks.push(index)
         console.log(`[${job.num}]${recency}  ${status.padEnd(24)}${job.command.slice(0,-2)}`)
