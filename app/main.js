@@ -5,7 +5,7 @@ const {execFileSync} = require('child_process')
 const os = require('os')
 
 const targets = ['echo ','exit ']
-const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete']
+const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'ls']
 let newCommands = {}
 
 let tabCount = 0 
@@ -24,25 +24,25 @@ const rl = readline.createInterface({
         let hits = targets.filter(target=>target.startsWith(line))
         const normLine = normalize(line)
         const dirNames = process.env.PATH.split(':')  
+        const mainCmd = normLine[0]
 
 
-        if(normLine[0] in newCommands){ // need to make async
+        if(mainCmd in newCommands){ // need to make async
           process.env.COMP_LINE = line;
           process.env.COMP_POINT = line.length;
-          const customCmd = normLine[0]
           let args = []
           if(normLine.length>1){
-            args.push(customCmd)
+            args.push(mainCmd)
             args.push(normLine.at(-1))
-            normLine.length>2 ? args.push(normLine.at(1)) : args.push(customCmd)
+            normLine.length>2 ? args.push(normLine.at(1)) : args.push(mainCmd)
           }
           console.log(args)
           try{
-            const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} ).trim()
+            const message = execFileSync(newCommands[mainCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} ).trim()
             const results = message.split('\n').filter(Boolean)
             const LCP = calcLCP(line, results)
 
-            const prefix = normLine.length===1  ? customCmd : normLine.slice(0,-1).join(' ')
+            const prefix = normLine.length===1  ? mainCmd : normLine.slice(0,-1).join(' ')
             const comparison = `${prefix} ${LCP}`
 
             if(results.length===0){
@@ -71,6 +71,10 @@ const rl = readline.createInterface({
           catch(error){
             error.stderr && process.stderr.write(error.stderr)
           }
+        }
+
+        if(!(mainCmd in newCommands )&& !(validCommands.includes(mainCmd)) ){
+          return [[], line]
         }
         
         for(const dir of dirNames){
