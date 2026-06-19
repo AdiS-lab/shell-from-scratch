@@ -110,7 +110,7 @@ const rl = readline.createInterface({
         else if(JSON.stringify(hits) === JSON.stringify(hits.filter(hit=>hit.includes(hits[0].trim())))){ // check if filtering by the first(root) gives you hits
           return [[hits[0].trim()], line]
         }
-        else if(LCP){
+        else if(LCP && tabCount<1){
           if(LCP.length > line.length){
             return [[LCP], line] 
           }
