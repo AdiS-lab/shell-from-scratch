@@ -142,7 +142,7 @@ const rl = readline.createInterface({
             hits = hits.map(hit=>{
               if(hit.includes(' ')){
                 const parts =  hit.split(' ')
-                return !parts.at(-1) ? parts[-2] : parts[-1]
+                return !parts.at(-1) ? parts.at(-2) : parts.at(-1)
               }
             })
             const allHits = hits.join(' ')
