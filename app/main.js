@@ -304,14 +304,21 @@ rl.on('line', (command)=>{
 
   
   if (normCom.at(-1) === '&'){
+    letMaxCounter = 0
     const fullCmd = normCom.join(' ')
     normCom.pop()
     const cmd = normCom[0]
     let child = spawn(cmd, normCom.slice(1), {stdio: 'inherit'}) // i
     console.log(`[${jobCounter}] ${child.pid}`)
 
+    if(jobs.length>0){
+      jobs.forEach((job)=>[
+        maxCounter = Math.max(job.num, maxCounter)
+      ])
+    }
+    
     const jobData = {
-      num: jobCounter,
+      num: maxCounter + 1,
       status: 'Running',
       processId: child.pid,
       command: fullCmd,
