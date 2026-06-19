@@ -276,7 +276,7 @@ rl.on('line', (command)=>{
     }
   } //  handling 2>
 
-  else if(normCom.includes(complete) && normCom.includes('-p')){
+  else if(normCom.includes('complete') && normCom.includes('-p')){
       const index = normCom.indexOf('-p')
       const path = newCommands[normCom[index + 1]]
       if(!path){
@@ -285,20 +285,24 @@ rl.on('line', (command)=>{
       else{
         console.log(`complete -C '${path}' ${docker}`)
       }
-  }
-  else if(normCom.includes(complete) && normCom.includes('-C')){
+  }// handle checking registration
+
+  else if(normCom.includes('complete') && normCom.includes('-C')){
       newCommands[normCom.at(-1)] = normCom.at(-2)
-  }
+  }// handle registration
+
   else if(command === 'exit'){
     rl.close()
     return
-  }
+  }// handle exit 
+
   else if(command.startsWith("echo")){
     console.log(`${normCom.slice(1).join(' ')}`)
-  }
+  }// handle echo command 
+
   else if(command === 'pwd'){
-    console.log(process.cwd()) // current working direcotry
-  }
+    console.log(process.cwd()) 
+  }// handle pwd command (whatever in current dir)
   else if (command.startsWith('cat')){
     // console.log('this is inside cat command  ' + normCom)
     const message = execFileSync(normCom[0], normCom.slice(1),{encoding: 'utf8'})
