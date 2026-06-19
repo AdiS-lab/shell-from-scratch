@@ -38,6 +38,7 @@ const rl = readline.createInterface({
             const message = execFileSync(newCommands[customCmd],args, {encoding:"utf8", stdio: ['pipe', 'pipe', 'pipe']} ).trim()
             const results = message.split('\n').filter(Boolean)
             let LCP = calcLCP(line, results)
+            console.log('what is LCP ' + LCP)
 
             if(results.length===0){
               process.stdout.write('\x07')
