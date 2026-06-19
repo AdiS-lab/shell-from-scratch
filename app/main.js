@@ -108,18 +108,17 @@ const rl = readline.createInterface({
             process.stdout.write('\n')
             const allHits = hits.join(' ')
             console.log(allHits)
-            rl.prompt()
+            // rl.prompt()
+            // rl.write(line)
+            rl._refreshLine()
+            return [[],line]
           }
           lastLine = line
         } 
-      return [[], line]
+      return [[], line] // if empty [] then will not recognize it as freshinput, and keep cursor at front
   }
-
-
 });
 
-
-// console.log('rl is this: ' + rl)
 
 const validCommands = ['echo', 'exit', 'type', 'pwd']
 rl.prompt();
