@@ -47,7 +47,7 @@ const rl = readline.createInterface({
             }
             else if(custTabCount<1){
               custTabCount+=1
-              process.stdout.write('x07')
+              process.stdout.write('\x07')
               return [[], line]
             } 
             else{
