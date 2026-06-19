@@ -397,7 +397,11 @@ rl.on('line', (command)=>{
 
   else if (command.startsWith('jobs')){
     jobs.forEach((job, index)=>{
-      const recency = index === jobs.length-1 ? '+' : '-'
+      let recency = ' '
+      if(index === jobs.length-1) recency = '+'
+      if(index === jobs.length-2) recency = '-'
+
+
       console.log(`[${job.num}]${recency}  ${job.status.padEnd(24)}${job.command}`)
     })
   }
