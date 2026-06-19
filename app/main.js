@@ -402,14 +402,10 @@ rl.on('line', (command)=>{
     const child2 = spawn(secondCommand[0], secondCommand.slice(1),{stdio:['pipe', 'pipe', 'inherit']})
     child1.stdout.pipe(child2.stdin)
 
-    let output = ''
-    child2.on('data', (data) => output += data)
-
-    child2.on('close' , ()=>{
-      console.log(output)
-      // process.stdout.write('\n')
-      // process.stdout.write(output)
+    child2.on('data', (data)=>{
+      console.log(data)
     })
+    // child2.stdout.pipe(process.stdout)
   }
 
   else if(normCom.includes('complete') && normCom.includes('-p')){
@@ -427,11 +423,11 @@ rl.on('line', (command)=>{
   else if(normCom.includes('complete') && normCom.includes('-C')){
       newCommands[normCom.at(-1)] = normCom.at(-2)
       copyCommands[normCom.at(-1)] = normCom.at(-2)
-  }// handle registration
+  }// handle creating registration
 
   else if(normCom.includes('complete') && normCom.includes('-r')){
      delete newCommands[normCom.at(-1)]
-  }// handle registration
+  }// handle remove registration
 
   else if(command === 'exit'){
     rl.close()
