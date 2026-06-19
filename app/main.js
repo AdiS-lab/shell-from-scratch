@@ -380,7 +380,6 @@ rl.on('line', (command)=>{
     jobNumber.push(jobCounter)
     console.log(`[${jobCounter}] ${child.pid}`)
     jobCounter++
-
     
     // child.on.stdout('data', (data)=>{
       
@@ -388,9 +387,9 @@ rl.on('line', (command)=>{
     // child.on.stderr('data', (data)=>{
 
     // })
-    child.on('close', (code) => {
-        console.log('Done Sleeping');
-    });
+    // child.on('close', (code) => {
+    //     console.log('Done Sleeping');
+    // });
   }
   
   else if (command.startsWith('cd')){
