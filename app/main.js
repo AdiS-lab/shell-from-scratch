@@ -36,7 +36,7 @@ const rl = readline.createInterface({
               process.stdout.write('\x07')
               return [[], line]
             }
-            const terminal = `${normLine.slice(0,-1)} ${message.trim()} `
+            const terminal = `${normLine.slice(0,-1).join(' ')} ${message.trim()} `
             return [[terminal], line]
           }
           catch(error){
