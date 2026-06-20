@@ -389,9 +389,9 @@ rl.on('line', (command)=>{
   normCom = normCom.map((input)=>{ // input could be something like $whatever
     if(input[0] === '$'){
         const sv =  input.slice(1)
-        shellVariables.forEach((variables)=>{
+        for(const variables of shellVariables){
           if(sv in variables) return variables[sv]
-        })
+        }
     }
     return input
   })
