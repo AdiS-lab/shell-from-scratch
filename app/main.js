@@ -39,14 +39,9 @@ const rl = readline.createInterface({
   prompt: "$ ",
   completer: function(cmd){
 
-      const normLine = normalize(cmd)
-        normLine = normLine.map((input)=>{ // input could be something like $whatever
-          if(input[0] === '$'){
-                const sv =  input.slice(1)
-                shellVariables.forEach((variables)=>{
-                  if(sv in variables) return variables[sv]
-                })
-            } 
+        let normLine = normalize(cmd)
+        normLine = normLine.map((input)=>{
+          return findShellVar(input)
         })
 
         let line = normLine.join(' ')
@@ -377,23 +372,28 @@ function splitPipe(inputArr){
     return cmds.trim().split(' ')
   })
   return newArr
-  //find each index
-  //slice accordingly into chunks
 }
 
+function findShellVar(input){
+  let arr = input.split('$')
+
+  return arr.map((inputPart, index)=>{
+    if(index===0) return inputPart
+    if(inputPart && index>0){
+      for(const variables of shellVariables){
+        if( inputPart in variables ) return variables[inputPart]
+      }// walk through and check if equal
+    return `$${inputPart}`
+    }
+  }).join('')
+}
 //_________ if type exists but not exec then continue, if non-existent command then return that________
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
   let normCom = normalize(command)
 
-  normCom = normCom.map((input)=>{ // input could be something like $whatever
-    if(input[0] === '$'){
-        const sv =  input.slice(1)
-        for(const variables of shellVariables){
-          if(sv in variables) return variables[sv]
-        }
-    }
-    return input
+  normCom = normCom.map((input)=>{
+    return findShellVar(input)
   })
 
   if (normCom.at(-1) === '&'){
