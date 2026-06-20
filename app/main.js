@@ -516,7 +516,7 @@ rl.on('line', (command)=>{
   }// handle creating registration
 
   else if(normCom.includes('complete') && normCom.includes('-r')){
-     pastCommands.push(line)
+     pastCommands.push(command)
      delete newCommands[normCom.at(-1)]
   }// handle remove registration
 
