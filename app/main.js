@@ -590,7 +590,7 @@ rl.on('line', (command)=>{
       })
 
       const fileData = fs.appendFileSync(filePath,data)
-      !found && prevAppend.push({filePath:pastCommands})
+      !found && prevAppend.push({[filePath]:pastCommands})
     }
     else{
       pastCommands.forEach((cm, index)=>{
