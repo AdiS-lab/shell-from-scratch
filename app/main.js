@@ -339,6 +339,12 @@ function splitPipe(inputArr){
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
   let normCom = normalize(command)
+  const histData = readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
+  const histResults = histData.trim().split('\n')
+  histResults.forEach((result) => {pastCommands.push(result)})
+
+
+
   if (normCom.at(-1) === '&'){
     let maxCounter = 0
     const fullCmd = normCom.join(' ')
@@ -592,7 +598,7 @@ rl.on('line', (command)=>{
       })
 
       const fileData = fs.appendFileSync(filePath,data)
-      !found && prevAppend.push({[filePath]:[...pastCommands]})
+      !found && prevAppend.push({[filePath]:[...pastCommands]}) // dereferencing
     }
     else{
       pastCommands.forEach((cm, index)=>{
