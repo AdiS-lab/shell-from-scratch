@@ -16,6 +16,7 @@ let prevAppend = []
 
 const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
 const histResults = histData.trim().split('\n')
+console.log(histResults)
 histResults.forEach((result) => {pastCommands.push(result)})
 
 
@@ -593,7 +594,7 @@ rl.on('line', (command)=>{
           found = true
         }
       })
-      
+
       const fileData = fs.appendFileSync(filePath,data)
       !found && prevAppend.push({[filePath]:[...pastCommands]}) // dereferencing
     }
