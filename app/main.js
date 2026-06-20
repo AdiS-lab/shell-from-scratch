@@ -554,6 +554,7 @@ rl.on('line', (command)=>{
 
   else if (command.startsWith('history')){
     pastCommands.push(command)
+    console.log(normCom[1])
     if(typeof Number(normCom[1]) === 'number'){
       const number = Number(normCom[1])
       pastCommands.forEach((command, index)=>{
@@ -563,7 +564,7 @@ rl.on('line', (command)=>{
     else if(normCom[1] === '-r'){
       console.log('making it inside the conditional at the very least')
       const filePath = normCom.at(-1)
-      const fileData = fs.readFileSync(filePath, 'utf8')
+      const fileData = fs.readFileSync(filePath, {encoding: 'utf8'})
       console.log(fileData)
       results.forEach(message=>pastCommands.push(message))
     }
