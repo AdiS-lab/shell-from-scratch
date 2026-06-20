@@ -588,14 +588,14 @@ rl.on('line', (command)=>{
     else{
       const decData = normCom[1].split('=')
       const NAME = decData[0]
+      const VALUE = decData[1]
+
       let valid = true
 
       if ( Number.isInteger(Number(NAME[0])) ){
-        console.log(`declare: ${NAME}: not a valid identifier`)
+        console.log(`declare: ${NAME}=${VALUE}: not a valid identifier`)
         valid = false
       }
-
-      const VALUE = decData[1]
       valid && shellVariables.push({[NAME]:[VALUE]})
     }
     
