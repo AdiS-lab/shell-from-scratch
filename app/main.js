@@ -37,9 +37,9 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
   prompt: "$ ",
-  completer: function(line){
+  completer: function(cmd){
 
-      const normLine = normalize(line)
+      const normLine = normalize(cmd)
         normLine = normLine.map((input)=>{ // input could be something like $whatever
           if(input[0] === '$'){
                 const sv =  input.slice(1)
