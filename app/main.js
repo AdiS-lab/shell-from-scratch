@@ -554,18 +554,24 @@ rl.on('line', (command)=>{
 
   else if (command.startsWith('history')){
     pastCommands.push(command)
-    if(normCom.length>1){
+    if(typeof Number(normCom[1]) === 'number'){
       const number = Number(normCom[1])
       pastCommands.forEach((command, index)=>{
         index >= (pastCommands.length-number) && console.log(`${index+1} ${command}`)
       })
+    }
+    else if(normCom[1] === '-r'){
+      const filePath = normCom.at(-1)
+      const message = execFileSync(filePath,[],{encoding:'utf8', stdio: ['inherit', 'pipe', 'inherit']}).trim()
+      const results = message.split('\n').filter(Boolean)
+      results.forEach(message=>pastCommands.push(message))
     }
     else{
       pastCommands.forEach((command, index)=>{
         console.log(`${index+1} ${command}`)
       })
     }
-    pastCommands.pop()
+    // pastCommands.pop()
   }
 
   else if(command.startsWith('type')){
