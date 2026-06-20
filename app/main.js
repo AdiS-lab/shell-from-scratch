@@ -593,7 +593,7 @@ rl.on('line', (command)=>{
       let valid = true
 
       if ( Number.isInteger(Number(NAME[0])) ){
-        console.log(`declare: ${NAME}=${VALUE}: not a valid identifier`)
+        console.log(`declare: \`${NAME}=${VALUE}': not a valid identifier`)
         valid = false
       }
       valid && shellVariables.push({[NAME]:[VALUE]})
