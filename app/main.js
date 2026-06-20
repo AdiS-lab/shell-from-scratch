@@ -12,6 +12,8 @@ let jobs = []
 let pastCommands = []
 let histCmd = false
 const directories = process.env.PATH.split(path.delimiter)
+let prevAppend = []
+
 
 
 let tabCount = 0 
@@ -574,9 +576,20 @@ rl.on('line', (command)=>{
       const fileData = fs.writeFileSync(filePath,data)
     }
     else if( normCom[1] && normCom[1] === '-a' ){
+      let found = false
+      let data = `${pastCommands.join('\n')}\n`
+      prevAppend.forEach((file)=>{
+        if(filePath in file){
+          const number = file[filePath].length
+          data = `${pastCommands.slice(length).join('\n')}\n`
+          file[filePath] = pastCommands
+          found = true
+        }
+      })
+
       const filePath = normCom.at(-1)
-      const data = `${pastCommands.join('\n')}\n`
       const fileData = fs.appendFileSync(filePath,data)
+      !found && prevAppend.push({filePath:pastCommands})
     }
     else{
       pastCommands.forEach((cm, index)=>{
