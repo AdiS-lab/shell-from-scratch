@@ -564,7 +564,7 @@ rl.on('line', (command)=>{
       const filePath = normCom.at(-1)
       const message = execFileSync(filePath,[],{encoding:'utf8', stdio: ['inherit', 'pipe', 'inherit']}).trim()
       const results = message.split('\n').filter(Boolean)
-      console.log(results)
+      console.log('this is results cmon ' + results)
       results.forEach(message=>pastCommands.push(message))
     }
     else{
