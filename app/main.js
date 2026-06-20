@@ -554,7 +554,6 @@ rl.on('line', (command)=>{
 
   else if (command.startsWith('history')){
     pastCommands.push(command)
-    let bool = false
     if( normCom[1] && Number.isInteger(Number(normCom[1])) ){
       const number = Number(normCom[1])
       pastCommands.forEach((command, index)=>{
@@ -565,6 +564,7 @@ rl.on('line', (command)=>{
       const filePath = normCom.at(-1)
       const fileData = fs.readFileSync(filePath, {encoding: 'utf8'})
       const results = fileData.trim().split('\n')
+      console.log('this is results !! ' + results)
       results.forEach(message => pastCommands.push(message))
     }
     else{
