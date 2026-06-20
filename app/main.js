@@ -533,9 +533,8 @@ rl.on('line', (command)=>{
 
   else if(command === 'exit'){
     pastCommands.push(command)
-    pastCommands.forEach((cmd) => { 
-      console.log(cmd)
-    })
+    const data = `${pastCommands.join('\n')}\n`
+    fs.writeFileSync(process.env.HISTFILE, data)
     rl.close()
     return
   }// handle exit 
