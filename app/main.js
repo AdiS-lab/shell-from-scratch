@@ -18,8 +18,9 @@ if(process.env.HISTFILE){
   const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
   const histResults = histData.trim().split('\n')
   if(!(histResults === '')) histResults.forEach((result) => {pastCommands.push(result)})
-  console.log('this is pastCommands'+ pastCommands)
   prevAppend.push({[process.env.HISTFILE]: [...pastCommands]})
+  const fileName = prevAppend[0]
+  console.log('this is prevAppend ' + fileName[process.env.HISTFILE])
 }
 
 
