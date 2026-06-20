@@ -562,9 +562,8 @@ rl.on('line', (command)=>{
     }
     else if(normCom[1] === '-r'){
       const filePath = normCom.at(-1)
-      const message = execFileSync(filePath,[],{encoding:'utf8', stdio: ['inherit', 'pipe', 'inherit']}).trim()
-      const results = message.split('\n').filter(Boolean)
-      console.log('this is results cmon ' + results)
+      const fileData = fs.readFileSync(filePath, 'utf8')
+      console.log(fileData)
       results.forEach(message=>pastCommands.push(message))
     }
     else{
