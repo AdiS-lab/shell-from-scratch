@@ -11,12 +11,15 @@ let copyCommands = {}
 let jobs = []
 let pastCommands = []
 let histCmd = false
+let prevAppend = []
 const directories = process.env.PATH.split(path.delimiter)
 
-const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
-const histResults = histData.trim().split('\n')
-histResults.forEach((result) => {pastCommands.push(result)})
-prevAppend = [{[process.env.HISTFILE]: [...pastCommands]}]
+if(process.env.HISTFILE){
+  const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
+  const histResults = histData.trim().split('\n')
+  histResults.forEach((result) => {pastCommands.push(result)})
+  prevAppend.push({[process.env.HISTFILE]: [...pastCommands]})
+}
 
 
 
@@ -593,8 +596,9 @@ rl.on('line', (command)=>{
           found = true
         }
       })
-
-      const fileData = fs.appendFileSync(filePath,data)
+      
+      
+      fs.appendFileSync(filePath,data)
       !found && prevAppend.push({[filePath]:[...pastCommands]}) // dereferencing
     }
     else{
