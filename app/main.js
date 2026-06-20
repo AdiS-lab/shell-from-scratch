@@ -339,7 +339,7 @@ function splitPipe(inputArr){
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
   let normCom = normalize(command)
-  const histData = readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
+  const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
   const histResults = histData.trim().split('\n')
   histResults.forEach((result) => {pastCommands.push(result)})
 
