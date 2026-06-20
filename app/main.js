@@ -568,7 +568,7 @@ rl.on('line', (command)=>{
       const results = fileData.trim().split('\n')
       results.forEach(message => pastCommands.push(message))
     }
-    else if( normCom[1] && normCom[1] === '-r' ){
+    else if( normCom[1] && normCom[1] === '-w' ){
       const filePath = normCom.at(-1)
       const data = pastCommands.join('\n')
       const fileData = fs.writeFileSync(filePath,data)
