@@ -39,10 +39,25 @@ const rl = readline.createInterface({
   prompt: "$ ",
   completer: function(line){
 
+      const normLine = normalize(line)
+        normLine = normLine.map((input)=>{ // input could be something like $whatever
+          if(input[0] === '$'){
+                const sv =  input.slice(1)
+                shellVariables.forEach((variables)=>{
+                  if(sv in variables) return variables[sv]
+                })
+            } 
+        })
+
+        let line = normLine.join(' ')
+
 
 
         let hits = targets.filter(target=>target.startsWith(line))
-        const normLine = normalize(line)
+
+        
+
+
         const dirNames = process.env.PATH.split(':')  
         const mainCmd = normLine[0]
 
@@ -371,6 +386,15 @@ function splitPipe(inputArr){
 rl.on('line', (command)=>{
   let normCom = normalize(command)
 
+  normCom = normCom.map((input)=>{ // input could be something like $whatever
+    if(input[0] === '$'){
+        const sv =  input.slice(1)
+        shellVariables.forEach((variables)=>{
+          if(sv in variables) return variables[sv]
+        })
+    } 
+  })
+
   if (normCom.at(-1) === '&'){
     let maxCounter = 0
     const fullCmd = normCom.join(' ')
@@ -400,7 +424,7 @@ rl.on('line', (command)=>{
     })
   }
 
-  else if (command.startsWith('jobs')){
+  else if (normCom[0] === 'jobs'){
     printAll = true
     checkJobs(printAll)
     printAll = false
@@ -554,7 +578,7 @@ rl.on('line', (command)=>{
      delete newCommands[normCom.at(-1)]
   }// handle remove registration
 
-  else if(command === 'exit'){
+  else if(normCom.join('') === 'exit'){
     pastCommands.push(command)
     const data = `${pastCommands.join('\n')}\n`
     if(process.env.HISTFILE){
@@ -564,19 +588,19 @@ rl.on('line', (command)=>{
     return
   }// handle exit 
 
-  else if(command.startsWith("echo")){
+  else if(normCom[0] === "echo"){
     console.log(`${normCom.slice(1).join(' ')}`)
   }// handle echo command 
 
-  else if(command === 'pwd'){
+  else if(normCom.join('') === 'pwd'){
     console.log(process.cwd()) 
   }// handle pwd command (whatever in current dir)
-  else if (command.startsWith('cat')){
+  else if (normCom[0] === 'cat'){
     // console.log('this is inside cat command  ' + normCom)
     const message = execFileSync(normCom[0], normCom.slice(1),{encoding: 'utf8'})
     process.stdout.write(message)
   } // handle cat commands
-  else if (command.startsWith('cd')){
+  else if (normCom[0] === 'cd'){
     const fileName = command.slice(3)
     if(fileName==='~'){
       process.chdir(os.homedir())
@@ -592,7 +616,7 @@ rl.on('line', (command)=>{
     }
   }// handle cd commands
 
-  else if (command.startsWith('declare')){
+  else if (normCom[0] === 'declare'){
     if(normCom[1] === '-p'){
       let NAME = normCom.at(-1)
       let VALUE = ''
@@ -618,7 +642,7 @@ rl.on('line', (command)=>{
     
   }
 
-  else if (command.startsWith('history')){
+  else if (normCom[0] === 'history'){
     pastCommands.push(command)
     if( normCom[1] && Number.isInteger(Number(normCom[1])) ){
       const number = Number(normCom[1])
@@ -665,8 +689,8 @@ rl.on('line', (command)=>{
     !histCmd && pastCommands.pop()
   } //  handle history
 
-  else if(command.startsWith('type')){
-    const secondHalf = command.slice(5)
+  else if(normCom[0] === 'type'){
+    const secondHalf = normCom.slice(1)
     const newPath = checkPath(directories, secondHalf)
 
     if(validCommands.includes(secondHalf)) {
@@ -687,13 +711,13 @@ rl.on('line', (command)=>{
 
 
   else{
-    console.log(`${command}: not found`)
+    console.log(`${normCom.join(' ')}: not found`)
   }
   checkJobs(printAll)
 
   if(!histCmd){
     histCmd = false
-    pastCommands.push(command)}
+    pastCommands.push(normCom.join(' '))}
 
   if(pipelineCmd){
     return
