@@ -555,7 +555,7 @@ rl.on('line', (command)=>{
   else if (command.startsWith('history')){
     pastCommands.push(command)
     let bool = false
-    if(bool){
+    if( normCom[1] && Number.isInteger(Number(normCom[1])) ){
       const number = Number(normCom[1])
       pastCommands.forEach((command, index)=>{
         index >= (pastCommands.length-number) && console.log(`${index+1} ${command}`)
@@ -564,7 +564,8 @@ rl.on('line', (command)=>{
     else if(normCom[1] === '-r'){
       const filePath = normCom.at(-1)
       const fileData = fs.readFileSync(filePath, {encoding: 'utf8'})
-      console.log(fileData)
+      const results = fileData.split('\n')
+      results.forEach(message => pastCommands.push(message))
     }
     else{
       pastCommands.forEach((command, index)=>{
