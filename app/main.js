@@ -516,7 +516,6 @@ rl.on('line', (command)=>{
   }// handle creating registration
 
   else if(normCom.includes('complete') && normCom.includes('-r')){
-     pastCommands.push(command)
      delete newCommands[normCom.at(-1)]
   }// handle remove registration
 
@@ -526,12 +525,10 @@ rl.on('line', (command)=>{
   }// handle exit 
 
   else if(command.startsWith("echo")){
-    pastCommands.push(command)
     console.log(`${normCom.slice(1).join(' ')}`)
   }// handle echo command 
 
   else if(command === 'pwd'){
-    pastCommands.push(command)
     console.log(process.cwd()) 
   }// handle pwd command (whatever in current dir)
   else if (command.startsWith('cat')){
@@ -542,13 +539,11 @@ rl.on('line', (command)=>{
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
     if(fileName==='~'){
-      pastCommands.push(command)
       process.chdir(os.homedir())
     } 
     else{
       const targetFile = path.resolve(fileName)
       if(fs.existsSync(fileName)){
-        pastCommands.push(command)
         process.chdir(fileName)
       }
       else{
@@ -558,7 +553,10 @@ rl.on('line', (command)=>{
   }// handle cd commands
 
   else if (command.startsWith('history')){
-    // pastCommands.push()
+    pastCommands.push('history')
+    pastCommands.forEach((command, index)=>{
+      console.log(`${index+1} ${command}`)
+    })
   }
 
   else if(command.startsWith('type')){
@@ -587,6 +585,7 @@ rl.on('line', (command)=>{
   }
   checkJobs(printAll)
 
+  pastCommands.push(command)
   if(pipelineCmd){
     return
   } 
