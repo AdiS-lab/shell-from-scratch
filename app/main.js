@@ -17,7 +17,7 @@ const directories = process.env.PATH.split(path.delimiter)
 if(process.env.HISTFILE){
   const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
   const histResults = histData.trim().split('\n')
-  if(!(histResults === '')) histResults.forEach((result) => {pastCommands.push(result)})
+  if(!histResults) histResults.forEach((result) => {pastCommands.push(result)})
   prevAppend.push({[process.env.HISTFILE]: [...pastCommands]})
   const fileName = prevAppend[0]
 }
@@ -590,6 +590,7 @@ rl.on('line', (command)=>{
       let data = `${pastCommands.join('\n')}\n`
 
       prevAppend.forEach((file)=>{
+
         if(filePath in file){
           const number = file[filePath].length
           console.log(file[filePath])
