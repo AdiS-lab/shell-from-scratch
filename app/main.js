@@ -346,7 +346,7 @@ function validateString(input){
     return false
   }
 
-  for (const x = 0; x<input.length; x ++ ){
+  for (const x = 1; x<input.length; x ++ ){
     const charVal = input.charCodeAt(x)
     if(!lowerLetterRange.includes(charVal) || !upperLetterRange.includes(charVal) || !charVal === underscoreVal || !digitRange.includes(charVal) )
     {
