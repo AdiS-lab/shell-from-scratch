@@ -565,6 +565,7 @@ rl.on('line', (command)=>{
       const fileData = fs.readFileSync(filePath, {encoding: 'utf8'})
       const results = fileData.trim().split('\n')
       results.forEach(message => pastCommands.push(message))
+      console.log('this is past Commands right after first ' + pastCommands)
     }
     else{
       pastCommands.forEach((command, index)=>{
