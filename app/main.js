@@ -564,7 +564,7 @@ rl.on('line', (command)=>{
     else if(normCom[1] === '-r'){
       const filePath = normCom.at(-1)
       const fileData = fs.readFileSync(filePath, {encoding: 'utf8'})
-      const results = fileData.split('\n')
+      const results = fileData.trim().split('\n')
       results.forEach(message => pastCommands.push(message))
     }
     else{
