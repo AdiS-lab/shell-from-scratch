@@ -692,6 +692,7 @@ rl.on('line', (command)=>{
 
   else if(normCom[0] === 'type'){
     const secondHalf = normCom.slice(1)
+    console.log(secondHalf)
     const newPath = checkPath(directories, secondHalf)
 
     if(validCommands.includes(secondHalf)) {
