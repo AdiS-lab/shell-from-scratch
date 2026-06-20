@@ -561,6 +561,7 @@ rl.on('line', (command)=>{
       })
     }
     else if(normCom[1] === '-r'){
+      console.log('making it inside the conditional at the very least')
       const filePath = normCom.at(-1)
       const fileData = fs.readFileSync(filePath, 'utf8')
       console.log(fileData)
