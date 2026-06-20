@@ -570,7 +570,7 @@ rl.on('line', (command)=>{
   }// handle cd commands
 
   else if (command.startsWith('declare')){
-    const variable = command.at(-1)
+    const variable = normCom.at(-1)
     console.log(`declare: ${variable}: not found`)
   }
 
