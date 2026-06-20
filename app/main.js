@@ -584,6 +584,7 @@ rl.on('line', (command)=>{
         if(filePath in file){
           const number = file[filePath].length
           data = `${pastCommands.slice(number).join('\n')}\n`
+          console.log(data)
           file[filePath] = pastCommands
           found = true
         }
