@@ -5,7 +5,7 @@ const {execFileSync, spawn, fork } = require('child_process')
 const os = require('os')
 
 const targets = ['echo ','exit ']
-const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs', 'history']
+const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs', 'history', 'declare']
 let newCommands = {}
 let copyCommands = {} // in order to keep track of what was used and not used anymore
 let jobs = []
