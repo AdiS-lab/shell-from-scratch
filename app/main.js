@@ -560,14 +560,14 @@ rl.on('line', (command)=>{
         index >= (pastCommands.length-number) && console.log(`${index+1} ${command}`)
       })
     }
-    else if(normCom[1] === '-r'){
+    else if( normCom[1] && normCom[1] === '-r'){
       const filePath = normCom.at(-1)
       const fileData = fs.readFileSync(filePath, {encoding: 'utf8'})
       const results = fileData.trim().split('\n')
       results.forEach(message => pastCommands.push(message))
-      console.log('this is past Commands right after first ' + pastCommands)
     }
     else{
+      console.log('this is pastCommands whne history activated ' + pastCommands)
       pastCommands.forEach((command, index)=>{
         console.log(`${index+1} ${command}`)
       })
