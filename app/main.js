@@ -587,10 +587,10 @@ rl.on('line', (command)=>{
       const filePath = normCom.at(-1)
       let found = false
       let data = `${pastCommands.join('\n')}\n`
-      console.log('THIS IS A CHECK ' + prevAppend[0])
 
       prevAppend.forEach((file)=>{
         if(filePath in file){
+          console.log('THIS IS A CHECK ' + file[filePath])
           const number = file[filePath].length
           console.log(file[filePath])
           data = `${pastCommands.slice(number).join('\n')}\n`
