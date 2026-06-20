@@ -12,6 +12,7 @@ let jobs = []
 let pastCommands = []
 let histCmd = false
 let prevAppend = []
+let shellVariables = []
 const directories = process.env.PATH.split(path.delimiter)
 
 if(process.env.HISTFILE){
@@ -570,8 +571,28 @@ rl.on('line', (command)=>{
   }// handle cd commands
 
   else if (command.startsWith('declare')){
-    const variable = normCom.at(-1)
-    console.log(`declare: ${variable}: not found`)
+    if(normCom[1] === '-p'){
+      let NAME = normCom.at(-1)
+      let VALUE = ''
+      let found = false
+
+      shellVariables.forEach((variable)=>{
+        if(NAME in variable){
+          VALUE = variable[NAME]
+          found = true
+        }
+      })
+      found ? console.log(`declare -- ${NAME}="${VALUE}"`)
+      : console.log(`declare: ${NAME}: not found`)
+    }
+    else{
+      const decData = normCom[1].split('=')
+      const NAME = decData[0]
+      const VALUE = decData[1]
+
+      shellVariables.push({[NAME]:[VALUE]})
+    }
+    
   }
 
   else if (command.startsWith('history')){
