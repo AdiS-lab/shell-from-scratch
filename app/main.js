@@ -585,13 +585,15 @@ rl.on('line', (command)=>{
           const number = file[filePath].length
           console.log(file[filePath])
           data = `${pastCommands.slice(number).join('\n')}\n`
-          file[filePath] = pastCommands
+
+
+          file[filePath] = [...pastCommands]
           found = true
         }
       })
 
       const fileData = fs.appendFileSync(filePath,data)
-      !found && prevAppend.push({[filePath]:pastCommands})
+      !found && prevAppend.push({[filePath]:[...pastCommands]})
     }
     else{
       pastCommands.forEach((cm, index)=>{
