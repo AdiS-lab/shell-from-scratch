@@ -14,6 +14,10 @@ let histCmd = false
 const directories = process.env.PATH.split(path.delimiter)
 let prevAppend = []
 
+const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
+const histResults = histData.trim().split('\n')
+histResults.forEach((result) => {pastCommands.push(result)})
+
 
 
 let tabCount = 0 
@@ -339,11 +343,6 @@ function splitPipe(inputArr){
 //_____ this entire loop is called a REPL good to know _________________________
 rl.on('line', (command)=>{
   let normCom = normalize(command)
-  const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
-  const histResults = histData.trim().split('\n')
-  histResults.forEach((result) => {pastCommands.push(result)})
-
-
 
   if (normCom.at(-1) === '&'){
     let maxCounter = 0
@@ -590,8 +589,6 @@ rl.on('line', (command)=>{
         if(filePath in file){
           const number = file[filePath].length
           data = `${pastCommands.slice(number).join('\n')}\n`
-
-
           file[filePath] = [...pastCommands]
           found = true
         }
