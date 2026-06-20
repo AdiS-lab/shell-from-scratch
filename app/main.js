@@ -342,7 +342,7 @@ function validateString(input){
   const underscoreVal = 95
   const firstChar = input.charCodeAt(0)
 
-  if(!lowerLetterRange.includes(firstChar) || !upperLetterRange.includes(firstChar) || !firstChar === underscoreVal){
+  if(!(lowerLetterRange.includes(firstChar) || upperLetterRange.includes(firstChar) || (firstChar === underscoreVal))){
     return false
   }
   input.forEach((_, index)=>{
