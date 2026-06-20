@@ -569,6 +569,11 @@ rl.on('line', (command)=>{
     }
   }// handle cd commands
 
+  else if (command.startsWith('declare')){
+    const variable = command.at(-1)
+    console.log(`declare: ${variable}: not found`)
+  }
+
   else if (command.startsWith('history')){
     pastCommands.push(command)
     if( normCom[1] && Number.isInteger(Number(normCom[1])) ){
@@ -614,7 +619,7 @@ rl.on('line', (command)=>{
       })
     }
     !histCmd && pastCommands.pop()
-  }
+  } //  handle history
 
   else if(command.startsWith('type')){
     const secondHalf = command.slice(5)
