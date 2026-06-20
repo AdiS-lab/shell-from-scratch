@@ -560,7 +560,6 @@ rl.on('line', (command)=>{
       pastCommands.forEach((command, index)=>{
         index >= (pastCommands.length-number) && console.log(`${index+1} ${command}`)
       })
-      pastCommands.pop()
     }
     else if( normCom[1] && normCom[1] === '-r'){
       histCmd = true
@@ -568,14 +567,18 @@ rl.on('line', (command)=>{
       const fileData = fs.readFileSync(filePath, {encoding: 'utf8'})
       const results = fileData.trim().split('\n')
       results.forEach(message => pastCommands.push(message))
-      process.stdout.write('')
+    }
+    else if( normCom[1] && normCom[1] === '-r' ){
+      const filePath = normCom.at(-1)
+      const data = pastCommands.join('\n')
+      const fileData = fs.writeFileSync(filePath,data)
     }
     else{
       pastCommands.forEach((cm, index)=>{
         console.log(`${index+1} ${cm}`)
       })
-      pastCommands.pop()
     }
+    !histCmd && pastCommands.pop()
   }
 
   else if(command.startsWith('type')){
