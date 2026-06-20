@@ -579,11 +579,11 @@ rl.on('line', (command)=>{
       const filePath = normCom.at(-1)
       let found = false
       let data = `${pastCommands.join('\n')}\n`
-      
+
       prevAppend.forEach((file)=>{
         if(filePath in file){
           const number = file[filePath].length
-          data = `${pastCommands.slice(length).join('\n')}\n`
+          data = `${pastCommands.slice(number).join('\n')}\n`
           file[filePath] = pastCommands
           found = true
         }
