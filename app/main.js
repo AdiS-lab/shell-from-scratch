@@ -554,7 +554,6 @@ rl.on('line', (command)=>{
 
   else if (command.startsWith('history')){
     pastCommands.push(command)
-    console.log(normCom[1])
     if(typeof Number(normCom[1]) === 'number'){
       const number = Number(normCom[1])
       pastCommands.forEach((command, index)=>{
