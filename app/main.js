@@ -565,11 +565,11 @@ rl.on('line', (command)=>{
       const fileData = fs.readFileSync(filePath, {encoding: 'utf8'})
       const results = fileData.trim().split('\n')
       results.forEach(message => pastCommands.push(message))
+      console.log('')
     }
     else{
-      console.log('this is pastCommands whne history activated ' + pastCommands)
-      pastCommands.forEach((command, index)=>{
-        console.log(`${index+1} ${command}`)
+      pastCommands.forEach((cm, index)=>{
+        console.log(`${index+1} ${cm}`)
       })
     }
     // pastCommands.pop()
