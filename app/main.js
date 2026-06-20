@@ -44,13 +44,13 @@ const rl = readline.createInterface({
           return findShellVar(input)
         })
 
-        let line = normLine.join(' ')
+        let line = cmd.includes('$') ? normLine.join(' ') : cmd
 
 
 
         let hits = targets.filter(target=>target.startsWith(line))
 
-        
+         
 
 
         const dirNames = process.env.PATH.split(':')  
