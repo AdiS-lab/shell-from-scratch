@@ -565,6 +565,7 @@ rl.on('line', (command)=>{
         console.log(`${index+1} ${command}`)
       })
     }
+    pastCommands.pop()
   }
 
   else if(command.startsWith('type')){
