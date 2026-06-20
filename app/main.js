@@ -334,6 +334,28 @@ function checkJobs(printAll){
     })
 }
 
+function validateString(input){
+  let valid = true
+  const lowerLetterRange = Array.from( {length: 26}, (_, i) => i + 65 )
+  const upperLetterRange = Array.from({length: 26}, (_, j) => j + 97)
+  const digitRange = Array.from({length: 10}, (_, k)=> k + 48)
+  const underscoreVal = 95
+  const firstChar = input.charCodeAt(0)
+
+  if(!lowerLetterRange.includes(firstChar) || !upperLetterRange.includes(firstChar) || !firstChar === underscoreVal){
+    return false
+  }
+  input.forEach((_, index)=>{
+    const charVal = input.charCodeAt(index)
+    if(!lowerLetterRange.includes(charVal) || !upperLetterRange.includes(charVal) || !charVal === underscoreVal || !digitRange.includes(charVal) )
+    {
+      return false
+    }
+  })
+
+  return true
+} 
+
 function splitPipe(inputArr){
   const stringArr = inputArr.join(' ').split('|')
   const newArr = stringArr.map((cmds)=>{
@@ -589,14 +611,9 @@ rl.on('line', (command)=>{
       const decData = normCom[1].split('=')
       const NAME = decData[0]
       const VALUE = decData[1]
+      let valid = validateString(NAME)
 
-      let valid = true
-
-      if ( Number.isInteger(Number(NAME[0])) ){
-        console.log(`declare: \`${NAME}=${VALUE}': not a valid identifier`)
-        valid = false
-      }
-      valid && shellVariables.push({[NAME]:[VALUE]})
+      valid ? shellVariables.push({[NAME]:[VALUE]}) : console.log(`declare: \`${NAME}=${VALUE}': not a valid identifier`)
     }
     
   }
