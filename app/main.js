@@ -392,7 +392,8 @@ rl.on('line', (command)=>{
         shellVariables.forEach((variables)=>{
           if(sv in variables) return variables[sv]
         })
-    } 
+    }
+    return input
   })
 
   if (normCom.at(-1) === '&'){
