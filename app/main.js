@@ -554,8 +554,8 @@ rl.on('line', (command)=>{
 
   else if (command.startsWith('history')){
     pastCommands.push(command)
-    const number = Number(normCom[1])
-    if(typeof number === 'integer'){
+    if(normCom.length>1){
+      const number = Number(normCom[1])
       pastCommands.forEach((command, index)=>{
         index >= (pastCommands.length-number) && console.log(`${index+1} ${command}`)
       })
