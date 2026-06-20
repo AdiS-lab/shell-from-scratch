@@ -553,10 +553,18 @@ rl.on('line', (command)=>{
   }// handle cd commands
 
   else if (command.startsWith('history')){
-    pastCommands.push('history')
-    pastCommands.forEach((command, index)=>{
-      console.log(`${index+1} ${command}`)
-    })
+    pastCommands.push(command)
+    if(typeof normCom[1]=== 'integer'){
+      const number = Number(normCom[1])
+      pastCommands.forEach((command, index)=>{
+        index >= pastCommands.length-number && console.log(`${index+1} ${command}`)
+      })
+    }
+    else{
+      pastCommands.forEach((command, index)=>{
+        console.log(`${index+1} ${command}`)
+      })
+    }
   }
 
   else if(command.startsWith('type')){
