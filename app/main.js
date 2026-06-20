@@ -20,7 +20,6 @@ if(process.env.HISTFILE){
   if(!(histResults === '')) histResults.forEach((result) => {pastCommands.push(result)})
   prevAppend.push({[process.env.HISTFILE]: [...pastCommands]})
   const fileName = prevAppend[0]
-  console.log('this is prevAppend ' + fileName[process.env.HISTFILE])
 }
 
 
