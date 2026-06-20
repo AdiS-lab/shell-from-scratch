@@ -17,6 +17,7 @@ const directories = process.env.PATH.split(path.delimiter)
 if(process.env.HISTFILE){
   const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
   const histResults = histData.trim().split('\n')
+  console.log('this is histResults' + histResults)
   if(!(histResults === '')) histResults.forEach((result) => {pastCommands.push(result)})
   prevAppend.push({[process.env.HISTFILE]: [...pastCommands]})
 }
