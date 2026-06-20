@@ -10,6 +10,7 @@ let newCommands = {}
 let copyCommands = {}
 let jobs = []
 let pastCommands = []
+let histCmd = false
 const directories = process.env.PATH.split(path.delimiter)
 
 
@@ -559,8 +560,10 @@ rl.on('line', (command)=>{
       pastCommands.forEach((command, index)=>{
         index >= (pastCommands.length-number) && console.log(`${index+1} ${command}`)
       })
+      pastCommands.pop()
     }
     else if( normCom[1] && normCom[1] === '-r'){
+      histCmd = true
       const filePath = normCom.at(-1)
       const fileData = fs.readFileSync(filePath, {encoding: 'utf8'})
       const results = fileData.trim().split('\n')
@@ -571,8 +574,8 @@ rl.on('line', (command)=>{
       pastCommands.forEach((cm, index)=>{
         console.log(`${index+1} ${cm}`)
       })
+      pastCommands.pop()
     }
-    // pastCommands.pop()
   }
 
   else if(command.startsWith('type')){
@@ -601,8 +604,11 @@ rl.on('line', (command)=>{
   }
   checkJobs(printAll)
 
-  pastCommands.push(command)
-  if(pipelineCmd){
+  if(!histCmd){
+    histCmd = false
+    pastCommands.push(command)}
+
+  if(pipelineCmd || histCmd){
     return
   } 
   else rl.prompt()
