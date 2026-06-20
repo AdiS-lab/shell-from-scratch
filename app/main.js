@@ -7,7 +7,7 @@ const os = require('os')
 const targets = ['echo ','exit ']
 const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs', 'history']
 let newCommands = {}
-let copyCommands = {}
+let copyCommands = {} // in order to keep track of what was used and not used anymore
 let jobs = []
 let pastCommands = []
 let histCmd = false
@@ -17,8 +17,8 @@ const directories = process.env.PATH.split(path.delimiter)
 if(process.env.HISTFILE){
   const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
   const histResults = histData.trim().split('\n')
-  console.log('this is histResults' + histResults)
   if(!(histResults === '')) histResults.forEach((result) => {pastCommands.push(result)})
+  console.log('this is pastCommands'+ pastCommands)
   prevAppend.push({[process.env.HISTFILE]: [...pastCommands]})
 }
 
@@ -590,7 +590,6 @@ rl.on('line', (command)=>{
       let data = `${pastCommands.join('\n')}\n`
 
       prevAppend.forEach((file)=>{
-        console.log(file[process.env.HISTFILE])
         if(filePath in file){
           const number = file[filePath].length
           console.log(file[filePath])
