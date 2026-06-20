@@ -532,6 +532,10 @@ rl.on('line', (command)=>{
   }// handle remove registration
 
   else if(command === 'exit'){
+    pastCommands.push(command)
+    pastCommands.forEach((cmd) => { 
+      console.log(cmd)
+    })
     rl.close()
     return
   }// handle exit 
