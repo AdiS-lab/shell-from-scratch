@@ -16,7 +16,7 @@ let prevAppend = []
 
 const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
 const histResults = histData.trim().split('\n')
-console.log(histResults)
+console.log('histResults is ' + histResults)
 histResults.forEach((result) => {pastCommands.push(result)})
 
 
