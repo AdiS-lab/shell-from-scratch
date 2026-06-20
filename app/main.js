@@ -345,13 +345,14 @@ function validateString(input){
   if(!(lowerLetterRange.includes(firstChar) || upperLetterRange.includes(firstChar) || (firstChar === underscoreVal))){
     return false
   }
-  input.forEach((_, index)=>{
-    const charVal = input.charCodeAt(index)
+
+  for (const x = 0; x<input.length; x ++ ){
+    const charVal = input.charCodeAt(x)
     if(!lowerLetterRange.includes(charVal) || !upperLetterRange.includes(charVal) || !charVal === underscoreVal || !digitRange.includes(charVal) )
     {
       return false
     }
-  })
+  }
 
   return true
 } 
