@@ -386,7 +386,7 @@ function findShellVar(input){
     if(inputPart[0] === '{'){
       const inputSplit = inputPart.split('}')
       inputCheck = inputSplit[0].slice(1)
-      const inputEnd = inputSplit[1]
+      inputEnd = inputSplit[1]
       parantheses = true
     }
 
