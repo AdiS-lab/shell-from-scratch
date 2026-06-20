@@ -335,9 +335,8 @@ function checkJobs(printAll){
 }
 
 function validateString(input){
-  let valid = true
-  const lowerLetterRange = Array.from( {length: 26}, (_, i) => i + 65 )
-  const upperLetterRange = Array.from({length: 26}, (_, j) => j + 97)
+  const upperLetterRange = Array.from( {length: 26}, (_, i) => i + 65 )
+  const lowerLetterRange = Array.from({length: 26}, (_, j) => j + 97)
   const digitRange = Array.from({length: 10}, (_, k)=> k + 48)
   const underscoreVal = 95
   const firstChar = input.charCodeAt(0)
@@ -346,9 +345,9 @@ function validateString(input){
     return false
   }
 
-  for (const x = 1; x<input.length; x ++ ){
+  for (let x = 1; x<input.length; x ++ ){
     const charVal = input.charCodeAt(x)
-    if(!lowerLetterRange.includes(charVal) || !upperLetterRange.includes(charVal) || !charVal === underscoreVal || !digitRange.includes(charVal) )
+    if(!(lowerLetterRange.includes(charVal) || upperLetterRange.includes(charVal) || charVal === underscoreVal || digitRange.includes(charVal)))
     {
       return false
     }
