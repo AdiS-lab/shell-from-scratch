@@ -15,7 +15,7 @@ const directories = process.env.PATH.split(path.delimiter)
 let prevAppend = []
 
 const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
-const histResults = histData.split('\n').trim()
+const histResults = histData.trim().split('\n')
 histResults.forEach((result) => {pastCommands.push(result)})
 
 
@@ -593,7 +593,7 @@ rl.on('line', (command)=>{
           found = true
         }
       })
-
+      
       const fileData = fs.appendFileSync(filePath,data)
       !found && prevAppend.push({[filePath]:[...pastCommands]}) // dereferencing
     }
