@@ -576,8 +576,10 @@ rl.on('line', (command)=>{
       const fileData = fs.writeFileSync(filePath,data)
     }
     else if( normCom[1] && normCom[1] === '-a' ){
+      const filePath = normCom.at(-1)
       let found = false
       let data = `${pastCommands.join('\n')}\n`
+      
       prevAppend.forEach((file)=>{
         if(filePath in file){
           const number = file[filePath].length
@@ -587,7 +589,6 @@ rl.on('line', (command)=>{
         }
       })
 
-      const filePath = normCom.at(-1)
       const fileData = fs.appendFileSync(filePath,data)
       !found && prevAppend.push({filePath:pastCommands})
     }
