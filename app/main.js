@@ -608,7 +608,7 @@ rl.on('line', (command)=>{
     histCmd = false
     pastCommands.push(command)}
 
-  if(pipelineCmd || histCmd){
+  if(pipelineCmd){
     return
   } 
   else rl.prompt()
