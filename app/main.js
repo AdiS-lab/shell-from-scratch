@@ -12,12 +12,11 @@ let jobs = []
 let pastCommands = []
 let histCmd = false
 const directories = process.env.PATH.split(path.delimiter)
-let prevAppend = []
 
 const histData = fs.readFileSync(process.env.HISTFILE, {encoding: 'utf8'})
 const histResults = histData.trim().split('\n')
-console.log('histResults is ' + histResults)
 histResults.forEach((result) => {pastCommands.push(result)})
+prevAppend = [{[process.env.HISTFILE]: [...pastCommands]}]
 
 
 
