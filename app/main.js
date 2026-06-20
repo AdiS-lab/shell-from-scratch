@@ -573,6 +573,11 @@ rl.on('line', (command)=>{
       const data = `${pastCommands.join('\n')}\n`
       const fileData = fs.writeFileSync(filePath,data)
     }
+    else if( normCom[1] && normCom[1] === '-a' ){
+      const filePath = normCom.at(-1)
+      const data = `${pastCommands.join('\n')}\n`
+      const fileData = fs.appendFileSync(filePath,data)
+    }
     else{
       pastCommands.forEach((cm, index)=>{
         console.log(`${index+1} ${cm}`)
