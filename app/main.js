@@ -526,12 +526,12 @@ rl.on('line', (command)=>{
   }// handle exit 
 
   else if(command.startsWith("echo")){
-    pastCommands.push(line)
+    pastCommands.push(command)
     console.log(`${normCom.slice(1).join(' ')}`)
   }// handle echo command 
 
   else if(command === 'pwd'){
-    pastCommands.push(line)
+    pastCommands.push(command)
     console.log(process.cwd()) 
   }// handle pwd command (whatever in current dir)
   else if (command.startsWith('cat')){
@@ -542,13 +542,13 @@ rl.on('line', (command)=>{
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
     if(fileName==='~'){
-      pastCommands.push(line)
+      pastCommands.push(command)
       process.chdir(os.homedir())
     } 
     else{
       const targetFile = path.resolve(fileName)
       if(fs.existsSync(fileName)){
-        pastCommands.push(line)
+        pastCommands.push(command)
         process.chdir(fileName)
       }
       else{
