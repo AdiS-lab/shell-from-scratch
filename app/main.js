@@ -588,9 +588,11 @@ rl.on('line', (command)=>{
     else{
       const decData = normCom[1].split('=')
       const NAME = decData[0]
-      const VALUE = decData[1]
+      const valid = true
 
-      shellVariables.push({[NAME]:[VALUE]})
+      if ( Number.isInteger(Number(NAME[0])) ) valid = false
+      const VALUE = decData[1]
+      valid && shellVariables.push({[NAME]:[VALUE]})
     }
     
   }
