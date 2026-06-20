@@ -5,10 +5,11 @@ const {execFileSync, spawn, fork } = require('child_process')
 const os = require('os')
 
 const targets = ['echo ','exit ']
-const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs']
+const validCommands = ['echo', 'exit', 'type', 'pwd', 'complete', 'jobs', 'history']
 let newCommands = {}
 let copyCommands = {}
 let jobs = []
+let pastCommands = []
 const directories = process.env.PATH.split(path.delimiter)
 
 
@@ -515,6 +516,7 @@ rl.on('line', (command)=>{
   }// handle creating registration
 
   else if(normCom.includes('complete') && normCom.includes('-r')){
+     pastCommands.push(line)
      delete newCommands[normCom.at(-1)]
   }// handle remove registration
 
@@ -524,10 +526,12 @@ rl.on('line', (command)=>{
   }// handle exit 
 
   else if(command.startsWith("echo")){
+    pastCommands.push(line)
     console.log(`${normCom.slice(1).join(' ')}`)
   }// handle echo command 
 
   else if(command === 'pwd'){
+    pastCommands.push(line)
     console.log(process.cwd()) 
   }// handle pwd command (whatever in current dir)
   else if (command.startsWith('cat')){
@@ -538,11 +542,13 @@ rl.on('line', (command)=>{
   else if (command.startsWith('cd')){
     const fileName = command.slice(3)
     if(fileName==='~'){
+      pastCommands.push(line)
       process.chdir(os.homedir())
     } 
     else{
       const targetFile = path.resolve(fileName)
       if(fs.existsSync(fileName)){
+        pastCommands.push(line)
         process.chdir(fileName)
       }
       else{
@@ -550,6 +556,10 @@ rl.on('line', (command)=>{
       }
     }
   }// handle cd commands
+
+  else if (command.startsWith('history')){
+    // pastCommands.push()
+  }
 
   else if(command.startsWith('type')){
     const secondHalf = command.slice(5)
