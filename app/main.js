@@ -42,7 +42,7 @@ const rl = readline.createInterface({
         let normLine = normalize(cmd)
         normLine = normLine.map((input)=>{
           return findShellVar(input)
-        })
+        }).filter(badPut => badPut !== '')
 
         let line = cmd.includes('$') ? normLine.join(' ') : cmd
 
@@ -377,7 +377,7 @@ function splitPipe(inputArr){
 function findShellVar(input){
   let arr = input.split('$')
 
-  return arr.map((inputPart, index)=>{
+  let checkArr =  arr.map((inputPart, index)=>{
     let inputCheck = inputPart
     let inputEnd = ''
     let parantheses = false
@@ -396,6 +396,8 @@ function findShellVar(input){
       }// walk through and check if equal
     }
   }).join('')
+
+  return !checkArr ? '' : checkArr
 }
 //_________ if type exists but not exec then continue, if non-existent command then return that________
 //_____ this entire loop is called a REPL good to know _________________________
@@ -404,7 +406,7 @@ rl.on('line', (command)=>{
 
   normCom = normCom.map((input)=>{
     return findShellVar(input)
-  })
+  }).filter(badPut => badPut !== '')
 
   if (normCom.at(-1) === '&'){
     let maxCounter = 0
