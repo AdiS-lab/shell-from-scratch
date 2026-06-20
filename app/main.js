@@ -589,8 +589,8 @@ rl.on('line', (command)=>{
       let data = `${pastCommands.join('\n')}\n`
 
       prevAppend.forEach((file)=>{
+        console.log('THIS IS A CHECK ')
         if(filePath in file){
-          console.log('THIS IS A CHECK ' + file[filePath])
           const number = file[filePath].length
           console.log(file[filePath])
           data = `${pastCommands.slice(number).join('\n')}\n`
