@@ -394,6 +394,7 @@ function findShellVar(input){
       for(const variables of shellVariables){
         if( inputCheck in variables ) return parantheses ? `${variables[inputCheck]}${inputEnd}` : variables[inputPart]
       }// walk through and check if equal
+      return inputEnd
     }
   }).join('')
 
