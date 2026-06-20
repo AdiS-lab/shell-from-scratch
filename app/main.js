@@ -378,12 +378,23 @@ function findShellVar(input){
   let arr = input.split('$')
 
   return arr.map((inputPart, index)=>{
+    let inputCheck = inputPart
+    let inputEnd = ''
+    let parantheses = false
     if(index===0) return inputPart
-    if(inputPart && index>0){
+
+    if(inputPart[0] === '{'){
+      const inputSplit = inputPart.split('}')
+      inputCheck = inputSplit[0].slice(1)
+      const inputEnd = inputSplit[1] || ''
+      parantheses = true
+    }
+
+    if(inputCheck && index>0){
       for(const variables of shellVariables){
-        if( inputPart in variables ) return variables[inputPart]
+        if( inputCheck in variables ) return parantheses ? `${variables[inputCheck]}${inputEnd}` : variables[inputPart]
       }// walk through and check if equal
-    return `$${inputPart}`
+    return parantheses ? `\${${inputCheck}}${inputEnd}` : `$${inputCheck}` 
     }
   }).join('')
 }
